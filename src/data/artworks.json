@@ -54,6 +54,17 @@
       "thumbnail": "005_vera_lines_thumb",
       "category": "data-visualization",
       "status": "published"
+    },
+    {
+      "id": "006",
+      "title": "Signal 006: Placeholder",
+      "description": "A reserved space awaiting its future sketch. Replace this placeholder when inspiration lands.",
+      "date": "2025-07-09",
+      "tags": ["placeholder", "pending", "future"],
+      "file": "006_placeholder_signal",
+      "thumbnail": "006_placeholder_signal_thumb",
+      "category": "generative",
+      "status": "published"
     }
   ],
   "categories": [
@@ -65,9 +76,9 @@
     "interactive"
   ],
   "metadata": {
-    "lastUpdated": "2024-01-19",
-    "totalArtworks": 2,
-    "publishedArtworks": 2,
+    "lastUpdated": "2025-07-09",
+    "totalArtworks": 6,
+    "publishedArtworks": 6,
     "draftArtworks": 0
   }
 }
