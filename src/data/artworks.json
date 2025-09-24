@@ -1,0 +1,73 @@
+{
+  "artworks": [
+    {
+      "id": "001",
+      "title": "Flowing Particles",
+      "description": "Interactive particle system with mouse interaction and color cycling",
+      "date": "2024-01-15",
+      "tags": ["particles", "interactive", "color"],
+      "file": "001_example",
+      "thumbnail": "001_example_thumb",
+      "category": "generative",
+      "status": "published"
+    },
+    {
+      "id": "002",
+      "title": "Morse Code Visualizer",
+      "description": "Converts text input into morse code line patterns",
+      "date": "2025-07-05",
+      "tags": ["morse", "text", "patterns"],
+      "file": "002_morse",
+      "thumbnail": "002_morse_thumb",
+      "category": "data-visualization",
+      "status": "published"
+    },
+    {
+      "id": "003",
+      "title": "Morse Code Visualizer 2",
+      "description": "Enhanced morse code visualization with improved patterns and spacing",
+      "date": "2025-07-06",
+      "tags": ["morse", "text", "patterns", "enhanced"],
+      "file": "003_morse_enhanced",
+      "thumbnail": "003_morse_enhanced_thumb",
+      "category": "data-visualization",
+      "status": "published"
+    },
+    {
+      "id": "004",
+      "title": "Morse Vera",
+      "description": "Morse code visualization with Vera Molnar-inspired lines",
+      "date": "2024-07-08",
+      "tags": ["color", "interactive", "theory"],
+      "file": "004_morse_vera",
+      "thumbnail": "004_morse_vera_thumb",
+      "category": "data-visualization",
+      "status": "published"
+    },
+    {
+      "id": "005",
+      "title": "Vera Lines",
+      "description": "Exploring color theory through interactive color wheels",
+      "date": "2024-07-08",
+      "tags": ["vera", "interactive", "theory"],
+      "file": "005_vera_lines",
+      "thumbnail": "005_vera_lines_thumb",
+      "category": "data-visualization",
+      "status": "published"
+    }
+  ],
+  "categories": [
+    "generative",
+    "data-visualization",
+    "geometric",
+    "mathematical",
+    "color",
+    "interactive"
+  ],
+  "metadata": {
+    "lastUpdated": "2024-01-19",
+    "totalArtworks": 2,
+    "publishedArtworks": 2,
+    "draftArtworks": 0
+  }
+}

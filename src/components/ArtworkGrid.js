@@ -1,0 +1,164 @@
+import React, { useState, useEffect } from "react";
+import P5Canvas from "./P5Canvas";
+import artworksData from "../data/artworks.json";
+
+// Map file names to sketch objects
+import exampleSketch from "../sketches/001_example";
+import myCustomSketch from "../sketches/002_morse";
+import morseEnhancedSketch from "../sketches/003_morse_enhanced";
+import morseVeraSketch from "../sketches/004_morse_vera";
+import veraLinesSketch from "../sketches/005_vera_lines";
+
+const sketchMap = {
+  "001_example": exampleSketch,
+  "002_morse": myCustomSketch,
+  "003_morse_enhanced": morseEnhancedSketch,
+  "004_morse_vera": morseVeraSketch,
+  "005_vera_lines": veraLinesSketch,
+};
+
+const getSketchFromFile = (fileName) => {
+  return sketchMap[fileName] || null;
+};
+
+const ArtworkGrid = ({ onArtworkSelect }) => {
+  const [artworks, setArtworks] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+  const [selectedCategory, setSelectedCategory] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
+
+  useEffect(() => {
+    loadArtworks();
+  }, []);
+
+  const loadArtworks = async () => {
+    try {
+      setLoading(true);
+      const publishedArtworks = artworksData.artworks.filter(
+        (artwork) => artwork.status === "published"
+      );
+      setArtworks(publishedArtworks);
+      setLoading(false);
+    } catch (err) {
+      setError("Failed to load artworks");
+      setLoading(false);
+    }
+  };
+
+  const filteredArtworks = artworks.filter((artwork) => {
+    const matchesCategory =
+      selectedCategory === "all" || artwork.category === selectedCategory;
+    const matchesSearch =
+      artwork.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      artwork.description.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      artwork.tags.some((tag) =>
+        tag.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    return matchesCategory && matchesSearch;
+  });
+
+  const categories = ["all", ...artworksData.categories];
+
+  if (loading) {
+    return (
+      <div className="artwork-grid">
+        <div className="loading">Loading artworks...</div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="artwork-grid">
+        <div className="error">Error: {error}</div>
+      </div>
+    );
+  }
+
+  return (
+    <div>
+      <div className="grid-header">
+        <p className="grid-description">
+          A collection of generative art and interactive sketches
+        </p>
+
+        <div className="grid-controls">
+          <div className="search-box">
+            <input
+              type="text"
+              placeholder="Search artworks..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="search-input"
+            />
+          </div>
+
+          <div className="category-filter">
+            <select
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+              className="category-select"
+            >
+              {categories.map((category) => (
+                <option key={category} value={category}>
+                  {category === "all"
+                    ? "All Categories"
+                    : category.charAt(0).toUpperCase() + category.slice(1)}
+                </option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        <div className="grid-stats">
+          <span>
+            {filteredArtworks.length} of {artworks.length} artworks
+          </span>
+        </div>
+      </div>
+
+      <div className="artwork-grid">
+        {filteredArtworks.length === 0 ? (
+          <div className="no-results">
+            <p>No artworks found matching your criteria.</p>
+          </div>
+        ) : (
+          filteredArtworks.map((artwork) => (
+            <div
+              key={artwork.id}
+              className="artwork-tile"
+              onClick={() => onArtworkSelect(artwork)}
+            >
+              <div className="artwork-preview">
+                <P5Canvas
+                  width={200}
+                  height={200}
+                  sketch={getSketchFromFile(artwork.file)}
+                  title=""
+                />
+              </div>
+              <div className="artwork-info">
+                <h3>{artwork.title}</h3>
+                <p>{artwork.description}</p>
+                <div className="artwork-meta">
+                  <span className="artwork-date">{artwork.date}</span>
+                  <span className="artwork-category">{artwork.category}</span>
+                </div>
+                <div className="artwork-tags">
+                  {artwork.tags.map((tag, tagIndex) => (
+                    <span key={tagIndex} className="tag">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          ))
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default ArtworkGrid;
