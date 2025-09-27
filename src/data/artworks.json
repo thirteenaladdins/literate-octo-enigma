@@ -5,7 +5,11 @@
       "title": "Flowing Particles",
       "description": "Interactive particle system with mouse interaction and color cycling",
       "date": "2024-01-15",
-      "tags": ["particles", "interactive", "color"],
+      "tags": [
+        "particles",
+        "interactive",
+        "color"
+      ],
       "file": "001_example",
       "thumbnail": "001_example_thumb",
       "category": "generative",
@@ -16,7 +20,11 @@
       "title": "Morse Code Visualizer",
       "description": "Converts text input into morse code line patterns",
       "date": "2025-07-05",
-      "tags": ["morse", "text", "patterns"],
+      "tags": [
+        "morse",
+        "text",
+        "patterns"
+      ],
       "file": "002_morse",
       "thumbnail": "002_morse_thumb",
       "category": "data-visualization",
@@ -27,7 +35,12 @@
       "title": "Morse Code Visualizer 2",
       "description": "Enhanced morse code visualization with improved patterns and spacing",
       "date": "2025-07-06",
-      "tags": ["morse", "text", "patterns", "enhanced"],
+      "tags": [
+        "morse",
+        "text",
+        "patterns",
+        "enhanced"
+      ],
       "file": "003_morse_enhanced",
       "thumbnail": "003_morse_enhanced_thumb",
       "category": "data-visualization",
@@ -38,7 +51,11 @@
       "title": "Morse Vera",
       "description": "Morse code visualization with Vera Molnar-inspired lines",
       "date": "2024-07-08",
-      "tags": ["color", "interactive", "theory"],
+      "tags": [
+        "color",
+        "interactive",
+        "theory"
+      ],
       "file": "004_morse_vera",
       "thumbnail": "004_morse_vera_thumb",
       "category": "data-visualization",
@@ -49,7 +66,11 @@
       "title": "Vera Lines",
       "description": "Exploring color theory through interactive color wheels",
       "date": "2024-07-08",
-      "tags": ["vera", "interactive", "theory"],
+      "tags": [
+        "vera",
+        "interactive",
+        "theory"
+      ],
       "file": "005_vera_lines",
       "thumbnail": "005_vera_lines_thumb",
       "category": "data-visualization",
@@ -60,9 +81,28 @@
       "title": "Signal 006: Placeholder",
       "description": "A reserved space awaiting its future sketch. Replace this placeholder when inspiration lands.",
       "date": "2025-07-09",
-      "tags": ["placeholder", "pending", "future"],
+      "tags": [
+        "placeholder",
+        "pending",
+        "future"
+      ],
       "file": "006_placeholder_signal",
       "thumbnail": "006_placeholder_signal_thumb",
+      "category": "generative",
+      "status": "published"
+    },
+    {
+      "id": "007",
+      "title": "Signal 007: Placeholder",
+      "description": "A reserved space awaiting its future sketch. Replace this placeholder when inspiration lands.",
+      "date": "2025-09-27",
+      "tags": [
+        "placeholder",
+        "pending",
+        "future"
+      ],
+      "file": "007_placeholder_signal",
+      "thumbnail": "007_placeholder_signal_thumb",
       "category": "generative",
       "status": "published"
     }
@@ -76,9 +116,9 @@
     "interactive"
   ],
   "metadata": {
-    "lastUpdated": "2025-07-09",
-    "totalArtworks": 6,
-    "publishedArtworks": 6,
+    "lastUpdated": "2025-09-27",
+    "totalArtworks": 7,
+    "publishedArtworks": 7,
     "draftArtworks": 0
   }
 }

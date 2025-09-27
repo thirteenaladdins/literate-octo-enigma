@@ -4,6 +4,7 @@ import sketch_003_morse_enhanced from "./003_morse_enhanced";
 import sketch_004_morse_vera from "./004_morse_vera";
 import sketch_005_vera_lines from "./005_vera_lines";
 import sketch_006_placeholder_signal from "./006_placeholder_signal";
+import index from "./index";
 
 const sketches = {
   "001_example": sketch_001_example,
@@ -12,6 +13,7 @@ const sketches = {
   "004_morse_vera": sketch_004_morse_vera,
   "005_vera_lines": sketch_005_vera_lines,
   "006_placeholder_signal": sketch_006_placeholder_signal,
+  "index": index,
 };
 
 export default sketches;
