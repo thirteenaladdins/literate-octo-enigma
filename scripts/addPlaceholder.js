@@ -115,7 +115,7 @@ const main = () => {
 
   const sketchFiles = fs
     .readdirSync(sketchesDir)
-    .filter((file) => file.endsWith(".js"))
+    .filter((file) => file.endsWith(".js") && file !== "index.js")
     .sort();
 
   fs.writeFileSync(sketchesIndexPath, buildSketchIndex(sketchFiles), "utf8");
