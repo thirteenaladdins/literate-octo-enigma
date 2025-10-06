@@ -12,6 +12,7 @@ import sketch_011_placeholder_signal from "./011_placeholder_signal";
 import sketch_012_placeholder_signal from "./012_placeholder_signal";
 import sketch_013_placeholder_signal from "./013_placeholder_signal";
 import sketch_014_placeholder_signal from "./014_placeholder_signal";
+import sketch_015_placeholder_signal from "./015_placeholder_signal";
 
 const sketches = {
   "001_example": sketch_001_example,
@@ -28,6 +29,7 @@ const sketches = {
   "012_placeholder_signal": sketch_012_placeholder_signal,
   "013_placeholder_signal": sketch_013_placeholder_signal,
   "014_placeholder_signal": sketch_014_placeholder_signal,
+  "015_placeholder_signal": sketch_015_placeholder_signal,
 };
 
 export default sketches;
