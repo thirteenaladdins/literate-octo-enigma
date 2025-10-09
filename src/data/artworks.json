@@ -270,6 +270,21 @@
       "thumbnail": "018_placeholder_signal_thumb",
       "category": "generative",
       "status": "published"
+    },
+    {
+      "id": "019",
+      "title": "Signal 019: Placeholder",
+      "description": "A reserved space awaiting its future sketch. Replace this placeholder when inspiration lands.",
+      "date": "2025-10-09",
+      "tags": [
+        "placeholder",
+        "pending",
+        "future"
+      ],
+      "file": "019_placeholder_signal",
+      "thumbnail": "019_placeholder_signal_thumb",
+      "category": "generative",
+      "status": "published"
     }
   ],
   "categories": [
@@ -281,9 +296,9 @@
     "interactive"
   ],
   "metadata": {
-    "lastUpdated": "2025-10-08",
-    "totalArtworks": 18,
-    "publishedArtworks": 18,
+    "lastUpdated": "2025-10-09",
+    "totalArtworks": 19,
+    "publishedArtworks": 19,
     "draftArtworks": 0
   }
 }
