@@ -69,23 +69,20 @@ jobs:
             xdg-utils
 
       - name: Write OAuth2 tokens for v2 media upload
-        env:
-          TW_OAUTH2_ACCESS: ${{ secrets.TWITTER_OAUTH2_ACCESS_TOKEN }}
-          TW_OAUTH2_REFRESH: ${{ secrets.TWITTER_OAUTH2_REFRESH_TOKEN }}
         run: |
-          if [ -n "$TW_OAUTH2_ACCESS" ] && [ -n "$TW_OAUTH2_REFRESH" ]; then
-            cat > .twitter-oauth2.json << 'JSON'
-            {
-              "tokens": {
-                "accessToken": "${{ secrets.TWITTER_OAUTH2_ACCESS_TOKEN }}",
-                "refreshToken": "${{ secrets.TWITTER_OAUTH2_REFRESH_TOKEN }}",
-                "expiresAt": 0
-              }
-            }
-            JSON
+          if [ -n "${{ secrets.TWITTER_OAUTH2_ACCESS_TOKEN }}" ] && [ -n "${{ secrets.TWITTER_OAUTH2_REFRESH_TOKEN }}" ]; then
+cat > .twitter-oauth2.json <<EOF
+{
+  "tokens": {
+    "accessToken": "${{ secrets.TWITTER_OAUTH2_ACCESS_TOKEN }}",
+    "refreshToken": "${{ secrets.TWITTER_OAUTH2_REFRESH_TOKEN }}",
+    "expiresAt": 0
+  }
+}
+EOF
             echo "OAuth2 token file created"
           else
-            echo "OAuth2 secrets not set; workflow will fallback to OAuth1 (media upload will fail)." || true
+            echo "OAuth2 secrets not set; skipping OAuth2 file (will fallback to OAuth1)." || true
           fi
 
       - name: Install dependencies
