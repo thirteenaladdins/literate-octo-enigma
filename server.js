@@ -187,6 +187,7 @@ app.listen(PORT, () => {
   console.log(
     `   Test endpoint: POST http://localhost:${PORT}/api/test-artwork`
   );
+  console.log(`   SPA routes: /* will serve index.html in production`);
   console.log("");
 });
 

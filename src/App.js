@@ -8,43 +8,52 @@ import artworksData from "./data/artworks.json";
 function App() {
   const [selectedArtwork, setSelectedArtwork] = useState(null);
 
-  // Handle hash-based navigation for direct artwork links
+  // Handle path-based navigation for direct artwork links (also accept legacy hash)
   useEffect(() => {
-    const handleHashChange = () => {
-      const hash = window.location.hash.replace("#", "");
-      if (hash) {
-        // Find artwork by ID (e.g., #019 or #019_ai_signal)
+    const syncFromLocation = () => {
+      const pathId = window.location.pathname.replace(/^\//, "");
+      const hashId = window.location.hash.replace("#", "");
+      const id = pathId || hashId;
+      if (id) {
         const artwork = artworksData.artworks.find(
-          (art) =>
-            art.id === hash ||
-            art.file === `${hash}_ai_signal.js` ||
-            art.file === `${hash}.js`
+          (art) => art.id === id
         );
-        if (artwork) {
-          setSelectedArtwork(artwork);
-        }
+        setSelectedArtwork(artwork || null);
       } else {
         setSelectedArtwork(null);
       }
     };
 
-    // Handle initial hash on load
-    handleHashChange();
+    // Initial sync
+    syncFromLocation();
 
-    // Listen for hash changes
-    window.addEventListener("hashchange", handleHashChange);
-    return () => window.removeEventListener("hashchange", handleHashChange);
+    // Listen for browser navigation and legacy hash changes
+    window.addEventListener("popstate", syncFromLocation);
+    window.addEventListener("hashchange", syncFromLocation);
+    return () => {
+      window.removeEventListener("popstate", syncFromLocation);
+      window.removeEventListener("hashchange", syncFromLocation);
+    };
   }, []);
 
   // Update hash when artwork is selected
   const handleArtworkSelect = (artwork) => {
-    window.location.hash = artwork.id;
+    const next = `/${artwork.id}`;
+    if (window.location.pathname !== next) {
+      window.history.pushState({}, "", next);
+    }
+    // Clear legacy hash if present
+    if (window.location.hash) {
+      window.history.replaceState({}, "", next);
+    }
     setSelectedArtwork(artwork);
   };
 
   // Clear hash when going back
   const handleBack = () => {
-    window.location.hash = "";
+    if (window.location.pathname !== "/") {
+      window.history.pushState({}, "", "/");
+    }
     setSelectedArtwork(null);
   };
 
