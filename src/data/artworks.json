@@ -357,6 +357,35 @@
       "thumbnail": "022_placeholder_signal_thumb",
       "category": "generative",
       "status": "published"
+    },
+    {
+      "id": "023",
+      "title": "Signal 023: Whispers of Elysian Seas",
+      "description": "Soothing waves oscillate softly, merging colors and shapes, creating a serene atmosphere that evokes a sense of escapism.",
+      "date": "2025-10-18",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "noise-waves",
+        "dreamy",
+        "tranquility",
+        "circle"
+      ],
+      "file": "023_ai_signal",
+      "thumbnail": "023_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "noiseWaves",
+      "colors": [
+        "#d9b5e6",
+        "#4a3f8a",
+        "#ff9f43",
+        "#fefae0"
+      ],
+      "movement": "gentle, undulating fluctuations mimicking a calm ocean surface",
+      "density": 45,
+      "mood": "dreamy tranquility"
     }
   ],
   "categories": [
@@ -373,8 +402,8 @@
   ],
   "metadata": {
     "lastUpdated": "2025-10-18",
-    "totalArtworks": 22,
-    "publishedArtworks": 22,
+    "totalArtworks": 23,
+    "publishedArtworks": 23,
     "draftArtworks": 0
   }
 }
