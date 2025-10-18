@@ -1,25 +1,9 @@
 import React, { useState, useEffect } from "react";
 import P5Canvas from "./P5Canvas";
 import artworksData from "../data/artworks.json";
+import sketches from "../sketches";
 
-// Map file names to sketch objects
-import exampleSketch from "../sketches/001_example";
-import myCustomSketch from "../sketches/002_morse";
-import morseEnhancedSketch from "../sketches/003_morse_enhanced";
-import morseVeraSketch from "../sketches/004_morse_vera";
-import veraLinesSketch from "../sketches/005_vera_lines";
-
-const sketchMap = {
-  "001_example": exampleSketch,
-  "002_morse": myCustomSketch,
-  "003_morse_enhanced": morseEnhancedSketch,
-  "004_morse_vera": morseVeraSketch,
-  "005_vera_lines": veraLinesSketch,
-};
-
-const getSketchFromFile = (fileName) => {
-  return sketchMap[fileName] || null;
-};
+const getSketchFromFile = (fileName) => sketches[fileName] || null;
 
 const ArtworkGrid = ({ onArtworkSelect }) => {
   const [artworks, setArtworks] = useState([]);
@@ -35,9 +19,9 @@ const ArtworkGrid = ({ onArtworkSelect }) => {
   const loadArtworks = async () => {
     try {
       setLoading(true);
-      const publishedArtworks = artworksData.artworks.filter(
-        (artwork) => artwork.status === "published"
-      );
+      const publishedArtworks = artworksData.artworks
+        .filter((artwork) => artwork.status === "published")
+        .reverse();
       setArtworks(publishedArtworks);
       setLoading(false);
     } catch (err) {
@@ -79,6 +63,7 @@ const ArtworkGrid = ({ onArtworkSelect }) => {
   return (
     <div>
       <div className="grid-header">
+        <h1 className="grid-banner">Whispers from an Unfinished Machine</h1>
         <p className="grid-description">
           A collection of generative art and interactive sketches
         </p>
@@ -135,7 +120,8 @@ const ArtworkGrid = ({ onArtworkSelect }) => {
                   width={200}
                   height={200}
                   sketch={getSketchFromFile(artwork.file)}
-                  title=""
+                  showTitle={false}
+                  showDescription={false}
                 />
               </div>
               <div className="artwork-info">

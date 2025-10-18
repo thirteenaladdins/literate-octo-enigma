@@ -41,7 +41,7 @@ const ArtworkJourney = () => {
     <div className="journey">
       <header className="journey-hero">
         <span className="journey-subtitle">Studio log</span>
-        <h1 className="journey-title">Signals from an unfinished machine</h1>
+        <h1 className="journey-title">Whispers from an unfinished machine</h1>
         <p className="journey-intro">
           Each sketch is a fragment from a longer conversation with code—less a
           product catalog, more a trail of impulses, experiments, and stray
@@ -67,7 +67,9 @@ const ArtworkJourney = () => {
               <div className="journey-section-background" aria-hidden="true" />
               <div className="journey-section-content">
                 <div className="journey-metadata">
-                  <span className="journey-sequence">{formatSequence(artwork.id)}</span>
+                  <span className="journey-sequence">
+                    {formatSequence(artwork.id)}
+                  </span>
                   <span className="journey-date">{artwork.date}</span>
                   <span className="journey-category">{artwork.category}</span>
                 </div>

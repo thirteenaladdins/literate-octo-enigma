@@ -2,23 +2,43 @@
   "name": "literate-octo-enigma",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://literate-octo-enigma-ruby.vercel.app",
   "dependencies": {
     "@testing-library/dom": "^10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
     "@testing-library/react": "^16.3.0",
     "@testing-library/user-event": "^13.5.0",
+    "axios": "^1.12.2",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "form-data": "^4.0.4",
+    "openai": "^4.77.0",
+    "puppeteer": "^23.11.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-scripts": "5.0.1",
+    "twitter-api-v2": "^1.17.2",
     "web-vitals": "^2.1.4"
+  },
+  "devDependencies": {
+    "concurrently": "^9.1.2",
+    "dotenv": "^16.4.7",
+    "gh-pages": "^6.3.0"
   },
   "scripts": {
     "dev": "react-scripts start",
     "start": "react-scripts start",
+    "server": "node server.js",
+    "dev:all": "concurrently \"npm run server\" \"npm run start\"",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "add:placeholder": "node scripts/addPlaceholder.js"
+    "add:placeholder": "node scripts/addPlaceholder.js",
+    "generate:daily": "node scripts/generateDailyArtwork.js",
+    "test:artwork": "node scripts/testArtworkFlow.js",
+    "test:media-upload": "node scripts/testMediaUploadV2.js",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build"
   },
   "eslintConfig": {
     "extends": [

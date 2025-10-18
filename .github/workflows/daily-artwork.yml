@@ -1,0 +1,97 @@
+name: Daily AI Artwork Signal
+
+on:
+  schedule:
+    - cron: "5 7 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  create-artwork:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Use Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Puppeteer dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            ca-certificates \
+            fonts-liberation \
+            libasound2 \
+            libatk-bridge2.0-0 \
+            libatk1.0-0 \
+            libc6 \
+            libcairo2 \
+            libcups2 \
+            libdbus-1-3 \
+            libexpat1 \
+            libfontconfig1 \
+            libgbm1 \
+            libgcc1 \
+            libglib2.0-0 \
+            libgtk-3-0 \
+            libnspr4 \
+            libnss3 \
+            libpango-1.0-0 \
+            libpangocairo-1.0-0 \
+            libstdc++6 \
+            libx11-6 \
+            libx11-xcb1 \
+            libxcb1 \
+            libxcomposite1 \
+            libxcursor1 \
+            libxdamage1 \
+            libxext6 \
+            libxfixes3 \
+            libxi6 \
+            libxrandr2 \
+            libxrender1 \
+            libxss1 \
+            libxtst6 \
+            lsb-release \
+            wget \
+            xdg-utils
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate AI artwork
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
+          TWITTER_API_SECRET: ${{ secrets.TWITTER_API_SECRET }}
+          TWITTER_ACCESS_TOKEN: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+          TWITTER_ACCESS_TOKEN_SECRET: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+          PORTFOLIO_URL: ${{ secrets.PORTFOLIO_URL }}
+        run: npm run generate:daily
+
+      - name: Commit and push changes
+        run: |
+          if git status --porcelain | grep . >/dev/null; then
+            git config user.name "github-actions[bot]"
+            git config user.email "github-actions[bot]@users.noreply.github.com"
+            git add .
+            ARTWORK_TITLE=$(git diff --cached --name-only | grep "src/sketches" | head -1 | sed 's/.*\/\([^\/]*\)\.js/\1/')
+            git commit -m "feat: add daily AI artwork - ${ARTWORK_TITLE}"
+            git push
+          else
+            echo "No new artwork generated today."
+          fi
+
+      - name: Notify on failure
+        if: failure()
+        run: |
+          echo "❌ Daily artwork generation failed!"
+          echo "Check the logs for details."

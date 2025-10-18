@@ -1,24 +1,8 @@
 import React from "react";
 import P5Canvas from "./P5Canvas";
+import sketches from "../sketches";
 
-// Import the same sketch mapping logic
-import exampleSketch from "../sketches/001_example";
-import myCustomSketch from "../sketches/002_morse";
-import morseEnhancedSketch from "../sketches/003_morse_enhanced";
-import morseVeraSketch from "../sketches/004_morse_vera";
-import veraLinesSketch from "../sketches/005_vera_lines";
-
-const sketchMap = {
-  "001_example": exampleSketch,
-  "002_morse": myCustomSketch,
-  "003_morse_enhanced": morseEnhancedSketch,
-  "004_morse_vera": morseVeraSketch,
-  "005_vera_lines": veraLinesSketch,
-};
-
-const getSketchFromFile = (fileName) => {
-  return sketchMap[fileName] || null;
-};
+const getSketchFromFile = (fileName) => sketches[fileName] || null;
 
 const ArtworkViewer = ({ artwork, onBack }) => {
   const sketch = getSketchFromFile(artwork.file);
