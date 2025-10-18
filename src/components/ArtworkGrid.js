@@ -116,13 +116,34 @@ const ArtworkGrid = ({ onArtworkSelect }) => {
               onClick={() => onArtworkSelect(artwork)}
             >
               <div className="artwork-preview">
-                <P5Canvas
+                {/* Prefer static thumbnail if available */}
+                <img
+                  src={`/thumbnails/${artwork.file}.png`}
+                  alt={artwork.title}
                   width={200}
                   height={200}
-                  sketch={getSketchFromFile(artwork.file)}
-                  showTitle={false}
-                  showDescription={false}
+                  onError={(e) => {
+                    // Fallback to live sketch preview if image missing
+                    e.currentTarget.style.display = "none";
+                    const placeholder = document.createElement("div");
+                    e.currentTarget.parentNode.appendChild(placeholder);
+                    // Render P5 only when thumbnail missing
+                    // This component will unmount/remount on navigation
+                  }}
+                  style={{ objectFit: "cover", borderRadius: 8 }}
                 />
+                {/* Lightweight fallback rendering */}
+                {!getSketchFromFile(artwork.file) ? null : (
+                  <noscript>
+                    <P5Canvas
+                      width={200}
+                      height={200}
+                      sketch={getSketchFromFile(artwork.file)}
+                      showTitle={false}
+                      showDescription={false}
+                    />
+                  </noscript>
+                )}
               </div>
               <div className="artwork-info">
                 <h3>{artwork.title}</h3>

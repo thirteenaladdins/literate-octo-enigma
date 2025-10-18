@@ -11,6 +11,7 @@ const path = require("path");
 class ScreenshotService {
   constructor() {
     this.screenshotsDir = path.join(__dirname, "../../screenshots");
+    this.publicThumbsDir = path.join(__dirname, "../../public/thumbnails");
     this.ensureScreenshotsDir();
   }
 
@@ -20,6 +21,9 @@ class ScreenshotService {
   ensureScreenshotsDir() {
     if (!fs.existsSync(this.screenshotsDir)) {
       fs.mkdirSync(this.screenshotsDir, { recursive: true });
+    }
+    if (!fs.existsSync(this.publicThumbsDir)) {
+      fs.mkdirSync(this.publicThumbsDir, { recursive: true });
     }
   }
 
@@ -60,6 +64,18 @@ class ScreenshotService {
       });
 
       console.log(`Screenshot saved to: ${outputPath}`);
+
+      // Also copy to public thumbnails for website rendering
+      try {
+        const publicThumbPath = path.join(
+          this.publicThumbsDir,
+          `${outputFileName}.png`
+        );
+        fs.copyFileSync(outputPath, publicThumbPath);
+        console.log(`Public thumbnail updated: ${publicThumbPath}`);
+      } catch (copyErr) {
+        console.warn("Warning: failed to copy thumbnail to public/:", copyErr);
+      }
 
       // Read the file as buffer for Twitter upload
       const buffer = fs.readFileSync(outputPath);

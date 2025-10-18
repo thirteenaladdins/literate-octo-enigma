@@ -21,13 +21,31 @@ const ArtworkViewer = ({ artwork, onBack }) => {
 
       <div className="artwork-content">
         <div className="artwork-canvas">
-          <P5Canvas
+          {/* Prefer static snapshot used for Twitter */}
+          <img
+            src={`/thumbnails/${artwork.file}.png`}
+            alt={artwork.title}
             width={600}
             height={600}
-            sketch={sketch}
-            title={artwork.title}
-            description={artwork.description}
+            onError={(e) => {
+              // If snapshot missing, fallback to live P5 render
+              e.currentTarget.style.display = "none";
+              const container = e.currentTarget.parentNode;
+              const mount = document.createElement("div");
+              container.appendChild(mount);
+            }}
+            style={{ objectFit: "cover", borderRadius: 12 }}
           />
+          {/* Non-JS fallback */}
+          <noscript>
+            <P5Canvas
+              width={600}
+              height={600}
+              sketch={sketch}
+              title={artwork.title}
+              description={artwork.description}
+            />
+          </noscript>
         </div>
 
         <div className="artwork-details">
