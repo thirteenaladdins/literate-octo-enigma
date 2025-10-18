@@ -2,17 +2,211 @@
   "artworks": [
     {
       "id": "001",
-      "title": "Signal 001: Placeholder",
-      "description": "A reserved space awaiting its future sketch. Replace this placeholder when inspiration lands.",
-      "date": "2025-10-18",
-      "tags": [
-        "placeholder",
-        "pending",
-        "future"
-      ],
-      "file": "001_placeholder_signal",
-      "thumbnail": "001_placeholder_signal_thumb",
+      "title": "Flowing Particles",
+      "description": "Interactive particle system with mouse interaction and color cycling.",
+      "date": "2024-01-15",
+      "tags": ["particles", "interactive", "color"],
+      "file": "001_example",
+      "thumbnail": "001_example_thumb",
       "category": "generative",
+      "status": "published"
+    },
+    {
+      "id": "002",
+      "title": "Morse Code Visualizer",
+      "description": "Converts text input into morse code line patterns.",
+      "date": "2024-02-01",
+      "tags": ["morse", "text", "patterns"],
+      "file": "002_morse",
+      "thumbnail": "002_morse_thumb",
+      "category": "data-visualization",
+      "status": "published"
+    },
+    {
+      "id": "003",
+      "title": "Morse Code Visualizer 2",
+      "description": "Enhanced morse code visualization with improved patterns and spacing.",
+      "date": "2024-02-08",
+      "tags": ["morse", "enhanced", "patterns"],
+      "file": "003_morse_enhanced",
+      "thumbnail": "003_morse_enhanced_thumb",
+      "category": "data-visualization",
+      "status": "published"
+    },
+    {
+      "id": "004",
+      "title": "Morse Code – Vera Style",
+      "description": "Morse code rendered with Vera-inspired aesthetics.",
+      "date": "2024-02-15",
+      "tags": ["morse", "vera", "typography"],
+      "file": "004_morse_vera",
+      "thumbnail": "004_morse_vera_thumb",
+      "category": "data-visualization",
+      "status": "published"
+    },
+    {
+      "id": "005",
+      "title": "Vera Lines",
+      "description": "Generative line studies with strong contrast and rhythm.",
+      "date": "2024-03-01",
+      "tags": ["lines", "vera", "contrast"],
+      "file": "005_vera_lines",
+      "thumbnail": "005_vera_lines_thumb",
+      "category": "geometric",
+      "status": "published"
+    },
+    {
+      "id": "006",
+      "title": "Signal 006: AI Resonance",
+      "description": "Emergent particle motion forming resonant structures.",
+      "date": "2025-10-06",
+      "tags": ["signal", "ai", "particles"],
+      "file": "006_ai_signal",
+      "thumbnail": "006_ai_signal_thumb",
+      "category": "generative",
+      "status": "published"
+    },
+    {
+      "id": "007",
+      "title": "Signal 007: Echo Fields",
+      "description": "Layered echoes shaping a dense motion field.",
+      "date": "2025-10-07",
+      "tags": ["signal", "fields", "echo"],
+      "file": "007_ai_signal",
+      "thumbnail": "007_ai_signal_thumb",
+      "category": "generative",
+      "status": "published"
+    },
+    {
+      "id": "008",
+      "title": "Signal 008: Noise Currents",
+      "description": "Currents driven by noise with soft collisions.",
+      "date": "2025-10-08",
+      "tags": ["signal", "noise", "currents"],
+      "file": "008_ai_signal",
+      "thumbnail": "008_ai_signal_thumb",
+      "category": "generative",
+      "status": "published"
+    },
+    {
+      "id": "009",
+      "title": "Signal 009: Orbital Drift",
+      "description": "Orbits drifting in layered densities.",
+      "date": "2025-10-09",
+      "tags": ["signal", "orbit", "drift"],
+      "file": "009_ai_signal",
+      "thumbnail": "009_ai_signal_thumb",
+      "category": "generative",
+      "status": "published"
+    },
+    {
+      "id": "010",
+      "title": "Signal 010: Vector Bloom",
+      "description": "Vector blooms expanding and folding back.",
+      "date": "2025-10-10",
+      "tags": ["signal", "vector", "bloom"],
+      "file": "010_ai_signal",
+      "thumbnail": "010_ai_signal_thumb",
+      "category": "generative",
+      "status": "published"
+    },
+    {
+      "id": "011",
+      "title": "Signal 011: Phase Weave",
+      "description": "Phased weaving of strands into a tapestry.",
+      "date": "2025-10-11",
+      "tags": ["signal", "phase", "weave"],
+      "file": "011_ai_signal",
+      "thumbnail": "011_ai_signal_thumb",
+      "category": "generative",
+      "status": "published"
+    },
+    {
+      "id": "012",
+      "title": "Signal 012: Whisper Grid",
+      "description": "Soft grid deformations whispering across the plane.",
+      "date": "2025-10-12",
+      "tags": ["signal", "grid", "whisper"],
+      "file": "012_ai_signal",
+      "thumbnail": "012_ai_signal_thumb",
+      "category": "geometric",
+      "status": "published"
+    },
+    {
+      "id": "013",
+      "title": "Signal 013: Violet Orbits",
+      "description": "Violet-hued orbits pulsing in rhythm.",
+      "date": "2025-10-13",
+      "tags": ["signal", "orbits", "violet"],
+      "file": "013_ai_signal",
+      "thumbnail": "013_ai_signal_thumb",
+      "category": "orbital",
+      "status": "published"
+    },
+    {
+      "id": "014",
+      "title": "Signal 014: Ribbon Flow",
+      "description": "Ribbons flowing through fluctuating fields.",
+      "date": "2025-10-14",
+      "tags": ["signal", "ribbons", "flow"],
+      "file": "014_ai_signal",
+      "thumbnail": "014_ai_signal_thumb",
+      "category": "flow-field",
+      "status": "published"
+    },
+    {
+      "id": "015",
+      "title": "Signal 015: Scatter Dance",
+      "description": "Dancing scatter of points with trails.",
+      "date": "2025-10-15",
+      "tags": ["signal", "scatter", "trails"],
+      "file": "015_ai_signal",
+      "thumbnail": "015_ai_signal_thumb",
+      "category": "generative",
+      "status": "published"
+    },
+    {
+      "id": "016",
+      "title": "Signal 016: Whispers of Colorful Echoes",
+      "description": "Colorful echoes whispering in expanding rings.",
+      "date": "2025-10-16",
+      "tags": ["signal", "echoes", "color"],
+      "file": "016_ai_signal",
+      "thumbnail": "016_ai_signal_thumb",
+      "category": "generative",
+      "status": "published"
+    },
+    {
+      "id": "017",
+      "title": "Signal 017: Spiral Chorus",
+      "description": "Chorus of spirals building interference.",
+      "date": "2025-10-17",
+      "tags": ["signal", "spiral", "chorus"],
+      "file": "017_ai_signal",
+      "thumbnail": "017_ai_signal_thumb",
+      "category": "generative",
+      "status": "published"
+    },
+    {
+      "id": "018",
+      "title": "Signal 018: Glass Waves",
+      "description": "Waves with glass-like refractions.",
+      "date": "2025-10-18",
+      "tags": ["signal", "waves", "glass"],
+      "file": "018_ai_signal",
+      "thumbnail": "018_ai_signal_thumb",
+      "category": "noise",
+      "status": "published"
+    },
+    {
+      "id": "019",
+      "title": "Signal 019: Harmony of Floating Spheres",
+      "description": "A vibrant array of particles dance and collide, creating mesmerizing trails that fade, evoking a sense of joyful chaos.",
+      "date": "2025-10-19",
+      "tags": ["signal", "harmony", "spheres"],
+      "file": "019_ai_signal",
+      "thumbnail": "019_ai_signal_thumb",
+      "category": "particleSystem",
       "status": "published"
     }
   ],
@@ -22,12 +216,16 @@
     "geometric",
     "mathematical",
     "color",
-    "interactive"
+    "interactive",
+    "orbital",
+    "flow-field",
+    "noise",
+    "particleSystem"
   ],
   "metadata": {
-    "lastUpdated": "2025-10-18",
-    "totalArtworks": 1,
-    "publishedArtworks": 1,
+    "lastUpdated": "2025-10-19",
+    "totalArtworks": 19,
+    "publishedArtworks": 19,
     "draftArtworks": 0
   }
 }
