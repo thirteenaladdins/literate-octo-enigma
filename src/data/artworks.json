@@ -342,6 +342,21 @@
       "movement": "graceful elliptical orbits with varying speed",
       "density": 75,
       "mood": "whimsical joy"
+    },
+    {
+      "id": "022",
+      "title": "Signal 022: Placeholder",
+      "description": "A reserved space awaiting its future sketch. Replace this placeholder when inspiration lands.",
+      "date": "2025-10-18",
+      "tags": [
+        "placeholder",
+        "pending",
+        "future"
+      ],
+      "file": "022_placeholder_signal",
+      "thumbnail": "022_placeholder_signal_thumb",
+      "category": "generative",
+      "status": "published"
     }
   ],
   "categories": [
@@ -358,8 +373,8 @@
   ],
   "metadata": {
     "lastUpdated": "2025-10-18",
-    "totalArtworks": 21,
-    "publishedArtworks": 21,
+    "totalArtworks": 22,
+    "publishedArtworks": 22,
     "draftArtworks": 0
   }
 }
