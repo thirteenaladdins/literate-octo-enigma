@@ -1,4 +1,5 @@
 import sketch_001_example from "./001_example";
+import sketch_001_placeholder_signal from "./001_placeholder_signal";
 import sketch_002_morse from "./002_morse";
 import sketch_003_morse_enhanced from "./003_morse_enhanced";
 import sketch_004_morse_vera from "./004_morse_vera";
@@ -17,9 +18,12 @@ import sketch_016_ai_signal from "./016_ai_signal";
 import sketch_017_ai_signal from "./017_ai_signal";
 import sketch_018_ai_signal from "./018_ai_signal";
 import sketch_019_ai_signal from "./019_ai_signal";
+import sketch_020_ai_signal from "./020_ai_signal";
+import sketch_021_ai_signal from "./021_ai_signal";
 
 const sketches = {
   "001_example": sketch_001_example,
+  "001_placeholder_signal": sketch_001_placeholder_signal,
   "002_morse": sketch_002_morse,
   "003_morse_enhanced": sketch_003_morse_enhanced,
   "004_morse_vera": sketch_004_morse_vera,
@@ -38,6 +42,8 @@ const sketches = {
   "017_ai_signal": sketch_017_ai_signal,
   "018_ai_signal": sketch_018_ai_signal,
   "019_ai_signal": sketch_019_ai_signal,
+  "020_ai_signal": sketch_020_ai_signal,
+  "021_ai_signal": sketch_021_ai_signal,
 };
 
 export default sketches;
