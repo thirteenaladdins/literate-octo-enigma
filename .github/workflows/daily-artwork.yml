@@ -118,3 +118,4 @@ EOF
         run: |
           echo "❌ Daily artwork generation failed!"
           echo "Check the logs for details."
+# touch to re-index
