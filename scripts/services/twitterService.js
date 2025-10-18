@@ -180,7 +180,8 @@ class TwitterService {
    * @returns {string} Tweet text
    */
   composeTweet(title, portfolioUrl, artworkId) {
-    const url = artworkId ? `${portfolioUrl}#${artworkId}` : portfolioUrl;
+    const base = (portfolioUrl || "").replace(/\/$/, "");
+    const url = artworkId ? `${base}/${artworkId}` : base;
 
     // Twitter limit is 280 chars, leave room for URL
     const maxTitleLength = 240;
