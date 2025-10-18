@@ -386,6 +386,35 @@
       "movement": "gentle, undulating fluctuations mimicking a calm ocean surface",
       "density": 45,
       "mood": "dreamy tranquility"
+    },
+    {
+      "id": "024",
+      "title": "Signal 024: Symphony of Geometric Pulses",
+      "description": "An interplay of shapes creating a vibrant heartbeat across a structured grid, evoking a sense of dynamic harmony.",
+      "date": "2025-10-18",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "grid-pattern",
+        "vibrant",
+        "contrast",
+        "circle"
+      ],
+      "file": "024_ai_signal",
+      "thumbnail": "024_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "gridPattern",
+      "colors": [
+        "#6a5acd",
+        "#ff6347",
+        "#ffd700",
+        "#00ced1"
+      ],
+      "movement": "intermittent rhythmic pulsation with gentle rotations",
+      "density": 70,
+      "mood": "vibrant contrast"
     }
   ],
   "categories": [
@@ -402,8 +431,8 @@
   ],
   "metadata": {
     "lastUpdated": "2025-10-18",
-    "totalArtworks": 23,
-    "publishedArtworks": 23,
+    "totalArtworks": 24,
+    "publishedArtworks": 24,
     "draftArtworks": 0
   }
 }
