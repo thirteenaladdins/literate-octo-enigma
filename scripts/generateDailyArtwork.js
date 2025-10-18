@@ -152,6 +152,8 @@ async function main() {
       thumbnail: `${sketchFileName}_thumb`,
       category: "generative",
       status: "published",
+      // Prefer static snapshot rendering on the website for newly generated artworks
+      displayMode: "image",
       // Store concept metadata to reduce repetition
       template: concept.template,
       colors: concept.colors,

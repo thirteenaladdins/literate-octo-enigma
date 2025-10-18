@@ -21,23 +21,19 @@ const ArtworkViewer = ({ artwork, onBack }) => {
 
       <div className="artwork-content">
         <div className="artwork-canvas">
-          {/* Prefer static snapshot used for Twitter */}
-          <img
-            src={`/thumbnails/${artwork.file}.png`}
-            alt={artwork.title}
-            width={600}
-            height={600}
-            onError={(e) => {
-              // If snapshot missing, fallback to live P5 render
-              e.currentTarget.style.display = "none";
-              const container = e.currentTarget.parentNode;
-              const mount = document.createElement("div");
-              container.appendChild(mount);
-            }}
-            style={{ objectFit: "cover", borderRadius: 12 }}
-          />
-          {/* Non-JS fallback */}
-          <noscript>
+          {artwork.displayMode === "image" ? (
+            <img
+              src={`/thumbnails/${artwork.file}.png`}
+              alt={artwork.title}
+              width={600}
+              height={600}
+              onError={(e) => {
+                // Hide broken image and fallback to live P5 render
+                e.currentTarget.style.display = "none";
+              }}
+              style={{ objectFit: "cover", borderRadius: 12 }}
+            />
+          ) : (
             <P5Canvas
               width={600}
               height={600}
@@ -45,7 +41,7 @@ const ArtworkViewer = ({ artwork, onBack }) => {
               title={artwork.title}
               description={artwork.description}
             />
-          </noscript>
+          )}
         </div>
 
         <div className="artwork-details">
