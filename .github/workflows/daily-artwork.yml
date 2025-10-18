@@ -23,13 +23,17 @@ jobs:
         with:
           node-version: 20
 
-      - name: Install Puppeteer dependencies
+      - name: Install Puppeteer dependencies (Ubuntu 24.04 compatible)
         run: |
+          set -e
           sudo apt-get update
+          # Handle renamed packages on Ubuntu 24.04 (noble)
+          if apt-cache show libasound2t64 >/dev/null 2>&1; then ASOUND_PKG=libasound2t64; else ASOUND_PKG=libasound2; fi
+          if apt-cache show libgcc-s1 >/dev/null 2>&1; then GCC_PKG=libgcc-s1; else GCC_PKG=libgcc1; fi
           sudo apt-get install -y \
             ca-certificates \
             fonts-liberation \
-            libasound2 \
+            "$ASOUND_PKG" \
             libatk-bridge2.0-0 \
             libatk1.0-0 \
             libc6 \
@@ -39,7 +43,7 @@ jobs:
             libexpat1 \
             libfontconfig1 \
             libgbm1 \
-            libgcc1 \
+            "$GCC_PKG" \
             libglib2.0-0 \
             libgtk-3-0 \
             libnspr4 \
