@@ -69,17 +69,12 @@ jobs:
             xdg-utils
 
       - name: Write OAuth2 tokens for v2 media upload
+        env:
+          ACCESS: ${{ secrets.TWITTER_OAUTH2_ACCESS_TOKEN }}
+          REFRESH: ${{ secrets.TWITTER_OAUTH2_REFRESH_TOKEN }}
         run: |
-          if [ -n "${{ secrets.TWITTER_OAUTH2_ACCESS_TOKEN }}" ] && [ -n "${{ secrets.TWITTER_OAUTH2_REFRESH_TOKEN }}" ]; then
-            printf '%s\n' \
-'{'
-'  "tokens": {' \
-'    "accessToken": '"\"${{ secrets.TWITTER_OAUTH2_ACCESS_TOKEN }}\"," \
-'    "refreshToken": '"\"${{ secrets.TWITTER_OAUTH2_REFRESH_TOKEN }}\"," \
-'    "expiresAt": 0' \
-'  }' \
-'}' > .twitter-oauth2.json
-            echo "OAuth2 token file created"
+          if [ -n "$ACCESS" ] && [ -n "$REFRESH" ]; then
+            node -e "const fs=require('fs'); const t={tokens:{accessToken:process.env.ACCESS,refreshToken:process.env.REFRESH,expiresAt:0}}; fs.writeFileSync('.twitter-oauth2.json', JSON.stringify(t,null,2)); console.log('OAuth2 token file created');"
           else
             echo "OAuth2 secrets not set; skipping OAuth2 file (will fallback to OAuth1)." || true
           fi
