@@ -71,15 +71,14 @@ jobs:
       - name: Write OAuth2 tokens for v2 media upload
         run: |
           if [ -n "${{ secrets.TWITTER_OAUTH2_ACCESS_TOKEN }}" ] && [ -n "${{ secrets.TWITTER_OAUTH2_REFRESH_TOKEN }}" ]; then
-            cat > .twitter-oauth2.json <<EOF
-            {
-              "tokens": {
-                "accessToken": "${{ secrets.TWITTER_OAUTH2_ACCESS_TOKEN }}",
-                "refreshToken": "${{ secrets.TWITTER_OAUTH2_REFRESH_TOKEN }}",
-                "expiresAt": 0
-              }
-            }
-            EOF
+            printf '%s\n' \
+'{'
+'  "tokens": {' \
+'    "accessToken": '"\"${{ secrets.TWITTER_OAUTH2_ACCESS_TOKEN }}\"," \
+'    "refreshToken": '"\"${{ secrets.TWITTER_OAUTH2_REFRESH_TOKEN }}\"," \
+'    "expiresAt": 0' \
+'  }' \
+'}' > .twitter-oauth2.json
             echo "OAuth2 token file created"
           else
             echo "OAuth2 secrets not set; skipping OAuth2 file (will fallback to OAuth1)." || true
@@ -118,4 +117,5 @@ jobs:
         run: |
           echo "❌ Daily artwork generation failed!"
           echo "Check the logs for details."
+
 # touch to re-index
