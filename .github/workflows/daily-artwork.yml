@@ -68,16 +68,54 @@ jobs:
             wget \
             xdg-utils
 
-      - name: Write OAuth2 tokens for v2 media upload
+      - name: Refresh Twitter OAuth2 access token (v2)
+        shell: bash
         env:
-          ACCESS: ${{ secrets.TWITTER_OAUTH2_ACCESS_TOKEN }}
-          REFRESH: ${{ secrets.TWITTER_OAUTH2_REFRESH_TOKEN }}
+          TW_CLIENT_ID: ${{ secrets.TWITTER_CLIENT_ID }}
+          TW_CLIENT_SECRET: ${{ secrets.TWITTER_CLIENT_SECRET }}
+          TW_REFRESH_TOKEN: ${{ secrets.TWITTER_OAUTH2_REFRESH_TOKEN }}
         run: |
-          if [ -n "$ACCESS" ] && [ -n "$REFRESH" ]; then
-            node -e "const fs=require('fs'); const t={tokens:{accessToken:process.env.ACCESS,refreshToken:process.env.REFRESH,expiresAt:0}}; fs.writeFileSync('.twitter-oauth2.json', JSON.stringify(t,null,2)); console.log('OAuth2 token file created');"
-          else
-            echo "OAuth2 secrets not set; skipping OAuth2 file (will fallback to OAuth1)." || true
+          set -euo pipefail
+          sudo apt-get update && sudo apt-get install -y jq
+
+          if [ -z "${TW_REFRESH_TOKEN:-}" ] || [ -z "${TW_CLIENT_ID:-}" ]; then
+            echo "Missing TWITTER_OAUTH2_REFRESH_TOKEN or TWITTER_CLIENT_ID; skipping OAuth2 refresh (workflow may fall back to OAuth1)." || true
+            exit 0
           fi
+
+          DATA="grant_type=refresh_token&refresh_token=$(printf %s "$TW_REFRESH_TOKEN" | sed -e 's/%/%25/g' -e 's/+/%2B/g' -e 's/\//%2F/g' -e 's/=/%3D/g')&client_id=$TW_CLIENT_ID"
+
+          if [[ -n "${TW_CLIENT_SECRET:-}" ]]; then
+            RESP=$(curl -sS -X POST "https://api.twitter.com/2/oauth2/token" \
+              -H "Content-Type: application/x-www-form-urlencoded" \
+              -d "$DATA&client_secret=$TW_CLIENT_SECRET")
+          else
+            RESP=$(curl -sS -X POST "https://api.twitter.com/2/oauth2/token" \
+              -H "Content-Type: application/x-www-form-urlencoded" \
+              -d "$DATA")
+          fi
+
+          echo "$RESP" | jq . || true
+          ACCESS_TOKEN=$(echo "$RESP" | jq -r '.access_token // empty')
+          NEW_REFRESH=$(echo "$RESP" | jq -r '.refresh_token // empty')
+
+          if [[ -z "$ACCESS_TOKEN" || "$ACCESS_TOKEN" == "null" ]]; then
+            echo "Failed to refresh access token:" >&2
+            echo "$RESP" >&2
+            exit 1
+          fi
+
+          cat > .twitter-oauth2.json <<EOF
+          {
+            "tokens": {
+              "accessToken": "$ACCESS_TOKEN",
+              "refreshToken": "${NEW_REFRESH:-$TW_REFRESH_TOKEN}",
+              "expiresAt": 0
+            }
+          }
+          EOF
+
+          echo "Wrote .twitter-oauth2.json with fresh access token"
 
       - name: Install dependencies
         run: npm ci
