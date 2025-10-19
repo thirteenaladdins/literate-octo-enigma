@@ -415,6 +415,21 @@
       "movement": "intermittent rhythmic pulsation with gentle rotations",
       "density": 70,
       "mood": "vibrant contrast"
+    },
+    {
+      "id": "025",
+      "title": "Signal 025: Placeholder",
+      "description": "A reserved space awaiting its future sketch. Replace this placeholder when inspiration lands.",
+      "date": "2025-10-19",
+      "tags": [
+        "placeholder",
+        "pending",
+        "future"
+      ],
+      "file": "025_placeholder_signal",
+      "thumbnail": "025_placeholder_signal_thumb",
+      "category": "generative",
+      "status": "published"
     }
   ],
   "categories": [
@@ -430,9 +445,9 @@
     "particleSystem"
   ],
   "metadata": {
-    "lastUpdated": "2025-10-18",
-    "totalArtworks": 24,
-    "publishedArtworks": 24,
+    "lastUpdated": "2025-10-19",
+    "totalArtworks": 25,
+    "publishedArtworks": 25,
     "draftArtworks": 0
   }
 }
