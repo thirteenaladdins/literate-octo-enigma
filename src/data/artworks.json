@@ -430,6 +430,35 @@
       "thumbnail": "025_placeholder_signal_thumb",
       "category": "generative",
       "status": "published"
+    },
+    {
+      "id": "026",
+      "title": "Signal 026: Signal 026: Tapestry of Vortex Winds",
+      "description": "A dynamic interplay of shapes flows through a shifting field, creating an enchanting visual symphony of movement and color.",
+      "date": "2025-10-19",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "flow-field",
+        "captivating",
+        "energy",
+        "circle"
+      ],
+      "file": "026_ai_signal",
+      "thumbnail": "026_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "flowField",
+      "colors": [
+        "#4e1f35",
+        "#f4c242",
+        "#1b6ca8",
+        "#f49b42"
+      ],
+      "movement": "swirling currents that intertwine like ribbons of wind",
+      "density": 65,
+      "mood": "captivating energy"
     }
   ],
   "categories": [
@@ -446,8 +475,8 @@
   ],
   "metadata": {
     "lastUpdated": "2025-10-19",
-    "totalArtworks": 25,
-    "publishedArtworks": 25,
+    "totalArtworks": 26,
+    "publishedArtworks": 26,
     "draftArtworks": 0
   }
 }
