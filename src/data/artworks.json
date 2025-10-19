@@ -459,6 +459,35 @@
       "movement": "swirling currents that intertwine like ribbons of wind",
       "density": 65,
       "mood": "captivating energy"
+    },
+    {
+      "id": "027",
+      "title": "Signal 027: Celestial Ballet of Colors",
+      "description": "An engaging dance of colorful orbs tracing their unique paths, creating a mesmerizing display of motion and interaction.",
+      "date": "2025-10-19",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "orbital-motion",
+        "dynamic",
+        "exploration",
+        "circle"
+      ],
+      "file": "027_ai_signal",
+      "thumbnail": "027_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "orbitalMotion",
+      "colors": [
+        "#f09e5f",
+        "#007A33",
+        "#299B9A",
+        "#EAE3D2"
+      ],
+      "movement": "intertwining orbits with variable speeds and radial pulses",
+      "density": 55,
+      "mood": "dynamic exploration"
     }
   ],
   "categories": [
@@ -475,8 +504,8 @@
   ],
   "metadata": {
     "lastUpdated": "2025-10-19",
-    "totalArtworks": 26,
-    "publishedArtworks": 26,
+    "totalArtworks": 27,
+    "publishedArtworks": 27,
     "draftArtworks": 0
   }
 }
