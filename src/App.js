@@ -15,9 +15,7 @@ function App() {
       const hashId = window.location.hash.replace("#", "");
       const id = pathId || hashId;
       if (id) {
-        const artwork = artworksData.artworks.find(
-          (art) => art.id === id
-        );
+        const artwork = artworksData.artworks.find((art) => art.id === id);
         setSelectedArtwork(artwork || null);
       } else {
         setSelectedArtwork(null);

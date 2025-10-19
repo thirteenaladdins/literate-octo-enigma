@@ -72,61 +72,10 @@ jobs:
         shell: bash
         env:
           TWITTER_CLIENT_ID: ${{ secrets.TWITTER_CLIENT_ID }}
-          TWITTER_CLIENT_SECRET: ${{ secrets.TWITTER_CLIENT_SECRET }} # leave unset for PKCE/Public apps
+          TWITTER_CLIENT_SECRET: ${{ secrets.TWITTER_CLIENT_SECRET }}
           TWITTER_OAUTH2_REFRESH_TOKEN: ${{ secrets.TWITTER_OAUTH2_REFRESH_TOKEN }}
-        run: |
-          set -euo pipefail
-          sudo apt-get update && sudo apt-get install -y jq coreutils python3-minimal
-
-          if [ -z "${TWITTER_OAUTH2_REFRESH_TOKEN:-}" ] || [ -z "${TWITTER_CLIENT_ID:-}" ]; then
-            echo "Missing TWITTER_OAUTH2_REFRESH_TOKEN or TWITTER_CLIENT_ID" >&2
-            exit 1
-          fi
-
-          enc() { python3 - <<'PY' "$1"
-import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=''))
-PY
-          }
-          RT_ENC=$(enc "$TWITTER_OAUTH2_REFRESH_TOKEN")
-          DATA="grant_type=refresh_token&refresh_token=${RT_ENC}&client_id=${TWITTER_CLIENT_ID}"
-
-          if [ -n "${TWITTER_CLIENT_SECRET:-}" ]; then
-            AUTH_B64=$(printf '%s:%s' "$TWITTER_CLIENT_ID" "$TWITTER_CLIENT_SECRET" | base64 -w0 2>/dev/null || printf '%s:%s' "$TWITTER_CLIENT_ID" "$TWITTER_CLIENT_SECRET" | base64 | tr -d '\n')
-            RESP=$(curl -sS -X POST 'https://api.twitter.com/2/oauth2/token' \
-              -H 'Content-Type: application/x-www-form-urlencoded' \
-              -H "Authorization: Basic ${AUTH_B64}" \
-              --data "$DATA")
-          else
-            RESP=$(curl -sS -X POST 'https://api.twitter.com/2/oauth2/token' \
-              -H 'Content-Type: application/x-www-form-urlencoded' \
-              --data "$DATA")
-          fi
-
-          ACCESS_TOKEN=$(jq -r '.access_token // empty' <<<"$RESP")
-          NEW_REFRESH=$(jq -r '.refresh_token // empty' <<<"$RESP")
-
-          if [ -z "$ACCESS_TOKEN" ] || [ "$ACCESS_TOKEN" = "null" ]; then
-            echo "Failed to refresh access token:" >&2
-            echo "$RESP" >&2
-            exit 1
-          fi
-
-          echo "::add-mask::$ACCESS_TOKEN"
-          if [ -n "${NEW_REFRESH:-}" ] && [ "$NEW_REFRESH" != "null" ]; then
-            echo "::add-mask::$NEW_REFRESH"
-          fi
-
-          cat > .twitter-oauth2.json <<EOF
-          {
-            "tokens": {
-              "accessToken": "$ACCESS_TOKEN",
-              "refreshToken": "${NEW_REFRESH:-$TWITTER_OAUTH2_REFRESH_TOKEN}",
-              "expiresAt": 0
-            }
-          }
-          EOF
-
-          echo "✅ OAuth2 access token refreshed and written to .twitter-oauth2.json"
+          GH_PAT: ${{ secrets.GH_PAT }}
+        run: bash scripts/ci/refresh_twitter_token.sh
 
       - name: Install dependencies
         run: npm ci
