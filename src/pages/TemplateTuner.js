@@ -8,6 +8,7 @@ import gridPatternSchema from "../art/templates/gridPattern.schema.json";
 import noiseWavesSchema from "../art/templates/noiseWaves.schema.json";
 import orbitalMotionSchema from "../art/templates/orbitalMotion.schema.json";
 import particleSystemSchema from "../art/templates/particleSystem.schema.json";
+import geometricGridSchema from "../art/templates/geometricGrid.schema.json";
 
 // Runtime templates
 import flowFieldRuntime from "../templates/flowFieldRuntime";
@@ -15,6 +16,7 @@ import gridPatternRuntime from "../templates/gridPatternRuntime";
 import noiseWavesRuntime from "../templates/noiseWavesRuntime";
 import orbitalMotionRuntime from "../templates/orbitalMotionRuntime";
 import particleSystemRuntime from "../templates/particleSystemRuntime";
+import geometricGridRuntime from "../templates/geometricGridRuntime";
 
 const templates = {
   flowField: {
@@ -41,6 +43,11 @@ const templates = {
     title: "Particle System",
     schema: particleSystemSchema,
     runtime: particleSystemRuntime,
+  },
+  geometricGrid: {
+    title: "Geometric Grid",
+    schema: geometricGridSchema,
+    runtime: geometricGridRuntime,
   },
 };
 

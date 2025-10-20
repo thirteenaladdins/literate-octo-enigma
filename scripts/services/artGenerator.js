@@ -15,6 +15,7 @@ class ArtGenerator {
       orbitalMotion: require("../templates/orbitalMotion"),
       flowField: require("../templates/flowField"),
       noiseWaves: require("../templates/noiseWaves"),
+      geometricGrid: require("../templates/geometricGrid"),
     };
   }
 
