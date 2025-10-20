@@ -16,6 +16,7 @@ class ArtGenerator {
       flowField: require("../templates/flowField"),
       noiseWaves: require("../templates/noiseWaves"),
       geometricGrid: require("../templates/geometricGrid"),
+      ballots: require("../templates/ballots"),
     };
   }
 
