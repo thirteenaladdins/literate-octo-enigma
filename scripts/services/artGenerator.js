@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const path = require("path");
+const { generateRandomConfig } = require("./templateConfigService");
 
 /**
  * Art Generator Service
@@ -39,13 +40,27 @@ class ArtGenerator {
       density: Math.max(10, Math.min(100, density)),
     };
 
+    // Build a per-template randomized config from schema to introduce variance
+    const seed = Date.now() % 2147483647;
+    const config = generateRandomConfig(template, seed);
+
     console.log(`Generating sketch using template: ${template}`);
     console.log(`Parameters:`, JSON.stringify(params, null, 2));
+    console.log(`Config:`, JSON.stringify(config, null, 2));
 
     // Generate the sketch code
-    const sketchCode = this.templates[template](params);
+    const sketchCode = this.embedConfig(
+      this.templates[template](params),
+      config
+    );
 
     return sketchCode;
+  }
+
+  embedConfig(code, config) {
+    // Prepend a CONFIG constant so runtime can use it
+    const header = `const CONFIG = ${JSON.stringify(config, null, 2)};\n`;
+    return header + code;
   }
 
   /**

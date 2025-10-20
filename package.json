@@ -18,6 +18,8 @@
     "react-dom": "^19.1.0",
     "react-scripts": "5.0.1",
     "twitter-api-v2": "^1.17.2",
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
     "web-vitals": "^2.1.4"
   },
   "devDependencies": {

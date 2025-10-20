@@ -14,10 +14,14 @@ module.exports = function noiseWaves(params) {
   draw: (p5) => {
     p5.background(0, 0, 12, 10);
     p5.noFill();
-    p5.strokeWeight(3);
+    p5.strokeWeight((CONFIG && CONFIG.lineWeight) || 3);
     
-    const t = p5.frameCount * 0.${movement.includes("slow") ? "008" : "015"};
-    const waveCount = Math.max(2, Math.floor(${Math.floor(density)} / 3));
+    const t = p5.frameCount * ((CONFIG && CONFIG.speed) || 0.${
+      movement.includes("slow") ? "008" : "015"
+    });
+    const waveCount = Math.max(2, Math.floor(((CONFIG && CONFIG.bands) || ${Math.floor(
+      density
+    )}) / 3));
     
     for (let w = 0; w < waveCount; w++) {
       const yOffset = (w / waveCount) * p5.height;
@@ -27,8 +31,8 @@ module.exports = function noiseWaves(params) {
       p5.beginShape();
       
       for (let x = 0; x < p5.width; x += 8) {
-        const noiseVal = p5.noise(x * 0.01, w * 0.5, t * 0.3);
-        const y = yOffset + noiseVal * 80 - 40;
+        const noiseVal = p5.noise(x * 0.01 * ((CONFIG && CONFIG.frequency) || 1), w * 0.5, t * 0.3);
+        const y = yOffset + noiseVal * (((CONFIG && CONFIG.amplitude) || 80)) - (((CONFIG && CONFIG.amplitude) || 80) / 2);
         p5.vertex(x, y);
       }
       p5.endShape();

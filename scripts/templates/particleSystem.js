@@ -16,8 +16,10 @@ module.exports = function particleSystem(params) {
     p5.background(0, 0, 8, 5);
     p5.noStroke();
     
-    const t = p5.frameCount * 0.${movement.includes("slow") ? "008" : "015"};
-    const count = ${Math.floor(density)};
+    const t = p5.frameCount * ((CONFIG && CONFIG.maxSpeed) ? (CONFIG.maxSpeed * 0.006) : 0.${
+      movement.includes("slow") ? "008" : "015"
+    });
+    const count = (CONFIG && CONFIG.numParticles) || ${Math.floor(density)};
     
     for (let i = 0; i < count; i++) {
       const angle = (i / count) * p5.TWO_PI;

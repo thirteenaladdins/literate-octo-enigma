@@ -186,6 +186,17 @@ Templates are located in `scripts/templates/`:
 - Returns a complete P5.js sketch as a string
 - Parameterized to allow AI concept customization
 
+### Template Tuner (/tuner)
+
+Schema-driven tuner to experiment with the 5 templates safely.
+
+- Route: `/tuner`
+- Schemas: `src/art/templates/*.schema.json`
+- Runtime templates: `src/templates/*Runtime.js`
+- Validator: `src/utils/schemaValidator.js` (Ajv)
+
+Use the tuner to tweak parameters (speed, density, palettes, etc.). You can copy or download the validated JSON config for reuse.
+
 ### Services
 
 Located in `scripts/services/`:

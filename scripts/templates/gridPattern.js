@@ -13,11 +13,15 @@ module.exports = function gridPattern(params) {
   },
 
   draw: (p5) => {
-    p5.background(0, 0, 12, 8);
+    p5.background(0, 0, 12, Math.min(100, Math.max(0, (CONFIG && CONFIG.fade) ? CONFIG.fade * 100 : 8)));
     p5.noStroke();
     
-    const t = p5.frameCount * 0.${movement.includes("slow") ? "005" : "012"};
-    const gridSize = Math.floor(Math.sqrt(${Math.floor(density)}));
+    const t = p5.frameCount * ((CONFIG && CONFIG.speed) || 0.${
+      movement.includes("slow") ? "005" : "012"
+    });
+    const gridSize = (CONFIG && CONFIG.gridSize) || Math.floor(Math.sqrt(${Math.floor(
+      density
+    )}));
     const cellSize = Math.min(p5.width, p5.height) / gridSize;
     
     for (let i = 0; i < gridSize; i++) {
@@ -29,7 +33,7 @@ module.exports = function gridPattern(params) {
         const size = cellSize * 0.6 * noiseVal;
         
         const colorIndex = (i + j) % ${Math.max(colors.length, 1)};
-        const hue = (colorIndex * 60 + t * 20) % 360;
+        const hue = (colorIndex * 60 + t * 30) % 360;
         const brightness = 60 + noiseVal * 35;
         
         p5.fill(hue, 75, brightness, 70);

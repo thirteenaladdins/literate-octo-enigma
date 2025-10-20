@@ -3,15 +3,21 @@ import "./App.css";
 import ArtworkGrid from "./components/ArtworkGrid";
 import ArtworkViewer from "./components/ArtworkViewer";
 import TestArtworkButton from "./components/TestArtworkButton";
+import TemplateTuner from "./pages/TemplateTuner";
 import artworksData from "./data/artworks.json";
 
 function App() {
   const [selectedArtwork, setSelectedArtwork] = useState(null);
 
-  // Handle path-based navigation for direct artwork links (also accept legacy hash)
+  // Handle path-based navigation for direct artwork links and tuner route (also accept legacy hash)
   useEffect(() => {
     const syncFromLocation = () => {
-      const pathId = window.location.pathname.replace(/^\//, "");
+      const path = window.location.pathname.replace(/^\//, "");
+      if (path === "tuner") {
+        setSelectedArtwork({ id: null, tuner: true });
+        return;
+      }
+      const pathId = path;
       const hashId = window.location.hash.replace("#", "");
       const id = pathId || hashId;
       if (id) {
@@ -58,7 +64,9 @@ function App() {
   return (
     <div className="App">
       <main className="App-main">
-        {selectedArtwork ? (
+        {selectedArtwork?.tuner ? (
+          <TemplateTuner />
+        ) : selectedArtwork ? (
           <ArtworkViewer artwork={selectedArtwork} onBack={handleBack} />
         ) : (
           <ArtworkGrid onArtworkSelect={handleArtworkSelect} />

@@ -16,19 +16,21 @@ module.exports = function orbitalMotion(params) {
     p5.background(0, 0, 10, 10);
     p5.noStroke();
     
-    const t = p5.frameCount * 0.${movement.includes("slow") ? "01" : "02"};
-    const count = ${Math.floor(density)};
+    const t = p5.frameCount * ((CONFIG && CONFIG.orbitSpeed) || 0.${
+      movement.includes("slow") ? "01" : "02"
+    });
+    const count = (CONFIG && CONFIG.numOrbits) || ${Math.floor(density)};
     
     for (let i = 0; i < count; i++) {
       const angle = t + (i / count) * p5.TWO_PI;
-      const orbitRadius = 100 + (i % 3) * 60;
+      const orbitRadius = ((CONFIG && CONFIG.radiusMin) || 60) + (i % 3) * (((CONFIG && CONFIG.radiusMax) || 400) / 6);
       const noiseVal = p5.noise(i * 0.08, t * 0.4);
       
       const radius = orbitRadius + 40 * noiseVal;
       const x = p5.width / 2 + radius * Math.cos(angle);
       const y = p5.height / 2 + radius * Math.sin(angle);
       
-      const hue = (180 + i * (360 / Math.max(count,1)) + t * 30) % 360;
+      const hue = (180 + i * (360 / Math.max(count,1)) + t * 60) % 360;
       const alpha = 40 + 45 * noiseVal;
       
       p5.fill(hue, 70, 90, alpha);
