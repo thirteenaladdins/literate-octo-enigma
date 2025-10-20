@@ -93,6 +93,55 @@ if [[ -n "${GH_PAT:-}" && -n "${NEW_REFRESH:-}" && "$NEW_REFRESH" != "null" ]]; 
     --app actions \
     --body "$NEW_REFRESH"
   echo "Repository secret updated"
+
+  # --- Self-check: verify the secret we just stored actually works ---
+  echo "Verifying rotated refresh token works (second refresh)..."
+  VERIFY_RESP="$(
+    TWITTER_OAUTH2_REFRESH_TOKEN="$NEW_REFRESH" \
+    TWITTER_CLIENT_ID="$TWITTER_CLIENT_ID" \
+    TWITTER_CLIENT_SECRET="${TWITTER_CLIENT_SECRET:-}" \
+    bash -c '
+      post() {
+        local url="$1"
+        if [[ -n "${TWITTER_CLIENT_SECRET:-}" ]]; then
+          local auth_b64
+          if base64 --help 2>&1 | grep -q -- "-w"; then
+            auth_b64="$(printf "%s:%s" "$TWITTER_CLIENT_ID" "$TWITTER_CLIENT_SECRET" | base64 -w0)"
+          else
+            auth_b64="$(printf "%s:%s" "$TWITTER_CLIENT_ID" "$TWITTER_CLIENT_SECRET" | base64 | tr -d "\n")"
+          fi
+          curl -sS -X POST "$url" \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            -H "Authorization: Basic ${auth_b64}" \
+            --data "grant_type=refresh_token" \
+            --data-urlencode "refresh_token=${TWITTER_OAUTH2_REFRESH_TOKEN}"
+        else
+          curl -sS -X POST "$url" \
+            -H "Content-Type: application/x-www-form-urlencoded" \
+            --data "grant_type=refresh_token" \
+            --data-urlencode "refresh_token=${TWITTER_OAUTH2_REFRESH_TOKEN}" \
+            --data "client_id=${TWITTER_CLIENT_ID}"
+        fi
+      }
+      RESP="$(post "https://api.twitter.com/2/oauth2/token" || true)"
+      if ! jq -e . >/dev/null 2>&1 <<<"$RESP" || [[ -z "$(jq -r ".access_token // empty" <<<"$RESP")" ]]; then
+        ALT="$(post "https://api.x.com/2/oauth2/token" || true)"
+        if jq -e . >/dev/null 2>&1 <<<"$ALT" && [[ -n "$(jq -r ".access_token // empty" <<<"$ALT")" ]]; then
+          RESP="$ALT"
+        fi
+      fi
+      printf "%s" "$RESP"
+    '
+  )"
+
+  if jq -e '.access_token // empty' >/dev/null 2>&1 <<<"$VERIFY_RESP"; then
+    echo "Verification succeeded: rotated refresh token is valid and stored."
+  else
+    echo "WARNING: verification refresh failed. Response:" >&2
+    echo "$VERIFY_RESP" >&2
+    echo "The secret may not have been updated or the PAT lacks scopes." >&2
+    exit 1
+  fi
 else
   echo "Skipping secret update (no GH_PAT provided or refresh token not rotated)"
 fi
