@@ -1,13 +1,11 @@
 export default function geometricGridRuntime(config) {
-  return function sketch(p) {
-    let palette;
-    let gridCols, gridRows;
-    let cellWidth, cellHeight;
-    let shapes = [];
+  let palette;
+  let gridCols, gridRows;
+  let cellWidth, cellHeight;
+  let shapes = [];
 
-    p.setup = function() {
-      p.createCanvas(800, 800);
-      p.noLoop();
+  return {
+    setup: (p) => {
       p.randomSeed(config.seed || 1);
       p.noiseSeed(config.seed || 1);
 
@@ -21,6 +19,7 @@ export default function geometricGridRuntime(config) {
       const distortion = config.distortion ?? 0.3;
       const rotationAmount = config.rotation ?? 30;
 
+      shapes = [];
       for (let row = 0; row < gridRows; row++) {
         for (let col = 0; col < gridCols; col++) {
           const x = col * cellWidth + cellWidth / 2;
@@ -43,9 +42,13 @@ export default function geometricGridRuntime(config) {
           });
         }
       }
-    };
 
-    p.draw = function() {
+      p.background(config.background || "#FAFAFA");
+      p.noStroke();
+      p.noLoop();
+    },
+
+    draw: (p) => {
       p.background(config.background || "#FAFAFA");
       p.noStroke();
 
@@ -63,7 +66,7 @@ export default function geometricGridRuntime(config) {
 
         p.pop();
       }
-    };
+    }
   };
 }
 
