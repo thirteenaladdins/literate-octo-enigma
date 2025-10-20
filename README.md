@@ -256,3 +256,7 @@ To add new templates:
 ### License
 
 MIT
+
+---
+
+Note: Automated deployment trigger test (Vercel).
