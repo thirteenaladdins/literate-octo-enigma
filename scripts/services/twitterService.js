@@ -61,10 +61,19 @@ class TwitterService {
   async postArtwork({ imageBuffer, title, portfolioUrl, artworkId }) {
     try {
       await this.ensureClient();
+      // Quick sanity check: confirm token is valid for user context
+      try {
+        const me = await this.rwClient.v2.me();
+        if (me?.data?.username) {
+          console.log(`Authenticated as @${me.data.username}`);
+        }
+      } catch (e) {
+        console.warn("Warning: token validation (v2.me) failed before upload:", e.message);
+      }
       console.log("Uploading image to Twitter v2 media endpoint...");
 
       let mediaId;
-      // Use v2 media upload endpoint directly
+      // Use v2 media upload endpoint directly (with host fallback)
       try {
         mediaId = await this.uploadMediaV2(imageBuffer);
       } catch (uploadErr) {
@@ -75,15 +84,28 @@ class TwitterService {
             JSON.stringify(uploadErr.response.data, null, 2)
           );
         }
-        // As a last resort, post text-only to avoid failing the whole run
-        const tweetTextFallback =
-          this.composeTweet(title, portfolioUrl, artworkId) +
-          "\n\n[media upload unavailable]";
-        const tweet = await this.rwClient.v2.tweet({ text: tweetTextFallback });
-        const tweetId = tweet.data.id;
-        const tweetUrl = `https://twitter.com/i/web/status/${tweetId}`;
-        console.log(`Tweet posted without media: ${tweetUrl}`);
-        return tweetUrl;
+        // Try alternate host once if first attempt failed
+        try {
+          console.log("Retrying media upload via alternate host...");
+          mediaId = await this.uploadMediaV2(imageBuffer, { preferXHost: true });
+        } catch (retryErr) {
+          console.error("Alternate host upload also failed:", retryErr?.message || retryErr);
+          if (retryErr?.response?.data) {
+            console.error(
+              "Alt host error details:",
+              JSON.stringify(retryErr.response.data, null, 2)
+            );
+          }
+          // As a last resort, post text-only to avoid failing the whole run
+          const tweetTextFallback =
+            this.composeTweet(title, portfolioUrl, artworkId) +
+            "\n\n[media upload unavailable]";
+          const tweet = await this.rwClient.v2.tweet({ text: tweetTextFallback });
+          const tweetId = tweet.data.id;
+          const tweetUrl = `https://twitter.com/i/web/status/${tweetId}`;
+          console.log(`Tweet posted without media: ${tweetUrl}`);
+          return tweetUrl;
+        }
       }
 
       if (!mediaId) {
@@ -123,7 +145,7 @@ class TwitterService {
    * @param {Buffer} imageBuffer - Image data
    * @returns {Promise<string>} Media ID
    */
-  async uploadMediaV2(imageBuffer) {
+  async uploadMediaV2(imageBuffer, { preferXHost = false } = {}) {
     // Use the OAuth2 token stored during ensureClient
     const accessToken = this.oauth2Token;
 
@@ -145,9 +167,10 @@ class TwitterService {
     // v2 endpoint requires media_category parameter
     formData.append("media_category", "tweet_image");
 
-    // Upload to v2 endpoint directly
+    // Upload to v2 endpoint directly (try twitter.com, optionally x.com)
+    const host = preferXHost ? "api.x.com" : "api.twitter.com";
     const response = await axios.post(
-      "https://api.x.com/2/media/upload",
+      `https://${host}/2/media/upload`,
       formData,
       {
         headers: {
