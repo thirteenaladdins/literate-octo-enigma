@@ -488,6 +488,93 @@
       "movement": "intertwining orbits with variable speeds and radial pulses",
       "density": 55,
       "mood": "dynamic exploration"
+    },
+    {
+      "id": "028",
+      "title": "Signal 028: Elysium Lights: Firework Reverie",
+      "description": "A vibrant celebration of particles erupting like festive fireworks, intertwining and fading with a sense of joyful exuberance.",
+      "date": "2025-10-20",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "particle-system",
+        "celebratory",
+        "joy",
+        "circle"
+      ],
+      "file": "028_ai_signal",
+      "thumbnail": "028_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "particleSystem",
+      "colors": [
+        "#2c3e50",
+        "#ecf0f1",
+        "#e67e22",
+        "#3498db"
+      ],
+      "movement": "erratic bursts mimicking fireworks exploding in slow motion",
+      "density": 75,
+      "mood": "celebratory joy"
+    },
+    {
+      "id": "029",
+      "title": "Signal 029: Rhythms of Aqua Harmony",
+      "description": "A vibrant exploration of wave forms blending gracefully, evoking the spontaneous beauty found in nature's fluid motions.",
+      "date": "2025-10-20",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "noise-waves",
+        "playful",
+        "chaos",
+        "ellipse"
+      ],
+      "file": "029_ai_signal",
+      "thumbnail": "029_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "noiseWaves",
+      "colors": [
+        "#3cba54",
+        "#c45850",
+        "#f9f923",
+        "#00bfff"
+      ],
+      "movement": "serpentine undulations with synchronized oscillations",
+      "density": 80,
+      "mood": "playful chaos"
+    },
+    {
+      "id": "030",
+      "title": "Signal 030: Echoes of Urban Pulse",
+      "description": "An engaging visual symphony where geometric patterns pulse and shift, reflecting the vibrant energy of a city in motion.",
+      "date": "2025-10-20",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "grid-pattern",
+        "energetic",
+        "vibrancy",
+        "circle"
+      ],
+      "file": "030_ai_signal",
+      "thumbnail": "030_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "gridPattern",
+      "colors": [
+        "#ff9a00",
+        "#4b3c2d",
+        "#f7d02c",
+        "#e85d04"
+      ],
+      "movement": "rhythmic pulsations with shifting radii and angles",
+      "density": 45,
+      "mood": "energetic vibrancy"
     }
   ],
   "categories": [
@@ -503,9 +590,9 @@
     "particleSystem"
   ],
   "metadata": {
-    "lastUpdated": "2025-10-19",
-    "totalArtworks": 27,
-    "publishedArtworks": 27,
+    "lastUpdated": "2025-10-20",
+    "totalArtworks": 30,
+    "publishedArtworks": 30,
     "draftArtworks": 0
   }
 }

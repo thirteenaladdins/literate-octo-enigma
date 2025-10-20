@@ -26,6 +26,9 @@ import sketch_024_ai_signal from "./024_ai_signal";
 import sketch_025_placeholder_signal from "./025_placeholder_signal";
 import sketch_026_ai_signal from "./026_ai_signal";
 import sketch_027_ai_signal from "./027_ai_signal";
+import sketch_028_ai_signal from "./028_ai_signal";
+import sketch_029_ai_signal from "./029_ai_signal";
+import sketch_030_ai_signal from "./030_ai_signal";
 
 const sketches = {
   "001_example": sketch_001_example,
@@ -56,6 +59,9 @@ const sketches = {
   "025_placeholder_signal": sketch_025_placeholder_signal,
   "026_ai_signal": sketch_026_ai_signal,
   "027_ai_signal": sketch_027_ai_signal,
+  "028_ai_signal": sketch_028_ai_signal,
+  "029_ai_signal": sketch_029_ai_signal,
+  "030_ai_signal": sketch_030_ai_signal,
 };
 
 export default sketches;
