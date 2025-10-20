@@ -17,21 +17,21 @@ if [[ -z "${TWITTER_OAUTH2_REFRESH_TOKEN:-}" || -z "${TWITTER_CLIENT_ID:-}" ]]; 
   exit 1
 fi
 
-enc() { python3 -c 'import sys, urllib.parse; print(urllib.parse.quote(sys.argv[1], safe=""))' "$1"; }
-
-RT_ENC="$(enc "$TWITTER_OAUTH2_REFRESH_TOKEN")"
-DATA="grant_type=refresh_token&refresh_token=${RT_ENC}&client_id=${TWITTER_CLIENT_ID}"
-
+# Use curl's --data-urlencode for refresh_token to avoid encoding issues
 if [[ -n "${TWITTER_CLIENT_SECRET:-}" ]]; then
   AUTH_B64=$(printf '%s:%s' "$TWITTER_CLIENT_ID" "$TWITTER_CLIENT_SECRET" | base64 -w0 2>/dev/null || printf '%s:%s' "$TWITTER_CLIENT_ID" "$TWITTER_CLIENT_SECRET" | base64 | tr -d '\n')
   RESP=$(curl -sS -X POST 'https://api.twitter.com/2/oauth2/token' \
     -H 'Content-Type: application/x-www-form-urlencoded' \
     -H "Authorization: Basic ${AUTH_B64}" \
-    --data "$DATA")
+    --data 'grant_type=refresh_token' \
+    --data-urlencode "refresh_token=${TWITTER_OAUTH2_REFRESH_TOKEN}" \
+    --data "client_id=${TWITTER_CLIENT_ID}")
 else
   RESP=$(curl -sS -X POST 'https://api.twitter.com/2/oauth2/token' \
     -H 'Content-Type: application/x-www-form-urlencoded' \
-    --data "$DATA")
+    --data 'grant_type=refresh_token' \
+    --data-urlencode "refresh_token=${TWITTER_OAUTH2_REFRESH_TOKEN}" \
+    --data "client_id=${TWITTER_CLIENT_ID}")
 fi
 
 ACCESS_TOKEN=$(jq -r '.access_token // empty' <<<"$RESP")
