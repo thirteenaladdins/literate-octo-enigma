@@ -119,14 +119,31 @@ class TwitterService {
 
       console.log("Posting tweet...");
 
-      // Post the tweet with the image
-      const tweet = await this.rwClient.v2.tweet({
-        text: tweetText,
-        media: { media_ids: [mediaId] },
-      });
+      // Post the tweet with the image via direct HTTP using OAuth2 bearer
+      let tweetId;
+      try {
+        tweetId = await this.postTweetV2({
+          accessToken: this.oauth2Token,
+          text: tweetText,
+          mediaIds: [mediaId],
+        });
+      } catch (e1) {
+        console.warn("Tweet via api.twitter.com failed; retrying via api.x.com...");
+        if (e1?.response?.data) {
+          console.warn(
+            "Tweet error details:",
+            JSON.stringify(e1.response.data, null, 2)
+          );
+        }
+        tweetId = await this.postTweetV2({
+          accessToken: this.oauth2Token,
+          text: tweetText,
+          mediaIds: [mediaId],
+          preferXHost: true,
+        });
+      }
 
-      const tweetId = tweet.data.id;
-      const tweetUrl = `https://twitter.com/user/status/${tweetId}`;
+      const tweetUrl = `https://twitter.com/i/web/status/${tweetId}`;
 
       console.log(`Tweet posted successfully: ${tweetUrl}`);
 
@@ -193,6 +210,45 @@ class TwitterService {
     }
 
     return mediaId;
+  }
+
+  /**
+   * Create a Tweet using v2 HTTP endpoint with OAuth2 Bearer token
+   * @param {Object} params
+   * @param {string} params.accessToken
+   * @param {string} params.text
+   * @param {string[]} [params.mediaIds]
+   * @param {boolean} [params.preferXHost]
+   * @returns {Promise<string>} Tweet ID
+   */
+  async postTweetV2({ accessToken, text, mediaIds = [], preferXHost = false }) {
+    if (!accessToken) {
+      throw new Error("Missing access token for posting tweet");
+    }
+
+    const host = preferXHost ? "api.x.com" : "api.twitter.com";
+    const body = mediaIds.length
+      ? { text, media: { media_ids: mediaIds } }
+      : { text };
+
+    const resp = await axios.post(`https://${host}/2/tweets`, body, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+        "Content-Type": "application/json",
+      },
+      validateStatus: () => true,
+    });
+
+    if (!resp?.data?.data?.id) {
+      const status = resp?.status;
+      const err = new Error(
+        `Tweet create failed${status ? ` (${status})` : ""}`
+      );
+      err.response = resp;
+      throw err;
+    }
+
+    return resp.data.data.id;
   }
 
   /**
