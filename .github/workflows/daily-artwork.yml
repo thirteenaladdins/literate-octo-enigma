@@ -1,7 +1,7 @@
 name: Daily AI Artwork Signal
 
 concurrency:
-  group: daily-artwork
+  group: twitter-token-rotation
   cancel-in-progress: false
 
 on:

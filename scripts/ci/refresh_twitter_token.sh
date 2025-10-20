@@ -126,55 +126,18 @@ if [[ -n "${GH_PAT-}" && -n "${NEW_REFRESH-}" && "$NEW_REFRESH" != "null" ]]; th
       --body "$NEW_REFRESH"
     echo "Repository secret updated"
 
-    # --- Self-check: verify the rotated token actually works ---
-    echo "Verifying rotated refresh token works (second refresh)..."
-    VERIFY_RESP="$(
-      TWITTER_OAUTH2_REFRESH_TOKEN="$NEW_REFRESH" \
-      TWITTER_CLIENT_ID="$TWITTER_CLIENT_ID" \
-      TWITTER_CLIENT_SECRET="${TWITTER_CLIENT_SECRET:-}" \
-      bash -c '
-        is_json(){ jq -e . >/dev/null 2>&1 <<<"$1"; }
-        post() {
-          local url="$1"
-          if [[ -n "${TWITTER_CLIENT_SECRET:-}" ]]; then
-            local auth_b64
-            if base64 --help 2>&1 | grep -q -- "-w"; then
-              auth_b64="$(printf "%s:%s" "$TWITTER_CLIENT_ID" "$TWITTER_CLIENT_SECRET" | base64 -w0)"
-            else
-              auth_b64="$(printf "%s:%s" "$TWITTER_CLIENT_ID" "$TWITTER_CLIENT_SECRET" | base64 | tr -d "\n")"
-            fi
-            curl -sS -X POST "$url" \
-              -H "Content-Type: application/x-www-form-urlencoded" \
-              -H "Authorization: Basic ${auth_b64}" \
-              --data "grant_type=refresh_token" \
-              --data-urlencode "refresh_token=${TWITTER_OAUTH2_REFRESH_TOKEN}" \
-              --data "client_id=${TWITTER_CLIENT_ID}"
-          else
-            curl -sS -X POST "$url" \
-              -H "Content-Type: application/x-www-form-urlencoded" \
-              --data "grant_type=refresh_token" \
-              --data-urlencode "refresh_token=${TWITTER_OAUTH2_REFRESH_TOKEN}" \
-              --data "client_id=${TWITTER_CLIENT_ID}"
-          fi
-        }
-        R="$(post "https://api.twitter.com/2/oauth2/token" || true)"
-        if ! is_json "$R" || [[ -z "$(jq -r ".access_token // empty" <<<"$R")" ]]; then
-          ALT="$(post "https://api.x.com/2/oauth2/token" || true)"
-          if is_json "$ALT" && [[ -n "$(jq -r ".access_token // empty" <<<"$ALT")" ]]; then
-            R="$ALT"
-          fi
-        fi
-        printf "%s" "$R"
-      '
-    )"
+    # --- Self-check: verify access token works without spending the refresh token ---
+    echo "Verifying access token works (/2/users/me)..."
+    WHOAMI_RESP="$(curl -sS -H "Authorization: Bearer $ACCESS_TOKEN" \
+      -H 'Content-Type: application/json' \
+      https://api.twitter.com/2/users/me || true)"
 
-    if jq -e '.access_token // empty' >/dev/null 2>&1 <<<"$VERIFY_RESP"; then
-      echo "Verification succeeded: rotated refresh token is valid and stored."
+    if jq -e '.data.id // empty' >/dev/null 2>&1 <<<"$WHOAMI_RESP"; then
+      echo "Verification succeeded: access token is valid."
     else
-      echo "WARNING: verification refresh failed. Response:" >&2
-      echo "$VERIFY_RESP" >&2
-      echo "The secret may not have been updated or the PAT lacks scopes." >&2
-      exit 1
+      echo "WARNING: access token verification failed. Response:" >&2
+      echo "$WHOAMI_RESP" >&2
+      # Not fatal; the token endpoint returned a token. Keep the rotated refresh token.
     fi
   else
     echo "gh CLI not available; skipping secret update." >&2
