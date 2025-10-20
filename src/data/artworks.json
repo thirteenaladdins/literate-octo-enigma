@@ -575,6 +575,35 @@
       "movement": "rhythmic pulsations with shifting radii and angles",
       "density": 45,
       "mood": "energetic vibrancy"
+    },
+    {
+      "id": "031",
+      "title": "Signal 031: Ethereal Dance of Colors",
+      "description": "A serene visualization of calming waves, blending colors that flow harmoniously in a rhythmic oscillation.",
+      "date": "2025-10-20",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "noise-waves",
+        "serene",
+        "tranquility",
+        "circle"
+      ],
+      "file": "031_ai_signal",
+      "thumbnail": "031_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "noiseWaves",
+      "colors": [
+        "#3b0a45",
+        "#de4f8e",
+        "#ffdb58",
+        "#40e0d0"
+      ],
+      "movement": "gentle ebb and flow with rhythmic pulsations",
+      "density": 68,
+      "mood": "serene tranquility"
     }
   ],
   "categories": [
@@ -591,8 +620,8 @@
   ],
   "metadata": {
     "lastUpdated": "2025-10-20",
-    "totalArtworks": 30,
-    "publishedArtworks": 30,
+    "totalArtworks": 31,
+    "publishedArtworks": 31,
     "draftArtworks": 0
   }
 }
