@@ -604,6 +604,35 @@
       "movement": "gentle ebb and flow with rhythmic pulsations",
       "density": 68,
       "mood": "serene tranquility"
+    },
+    {
+      "id": "032",
+      "title": "Signal 032: Whispers in the Breeze",
+      "description": "A flowing tapestry of intertwining shapes that evoke the gentle movement of the wind across an abstract landscape.",
+      "date": "2025-10-20",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "flow-field",
+        "tranquil",
+        "beauty",
+        "circle"
+      ],
+      "file": "032_ai_signal",
+      "thumbnail": "032_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "flowField",
+      "colors": [
+        "#1f78b4",
+        "#33a02c",
+        "#fb9a99",
+        "#e31a1c"
+      ],
+      "movement": "gentle swirling currents enhancing fluidity",
+      "density": 65,
+      "mood": "tranquil beauty"
     }
   ],
   "categories": [
@@ -620,8 +649,8 @@
   ],
   "metadata": {
     "lastUpdated": "2025-10-20",
-    "totalArtworks": 31,
-    "publishedArtworks": 31,
+    "totalArtworks": 32,
+    "publishedArtworks": 32,
     "draftArtworks": 0
   }
 }
