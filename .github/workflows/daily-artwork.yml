@@ -1,5 +1,9 @@
 name: Daily AI Artwork Signal
 
+concurrency:
+  group: daily-artwork
+  cancel-in-progress: false
+
 on:
   schedule:
     - cron: "5 7 * * *"
