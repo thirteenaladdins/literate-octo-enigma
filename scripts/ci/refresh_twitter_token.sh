@@ -18,20 +18,40 @@ if [[ -z "${TWITTER_OAUTH2_REFRESH_TOKEN:-}" || -z "${TWITTER_CLIENT_ID:-}" ]]; 
 fi
 
 # Use curl's --data-urlencode for refresh_token to avoid encoding issues
-if [[ -n "${TWITTER_CLIENT_SECRET:-}" ]]; then
-  AUTH_B64=$(printf '%s:%s' "$TWITTER_CLIENT_ID" "$TWITTER_CLIENT_SECRET" | base64 -w0 2>/dev/null || printf '%s:%s' "$TWITTER_CLIENT_ID" "$TWITTER_CLIENT_SECRET" | base64 | tr -d '\n')
-  RESP=$(curl -sS -X POST 'https://api.twitter.com/2/oauth2/token' \
-    -H 'Content-Type: application/x-www-form-urlencoded' \
-    -H "Authorization: Basic ${AUTH_B64}" \
-    --data 'grant_type=refresh_token' \
-    --data-urlencode "refresh_token=${TWITTER_OAUTH2_REFRESH_TOKEN}" \
-    --data "client_id=${TWITTER_CLIENT_ID}")
-else
-  RESP=$(curl -sS -X POST 'https://api.twitter.com/2/oauth2/token' \
-    -H 'Content-Type: application/x-www-form-urlencoded' \
-    --data 'grant_type=refresh_token' \
-    --data-urlencode "refresh_token=${TWITTER_OAUTH2_REFRESH_TOKEN}" \
-    --data "client_id=${TWITTER_CLIENT_ID}")
+# Sanitize envs to avoid stray quotes/newlines
+TWITTER_CLIENT_ID="$(printf '%s' "${TWITTER_CLIENT_ID:-}" | tr -d '\r' | sed 's/^"//; s/"$//')"
+TWITTER_CLIENT_SECRET="$(printf '%s' "${TWITTER_CLIENT_SECRET:-}" | tr -d '\r' | sed 's/^"//; s/"$//')"
+TWITTER_OAUTH2_REFRESH_TOKEN="$(printf '%s' "${TWITTER_OAUTH2_REFRESH_TOKEN:-}" | tr -d '\r' | sed 's/^"//; s/"$//')"
+
+token_post() {
+  local URL="$1"
+  if [[ -n "${TWITTER_CLIENT_SECRET:-}" ]]; then
+    # Confidential client: use Basic auth; do NOT include client_id in body
+    local AUTH_B64
+    AUTH_B64=$(printf '%s:%s' "$TWITTER_CLIENT_ID" "$TWITTER_CLIENT_SECRET" | base64 -w0 2>/dev/null || printf '%s:%s' "$TWITTER_CLIENT_ID" "$TWITTER_CLIENT_SECRET" | base64 | tr -d '\n')
+    curl -sS -X POST "$URL" \
+      -H 'Content-Type: application/x-www-form-urlencoded' \
+      -H "Authorization: Basic ${AUTH_B64}" \
+      --data 'grant_type=refresh_token' \
+      --data-urlencode "refresh_token=${TWITTER_OAUTH2_REFRESH_TOKEN}"
+  else
+    # PKCE/public: no secret; include client_id
+    curl -sS -X POST "$URL" \
+      -H 'Content-Type: application/x-www-form-urlencoded' \
+      --data 'grant_type=refresh_token' \
+      --data-urlencode "refresh_token=${TWITTER_OAUTH2_REFRESH_TOKEN}" \
+      --data "client_id=${TWITTER_CLIENT_ID}"
+  fi
+}
+
+# Try twitter.com first, then x.com
+RESP="$(token_post 'https://api.twitter.com/2/oauth2/token' || true)"
+if jq -e '.error' >/dev/null 2>&1 <<<"$RESP"; then
+  ALT_RESP="$(token_post 'https://api.x.com/2/oauth2/token' || true)"
+  # Use ALT if it produced an access_token
+  if [[ -n "$(jq -r '.access_token // empty' <<<"$ALT_RESP")" ]]; then
+    RESP="$ALT_RESP"
+  fi
 fi
 
 ACCESS_TOKEN=$(jq -r '.access_token // empty' <<<"$RESP")
