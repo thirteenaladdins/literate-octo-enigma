@@ -662,6 +662,93 @@
       "movement": "dynamic rotation and scaling of shapes within the grid",
       "density": 55,
       "mood": "playful intrigue"
+    },
+    {
+      "id": "034",
+      "title": "Signal 034: Celestial Spirals of Color",
+      "description": "A whimsical journey through a universe of spiraling shapes, where colors blend and dance in a harmonious orbit.",
+      "date": "2025-10-21",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "orbital-motion",
+        "whimsical",
+        "exploration",
+        "circle"
+      ],
+      "file": "034_ai_signal",
+      "thumbnail": "034_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "orbitalMotion",
+      "colors": [
+        "#ff4f00",
+        "#ffdc00",
+        "#3cbb9e",
+        "#2b0a45"
+      ],
+      "movement": "spiraling ascent with gradual rotation around a focal point",
+      "density": 75,
+      "mood": "whimsical exploration"
+    },
+    {
+      "id": "035",
+      "title": "Signal 035: Fragmented Harmony in Motion",
+      "description": "A swirling chaos of particles creates a visual symphony, blending shapes and colors into an energetic tapestry of movement.",
+      "date": "2025-10-21",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "particle-system",
+        "chaotic",
+        "beauty",
+        "circle"
+      ],
+      "file": "035_ai_signal",
+      "thumbnail": "035_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "particleSystem",
+      "colors": [
+        "#5b2e91",
+        "#ff8c00",
+        "#fff3b0",
+        "#7c84ff"
+      ],
+      "movement": "fractured, but harmonious pulses with erratic trajectories",
+      "density": 45,
+      "mood": "chaotic beauty"
+    },
+    {
+      "id": "036",
+      "title": "Signal 036: Fractal Snapshots of Motion",
+      "description": "Lines and shapes pop into focus with rhythmic intensity, creating a visual narrative of captured moments in time.",
+      "date": "2025-10-21",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "grid-pattern",
+        "dynamic",
+        "tension",
+        "line"
+      ],
+      "file": "036_ai_signal",
+      "thumbnail": "036_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "gridPattern",
+      "colors": [
+        "#ecf0f1",
+        "#3498db",
+        "#e74c3c",
+        "#2ecc71"
+      ],
+      "movement": "intermittent snapping and expanding like a camera shutter",
+      "density": 75,
+      "mood": "dynamic tension"
     }
   ],
   "categories": [
@@ -678,8 +765,8 @@
   ],
   "metadata": {
     "lastUpdated": "2025-10-21",
-    "totalArtworks": 33,
-    "publishedArtworks": 33,
+    "totalArtworks": 36,
+    "publishedArtworks": 36,
     "draftArtworks": 0
   }
 }
