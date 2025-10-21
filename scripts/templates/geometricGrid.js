@@ -53,9 +53,8 @@ export default function sketch(p) {
         });
       }
     }
-  };
-
-  p.draw = function() {
+    
+    // Draw immediately in setup for static render
     p.background(250);
     p.noStroke();
 
