@@ -214,6 +214,7 @@ async function main() {
         title: newArtwork.title,
         portfolioUrl: process.env.PORTFOLIO_URL || "https://your-portfolio.com",
         artworkId: paddedId,
+        hashtags: concept.hashtags || [],
       });
       console.log(`   Posted: ${tweetUrl}`);
     } else if (isDryRun) {

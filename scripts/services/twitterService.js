@@ -58,7 +58,9 @@ class TwitterService {
     );
   }
 
-  async postArtwork({ imageBuffer, title, portfolioUrl, artworkId }) {
+  async postArtwork({ imageBuffer, title, portfolioUrl, artworkId, hashtags = [] }) {
+    // Store hashtags for use in composeTweet
+    this.conceptHashtags = hashtags;
     try {
       await this.ensureClient();
       // Quick sanity check: confirm token is valid for user context
@@ -114,8 +116,8 @@ class TwitterService {
 
       console.log(`Image uploaded successfully. Media ID: ${mediaId}`);
 
-      // Compose the tweet text
-      const tweetText = this.composeTweet(title, portfolioUrl, artworkId);
+      // Compose the tweet text (conceptHashtags passed from postArtwork params)
+      const tweetText = this.composeTweet(title, portfolioUrl, artworkId, this.conceptHashtags || []);
 
       console.log("Posting tweet...");
 
@@ -256,20 +258,37 @@ class TwitterService {
    * @param {string} title - Artwork title
    * @param {string} portfolioUrl - Portfolio URL
    * @param {string} artworkId - Artwork ID
+   * @param {Array<string>} conceptHashtags - Concept-specific hashtags from AI
    * @returns {string} Tweet text
    */
-  composeTweet(title, portfolioUrl, artworkId) {
+  composeTweet(title, portfolioUrl, artworkId, conceptHashtags = []) {
     const base = (portfolioUrl || "").replace(/\/$/, "");
     const url = artworkId ? `${base}/${artworkId}` : base;
 
-    // Twitter limit is 280 chars, leave room for URL
-    const maxTitleLength = 240;
+    // Consistent hashtags for all posts
+    const consistentHashtags = [
+      "#GenerativeArt",
+      "#AIArt",
+      "#CreativeCoding",
+      "#P5js",
+      "#DailyArt",
+    ];
+
+    // Combine consistent + concept-specific hashtags
+    const allHashtags = [...consistentHashtags, ...conceptHashtags];
+    const hashtagString = allHashtags.join(" ");
+
+    // Twitter limit is 280 chars, leave room for URL and hashtags
+    const urlLength = url.length + 2; // +2 for newlines
+    const hashtagLength = hashtagString.length + 2; // +2 for newlines
+    const maxTitleLength = 280 - urlLength - hashtagLength - 10; // -10 buffer
+
     const truncatedTitle =
       title.length > maxTitleLength
         ? title.substring(0, maxTitleLength - 3) + "..."
         : title;
 
-    return `${truncatedTitle}\n\n${url}`;
+    return `${truncatedTitle}\n\n${url}\n\n${hashtagString}`;
   }
 
   /**

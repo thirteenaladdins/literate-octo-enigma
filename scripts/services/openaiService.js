@@ -38,7 +38,8 @@ class OpenAIService {
   "density": 20-100,
   "mood": "1-2 word mood description",
   "title": "poetic title for the artwork (3-6 words)",
-  "description": "brief artistic description (15-25 words)"
+  "description": "brief artistic description (15-25 words)",
+  "hashtags": ["2-3 concept-specific hashtags (e.g., #Abstract, #Minimalist, #Organic, #Geometric, #Flowing)"]
 }
 
 Guidelines:
@@ -47,7 +48,8 @@ Guidelines:
 - Movement should be evocative and specific
 - Density should match the template type
 - Title should be evocative but not overly abstract
-- Make each concept unique and visually distinct`;
+- Make each concept unique and visually distinct
+- Hashtags should be single words describing visual style or mood (no spaces, camelCase if needed)`;
 
     try {
       const response = await this.client.chat.completions.create({
@@ -89,6 +91,7 @@ Guidelines:
       "mood",
       "title",
       "description",
+      "hashtags",
     ];
 
     for (const field of required) {
@@ -107,6 +110,10 @@ Guidelines:
 
     if (typeof concept.density !== "number" || concept.density < 1) {
       throw new Error("Density must be a positive number");
+    }
+
+    if (!Array.isArray(concept.hashtags) || concept.hashtags.length === 0) {
+      throw new Error("Hashtags must be a non-empty array");
     }
 
     const validTemplates = [
