@@ -58,7 +58,13 @@ class TwitterService {
     );
   }
 
-  async postArtwork({ imageBuffer, title, portfolioUrl, artworkId, hashtags = [] }) {
+  async postArtwork({
+    imageBuffer,
+    title,
+    portfolioUrl,
+    artworkId,
+    hashtags = [],
+  }) {
     // Store hashtags for use in composeTweet
     this.conceptHashtags = hashtags;
     try {
@@ -70,7 +76,10 @@ class TwitterService {
           console.log(`Authenticated as @${me.data.username}`);
         }
       } catch (e) {
-        console.warn("Warning: token validation (v2.me) failed before upload:", e.message);
+        console.warn(
+          "Warning: token validation (v2.me) failed before upload:",
+          e.message
+        );
       }
       console.log("Uploading image to Twitter v2 media endpoint...");
 
@@ -89,9 +98,14 @@ class TwitterService {
         // Try alternate host once if first attempt failed
         try {
           console.log("Retrying media upload via alternate host...");
-          mediaId = await this.uploadMediaV2(imageBuffer, { preferXHost: true });
+          mediaId = await this.uploadMediaV2(imageBuffer, {
+            preferXHost: true,
+          });
         } catch (retryErr) {
-          console.error("Alternate host upload also failed:", retryErr?.message || retryErr);
+          console.error(
+            "Alternate host upload also failed:",
+            retryErr?.message || retryErr
+          );
           if (retryErr?.response?.data) {
             console.error(
               "Alt host error details:",
@@ -100,9 +114,15 @@ class TwitterService {
           }
           // As a last resort, post text-only to avoid failing the whole run
           const tweetTextFallback =
-            this.composeTweet(title, portfolioUrl, artworkId) +
-            "\n\n[media upload unavailable]";
-          const tweet = await this.rwClient.v2.tweet({ text: tweetTextFallback });
+            this.composeTweet(
+              title,
+              portfolioUrl,
+              artworkId,
+              this.conceptHashtags || []
+            ) + "\n\n[media upload unavailable]";
+          const tweet = await this.rwClient.v2.tweet({
+            text: tweetTextFallback,
+          });
           const tweetId = tweet.data.id;
           const tweetUrl = `https://twitter.com/i/web/status/${tweetId}`;
           console.log(`Tweet posted without media: ${tweetUrl}`);
@@ -117,7 +137,12 @@ class TwitterService {
       console.log(`Image uploaded successfully. Media ID: ${mediaId}`);
 
       // Compose the tweet text (conceptHashtags passed from postArtwork params)
-      const tweetText = this.composeTweet(title, portfolioUrl, artworkId, this.conceptHashtags || []);
+      const tweetText = this.composeTweet(
+        title,
+        portfolioUrl,
+        artworkId,
+        this.conceptHashtags || []
+      );
 
       console.log("Posting tweet...");
 
@@ -130,7 +155,9 @@ class TwitterService {
           mediaIds: [mediaId],
         });
       } catch (e1) {
-        console.warn("Tweet via api.twitter.com failed; retrying via api.x.com...");
+        console.warn(
+          "Tweet via api.twitter.com failed; retrying via api.x.com..."
+        );
         if (e1?.response?.data) {
           console.warn(
             "Tweet error details:",
