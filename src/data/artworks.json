@@ -836,6 +836,35 @@
       "movement": "interlocking triangles shifting rhythmically in a synchronized dance",
       "density": 80,
       "mood": "dynamic harmony"
+    },
+    {
+      "id": "040",
+      "title": "Signal 040: Celestial Whispers of Infinity",
+      "description": "An ethereal display of spiraling circles exuding a sense of cosmic wonder, inviting contemplation on the vastness of space.",
+      "date": "2025-10-24",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "orbital-motion",
+        "mysterious",
+        "allure",
+        "circle"
+      ],
+      "file": "040_ai_signal",
+      "thumbnail": "040_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "orbitalMotion",
+      "colors": [
+        "#8e44ad",
+        "#2c3e50",
+        "#f1c40f",
+        "#d35400"
+      ],
+      "movement": "graceful spirals with varying rotation speeds",
+      "density": 55,
+      "mood": "mysterious allure"
     }
   ],
   "categories": [
@@ -851,9 +880,9 @@
     "particleSystem"
   ],
   "metadata": {
-    "lastUpdated": "2025-10-23",
-    "totalArtworks": 39,
-    "publishedArtworks": 39,
+    "lastUpdated": "2025-10-24",
+    "totalArtworks": 40,
+    "publishedArtworks": 40,
     "draftArtworks": 0
   }
 }
