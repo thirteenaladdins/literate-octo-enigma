@@ -865,6 +865,35 @@
       "movement": "graceful spirals with varying rotation speeds",
       "density": 55,
       "mood": "mysterious allure"
+    },
+    {
+      "id": "041",
+      "title": "Signal 041: Eruptions of Colorful Energy",
+      "description": "A vibrant display of particles that explode outward in rhythmic bursts, gradually fading into the background.",
+      "date": "2025-10-25",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "particle-system",
+        "dynamic",
+        "chaos",
+        "circle"
+      ],
+      "file": "041_ai_signal",
+      "thumbnail": "041_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "particleSystem",
+      "colors": [
+        "#ff5733",
+        "#33c1ff",
+        "#9b59b6",
+        "#f1c40f"
+      ],
+      "movement": "explosive bursts followed by slow fade-out",
+      "density": 85,
+      "mood": "dynamic chaos"
     }
   ],
   "categories": [
@@ -880,9 +909,9 @@
     "particleSystem"
   ],
   "metadata": {
-    "lastUpdated": "2025-10-24",
-    "totalArtworks": 40,
-    "publishedArtworks": 40,
+    "lastUpdated": "2025-10-25",
+    "totalArtworks": 41,
+    "publishedArtworks": 41,
     "draftArtworks": 0
   }
 }
