@@ -894,6 +894,35 @@
       "movement": "explosive bursts followed by slow fade-out",
       "density": 85,
       "mood": "dynamic chaos"
+    },
+    {
+      "id": "042",
+      "title": "Signal 042: Flickering Echoes of Color",
+      "description": "A dynamic display of rectangles and circles, rhythmically scaling and flickering in vibrant colors, creating a lively interplay of light.",
+      "date": "2025-10-26",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "grid-pattern",
+        "vibrant",
+        "energy",
+        "rect"
+      ],
+      "file": "042_ai_signal",
+      "thumbnail": "042_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "gridPattern",
+      "colors": [
+        "#ff6b81",
+        "#f7e3b6",
+        "#46d0f5",
+        "#1c1c1c"
+      ],
+      "movement": "oscillating flicker with random scaling",
+      "density": 75,
+      "mood": "vibrant energy"
     }
   ],
   "categories": [
@@ -909,9 +938,9 @@
     "particleSystem"
   ],
   "metadata": {
-    "lastUpdated": "2025-10-25",
-    "totalArtworks": 41,
-    "publishedArtworks": 41,
+    "lastUpdated": "2025-10-26",
+    "totalArtworks": 42,
+    "publishedArtworks": 42,
     "draftArtworks": 0
   }
 }
