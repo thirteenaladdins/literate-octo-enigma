@@ -46,6 +46,9 @@ class ArtGenerator {
     const seed = Date.now() % 2147483647;
     const config = generateRandomConfig(template, seed);
 
+    // Add template name to config for reference
+    config.template = template;
+
     console.log(`Generating sketch using template: ${template}`);
     console.log(`Parameters:`, JSON.stringify(params, null, 2));
     console.log(`Config:`, JSON.stringify(config, null, 2));

@@ -1,4 +1,5 @@
 const CONFIG = {
+  "template": "gridPattern",
   "seed": 9,
   "gridSize": 38,
   "speed": 0.019,

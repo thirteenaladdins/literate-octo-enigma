@@ -1,4 +1,5 @@
 const CONFIG = {
+  "template": "flowField",
   "seed": 2,
   "speed": 0.048,
   "density": 179,
