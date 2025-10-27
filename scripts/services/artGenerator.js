@@ -2,6 +2,7 @@
 
 const path = require("path");
 const { generateRandomConfig } = require("./templateConfigService");
+const templateRegistry = require("../../src/templates/registry");
 
 /**
  * Art Generator Service
@@ -18,6 +19,7 @@ class ArtGenerator {
       geometricGrid: require("../templates/geometricGrid"),
       ballots: require("../templates/ballots"),
     };
+    this.registry = templateRegistry;
   }
 
   /**
@@ -32,6 +34,13 @@ class ArtGenerator {
     // Validate template exists
     if (!this.templates[template]) {
       throw new Error(`Unknown template: ${template}`);
+    }
+    
+    // Check template registry for capabilities
+    if (this.registry[template]) {
+      console.log(`📋 Template: ${this.registry[template].name}`);
+      console.log(`   Capabilities:`, this.registry[template].capabilities);
+      console.log(`   Required inputs:`, this.registry[template].inputs);
     }
 
     // Prepare template parameters

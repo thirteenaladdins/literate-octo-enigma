@@ -61,8 +61,31 @@ const calculateDate = () => {
   return now.toISOString().slice(0, 10);
 };
 
+// Parse command-line arguments
+function parseArgs() {
+  const args = {
+    dryRun: process.argv.includes("--dry-run"),
+    tomorrow: process.argv.includes("--tomorrow"),
+    id: null,
+    template: null,
+  };
+
+  const idIndex = process.argv.indexOf("--id");
+  if (idIndex !== -1 && process.argv[idIndex + 1]) {
+    args.id = process.argv[idIndex + 1];
+  }
+
+  const templateIndex = process.argv.indexOf("--template");
+  if (templateIndex !== -1 && process.argv[templateIndex + 1]) {
+    args.template = process.argv[templateIndex + 1];
+  }
+
+  return args;
+}
+
 async function main() {
-  const isDryRun = process.argv.includes("--dry-run");
+  const args = parseArgs();
+  const isDryRun = args.dryRun;
 
   console.log("=".repeat(60));
   console.log("AI-Powered Daily Artwork Generator");
@@ -70,6 +93,14 @@ async function main() {
 
   if (isDryRun) {
     console.log("🔍 DRY RUN MODE - No Twitter posting");
+  }
+  
+  if (args.id) {
+    console.log(`🔄 REPLAY MODE - Targeting ID: ${args.id}`);
+  }
+  
+  if (args.template) {
+    console.log(`🎯 TEMPLATE OVERRIDE - Using: ${args.template}`);
   }
 
   try {
@@ -95,15 +126,26 @@ async function main() {
     const data = readJson(dataPath);
     const artworks = Array.isArray(data.artworks) ? data.artworks : [];
 
-    // 3. Generate next artwork ID
-    const numericIds = artworks
-      .map((artwork) => Number.parseInt(artwork.id, 10))
-      .filter(Number.isFinite);
+    // 3. Generate next artwork ID (or use override)
+    let paddedId, sketchFileName, sketchPath;
+    
+    if (args.id) {
+      // Replay mode: use specified ID
+      paddedId = padId(args.id);
+      sketchFileName = `${paddedId}_ai_signal`;
+      sketchPath = path.join(sketchesDir, `${sketchFileName}.js`);
+      console.log(`\n🔄 Replay mode: Using ID ${paddedId}`);
+    } else {
+      // Normal mode: generate next ID
+      const numericIds = artworks
+        .map((artwork) => Number.parseInt(artwork.id, 10))
+        .filter(Number.isFinite);
 
-    const nextNumericId = numericIds.length ? Math.max(...numericIds) + 1 : 1;
-    const paddedId = padId(nextNumericId);
-    const sketchFileName = `${paddedId}_ai_signal`;
-    const sketchPath = path.join(sketchesDir, `${sketchFileName}.js`);
+      const nextNumericId = numericIds.length ? Math.max(...numericIds) + 1 : 1;
+      paddedId = padId(nextNumericId);
+      sketchFileName = `${paddedId}_ai_signal`;
+      sketchPath = path.join(sketchesDir, `${sketchFileName}.js`);
+    }
 
     // Check if artwork already exists
     if (fs.existsSync(sketchPath)) {
@@ -128,7 +170,13 @@ async function main() {
         .join("|")
     );
     const seed = Date.now();
-    const concept = await openaiService.generateArtConcept({ avoid, seed });
+    let concept = await openaiService.generateArtConcept({ avoid, seed });
+    
+    // Override template if specified
+    if (args.template) {
+      console.log(`\n🎯 Overriding template from "${concept.template}" to "${args.template}"`);
+      concept.template = args.template;
+    }
 
     console.log(`\n✨ Concept generated:`);
     console.log(`   Title: ${concept.title}`);

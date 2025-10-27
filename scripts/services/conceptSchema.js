@@ -11,7 +11,10 @@ const ConceptSchema = z.object({
   template: z.literal("gridPattern"), // Only allow gridPattern for now
   description: z.string().min(10).max(200),
   mood: z.string().max(50),
-  colors: z.array(z.string().regex(/^#[0-9A-Fa-f]{6}$/)).min(3).max(8),
+  colors: z
+    .array(z.string().regex(/^#[0-9A-Fa-f]{6}$/))
+    .min(3)
+    .max(8),
   movement: z.string().min(5).max(100),
   density: z.number().int().min(10).max(200),
   hashtags: z.array(z.string()).min(1).max(8),
@@ -65,4 +68,3 @@ module.exports = {
   validateConcept,
   validateConceptWithMetadata,
 };
-

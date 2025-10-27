@@ -112,10 +112,10 @@ Guidelines:
       // Validate with Zod schema
       try {
         const concept = validateConcept(rawConcept);
-        
+
         // Log the full response for debugging
         this.logResponse(concept, response);
-        
+
         console.log("Generated art concept:", concept.title);
         return concept;
       } catch (error) {
@@ -129,7 +129,6 @@ Guidelines:
       throw error;
     }
   }
-
 }
 
 module.exports = OpenAIService;
