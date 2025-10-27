@@ -31,7 +31,7 @@ class OpenAIService {
 
     const userPrompt = `Generate a unique generative art concept for a P5.js sketch. ${avoidText}\n${seedText}\n\nReturn ONLY valid JSON with this exact structure:
 {
-  "template": "particleSystem" | "gridPattern" | "orbitalMotion" | "flowField" | "noiseWaves" | "geometricGrid" | "ballots",
+  "template": "gridPattern",
   "shapes": ["circle", "rect", "line", "triangle", "ellipse"],
   "colors": ["#hexcolor1", "#hexcolor2", "#hexcolor3", "#hexcolor4"],
   "movement": "description of animation pattern (e.g., 'slow orbital drift', 'pulsing expansion', 'flowing waves')",
@@ -117,13 +117,13 @@ Guidelines:
     }
 
     const validTemplates = [
-      "particleSystem",
-      "gridPattern",
-      "orbitalMotion",
-      "flowField",
-      "noiseWaves",
-      "geometricGrid",
-      "ballots",
+      "gridPattern", // Only allow gridPattern for now
+      // "particleSystem",
+      // "orbitalMotion",
+      // "flowField",
+      // "noiseWaves",
+      // "geometricGrid",
+      // "ballots",
     ];
     if (!validTemplates.includes(concept.template)) {
       throw new Error(`Invalid template: ${concept.template}`);
