@@ -60,24 +60,24 @@ class OpenAIService {
 
     const seedText = seed != null ? `Creative seed: ${seed}` : "";
 
-    const userPrompt = `Generate a unique generative art concept for a P5.js sketch. ${avoidText}\n${seedText}\n\nReturn ONLY valid JSON with this exact structure:
+    const userPrompt = `Generate a unique generative art concept for a P5.js sketch using the gridPattern template. ${avoidText}\n${seedText}\n\nCRITICAL: You MUST use ONLY "gridPattern" as the template value. No other templates are allowed.\n\nReturn ONLY valid JSON with this exact structure:
 {
   "template": "gridPattern",
   "shapes": ["circle", "rect", "line", "triangle", "ellipse"],
   "colors": ["#hexcolor1", "#hexcolor2", "#hexcolor3", "#hexcolor4"],
-  "movement": "description of animation pattern (e.g., 'slow orbital drift', 'pulsing expansion', 'flowing waves')",
+  "movement": "description of animation pattern for grid-based patterns (e.g., 'slow pulse', 'alternating scales', 'rhythmic growth')",
   "density": 20-100,
   "mood": "1-2 word mood description",
   "title": "poetic title for the artwork (3-6 words)",
   "description": "brief artistic description (15-25 words)",
-  "hashtags": ["2-3 concept-specific hashtags (e.g., #Abstract, #Minimalist, #Organic, #Geometric, #Flowing)"]
+  "hashtags": ["2-3 concept-specific hashtags (e.g., #Abstract, #Minimalist, #Organic, #Geometric, #Grid)"]
 }
 
 Guidelines:
-- Choose template that fits the concept
-- Use 3-5 harmonious colors
-- Movement should be evocative and specific
-- Density should match the template type
+- ALWAYS use "gridPattern" as the template value - this is MANDATORY
+- Use 3-5 harmonious colors suitable for grid patterns
+- Movement should describe grid-specific animation (pulsing, scaling, shifting)
+- Density should be appropriate for grid layouts (typically 40-80)
 - Title should be evocative but not overly abstract
 - Make each concept unique and visually distinct
 - Hashtags should be single words describing visual style or mood (no spaces, camelCase if needed)`;
@@ -96,6 +96,12 @@ Guidelines:
 
       const content = response.choices[0].message.content;
       const concept = JSON.parse(content);
+
+      // Enforce gridPattern template if LLM tries to use another one
+      if (concept.template && concept.template !== "gridPattern") {
+        console.log(`⚠️  LLM tried to use "${concept.template}", forcing to "gridPattern"`);
+        concept.template = "gridPattern";
+      }
 
       // Validate the concept
       this.validateConcept(concept);
