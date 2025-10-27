@@ -13,28 +13,34 @@
 html,
 body {
   margin: 0;
+  padding: 0;
   min-height: 100%;
   font-family: "Inter", "Helvetica Neue", Helvetica, Arial, sans-serif;
   background: #050512;
   color: var(--text-primary);
   line-height: 1.6;
   letter-spacing: 0.01em;
+  width: 100%;
 }
 
 body {
   overflow-x: hidden;
+  overflow-y: auto;
 }
 
 .App {
   position: relative;
   min-height: 100vh;
   width: 100%;
-  display: flex;
-  justify-content: center;
   background: radial-gradient(120% 120% at 10% 10%, #191970 0%, transparent 55%),
     radial-gradient(140% 140% at 90% 0%, #8a2be2 0%, transparent 60%),
     #050512;
   overflow: hidden;
+}
+
+/* Only center content for the home/gallery page */
+.App:not(:has(.full-width)) .App-main {
+  margin: 0 auto;
 }
 
 .App::before {
@@ -68,6 +74,15 @@ body {
   z-index: 1;
   width: min(1080px, 92vw);
   padding: clamp(3rem, 6vw, 5rem) 0;
+}
+
+/* Full-width pages (editor, tuner) */
+.App-main.full-width {
+  width: 100%;
+  max-width: 100%;
+  padding: 0;
+  margin: 0;
+  overflow: hidden;
 }
 
 .journey {
@@ -312,11 +327,38 @@ body {
   gap: 1rem;
   margin-bottom: 2rem;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .search-box,
 .category-filter {
   min-width: 200px;
+}
+
+.editor-link {
+  min-width: 150px;
+}
+
+.editor-button {
+  display: inline-block;
+  padding: 0.75rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-decoration: none;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+}
+
+.editor-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+  color: white;
+  text-decoration: none;
 }
 
 .search-input,
@@ -343,7 +385,7 @@ body {
 
 .artwork-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  grid-template-columns: repeat(4, 1fr);
   gap: 1.5rem;
   margin-top: 2rem;
 }
@@ -672,7 +714,17 @@ body {
   color: #4ade80;
 }
 
+@media (max-width: 1024px) {
+  .artwork-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
 @media (max-width: 768px) {
+  .artwork-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
   .test-artwork-container {
     bottom: 1rem;
     right: 1rem;
@@ -683,5 +735,11 @@ body {
     min-width: auto;
     max-width: none;
     width: 100%;
+  }
+}
+
+@media (max-width: 480px) {
+  .artwork-grid {
+    grid-template-columns: 1fr;
   }
 }

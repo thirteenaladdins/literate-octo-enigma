@@ -61,9 +61,11 @@ function App() {
     setSelectedArtwork(null);
   };
 
+  const isFullWidthPage = selectedArtwork?.tuner;
+
   return (
     <div className="App">
-      <main className="App-main">
+      <main className={`App-main ${isFullWidthPage ? "full-width" : ""}`}>
         {selectedArtwork?.tuner ? (
           <TemplateTuner />
         ) : selectedArtwork ? (
@@ -73,8 +75,10 @@ function App() {
         )}
       </main>
 
-      {/* Test button for artwork generation */}
-      {process.env.NODE_ENV === "development" && <TestArtworkButton />}
+      {/* Test button for artwork generation - only on home page */}
+      {process.env.NODE_ENV === "development" && !selectedArtwork && (
+        <TestArtworkButton />
+      )}
     </div>
   );
 }

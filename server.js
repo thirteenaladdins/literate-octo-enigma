@@ -5,6 +5,8 @@
 require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
+const fs = require("fs");
+const path = require("path");
 const { runArtworkGeneration } = require("./scripts/testArtworkFlow");
 const {
   getAuthLink,
@@ -180,12 +182,257 @@ app.post("/api/test-artwork", async (req, res) => {
   }
 });
 
+// LLM Chat endpoint for code editor
+app.post("/api/llm/chat", async (req, res) => {
+  const { code, userMessage, conversationHistory } = req.body;
+
+  console.log(`\n🤖 LLM Chat request: "${userMessage}"`);
+
+  // Check for required environment variables
+  if (!process.env.OPENAI_API_KEY) {
+    return res.status(500).json({
+      success: false,
+      message:
+        "OpenAI API key not configured. Please check your environment variables.",
+      error: "Configuration error",
+    });
+  }
+
+  try {
+    const OpenAI = require("openai");
+    const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+
+    // Build conversation context
+    const messages = [
+      {
+        role: "system",
+        content: `You are a p5.js creative coding assistant. The user will provide:
+1. Current code (or empty for new sketch)
+2. A request to modify the code
+
+Your task:
+- Apply the user's requested changes
+- Return complete, runnable p5.js code in instance mode format
+- Include a brief explanation of what you changed
+- Keep the code clean and well-commented
+- Use creative defaults for colors, movement, and parameters
+- Always return a valid sketch object with setup() and/or draw() functions
+- Use p5 instance mode: sketch = { setup: (p5) => {...}, draw: (p5) => {...} }
+
+IMPORTANT:
+- Never include \`new p5()\` or \`new p5(sketch)\` - the preview system handles instantiation
+- Never call \`p5.createCanvas()\` - the canvas is created automatically
+- Only return the sketch object definition
+- Do not instantiate or execute the sketch
+
+Security: Never include dangerous functions like eval, Function, import, fetch, XMLHttpRequest, Worker, or DOM manipulation.`,
+      },
+    ];
+
+    // Add conversation history for context
+    if (conversationHistory && conversationHistory.length > 0) {
+      conversationHistory.forEach((msg) => {
+        if (msg.type === "user") {
+          messages.push({ role: "user", content: msg.content });
+        } else if (msg.type === "ai") {
+          messages.push({ role: "assistant", content: msg.content });
+        }
+      });
+    }
+
+    // Add current code context if provided
+    if (code && code.trim()) {
+      messages.push({
+        role: "user",
+        content: `Current code:\n\`\`\`javascript\n${code}\n\`\`\`\n\nUser request: ${userMessage}`,
+      });
+    } else {
+      messages.push({
+        role: "user",
+        content: `User request: ${userMessage}`,
+      });
+    }
+
+    const response = await openai.chat.completions.create({
+      model: "gpt-4o-mini",
+      messages: messages,
+      temperature: 0.7,
+      max_tokens: 2000,
+    });
+
+    const aiResponse = response.choices[0].message.content;
+
+    // Extract code and explanation from the response
+    let generatedCode = code; // Default to current code
+    let explanation = aiResponse;
+
+    // Try to extract code from markdown code blocks
+    const codeBlockMatch = aiResponse.match(
+      /```(?:javascript|js)?\n([\s\S]*?)\n```/
+    );
+    if (codeBlockMatch) {
+      generatedCode = codeBlockMatch[1];
+      // Remove the code block from explanation
+      explanation = aiResponse
+        .replace(/```(?:javascript|js)?\n[\s\S]*?\n```/, "")
+        .trim();
+    }
+
+    // If no code block found, try to find sketch object
+    if (generatedCode === code) {
+      const sketchMatch = aiResponse.match(
+        /const\s+sketch\s*=\s*\{[\s\S]*?\};/
+      );
+      if (sketchMatch) {
+        generatedCode = sketchMatch[0];
+        explanation = aiResponse.replace(sketchMatch[0], "").trim();
+      }
+    }
+
+    // Clean up explanation
+    if (explanation) {
+      explanation = explanation.replace(/^[^\w]*/, "").trim();
+    }
+
+    console.log(`✅ LLM response generated successfully`);
+
+    res.json({
+      success: true,
+      code: generatedCode,
+      explanation:
+        explanation || "Code has been generated/modified successfully.",
+    });
+  } catch (error) {
+    console.error("Error in LLM chat:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to process LLM request",
+      error: error.message,
+    });
+  }
+});
+
+// Save template endpoint
+app.post("/api/templates/save", (req, res) => {
+  try {
+    const { name, code } = req.body;
+
+    if (!name || !code) {
+      return res.status(400).json({
+        success: false,
+        message: "Name and code are required",
+      });
+    }
+
+    // Sanitize template name
+    const sanitizedName = name
+      .trim()
+      .toLowerCase()
+      .replace(/[^a-z0-9]/g, "");
+    if (!sanitizedName) {
+      return res.status(400).json({
+        success: false,
+        message: "Invalid template name. Use only letters and numbers.",
+      });
+    }
+
+    // Create template wrapper
+    const templateCode = `/**
+ * Custom Template: ${name}
+ * Generated from editor
+ */
+module.exports = function ${sanitizedName}(params) {
+  const { colors, density, movement, shapes } = params;
+  
+  // Extract the sketch object from the current code
+  const userCode = \`${code.replace(/`/g, "\\`").replace(/\$/g, "\\$")}\`;
+  
+  return userCode;
+};`;
+
+    // Get template directory
+    const templateDir = path.join(__dirname, "scripts", "templates");
+    const templatePath = path.join(templateDir, `${sanitizedName}.js`);
+
+    // Check if template already exists
+    if (fs.existsSync(templatePath)) {
+      return res.status(400).json({
+        success: false,
+        message: `Template "${sanitizedName}" already exists. Please choose a different name.`,
+      });
+    }
+
+    // Write template file
+    fs.writeFileSync(templatePath, templateCode, "utf8");
+
+    // Auto-register in artGenerator.js
+    const artGeneratorPath = path.join(
+      __dirname,
+      "scripts",
+      "services",
+      "artGenerator.js"
+    );
+    let artGeneratorContent = fs.readFileSync(artGeneratorPath, "utf8");
+
+    // Check if already registered
+    if (artGeneratorContent.includes(`${sanitizedName}: require`)) {
+      console.log(
+        `Template ${sanitizedName} already registered in artGenerator.js`
+      );
+    } else {
+      // Find the templates object and add new template
+      const templatesStart = artGeneratorContent.indexOf("this.templates = {");
+      const templatesEnd = artGeneratorContent.indexOf("};", templatesStart);
+
+      // Find the last template entry
+      const lastComma = artGeneratorContent.lastIndexOf(",", templatesEnd);
+      const lastTemplateLine = artGeneratorContent.lastIndexOf(
+        ": require",
+        templatesEnd
+      );
+      const insertionPoint =
+        lastComma > lastTemplateLine ? lastComma + 1 : templatesEnd;
+
+      const newTemplateLine = `      ${sanitizedName}: require("../templates/${sanitizedName}"),\n`;
+
+      // Insert the new template
+      artGeneratorContent =
+        artGeneratorContent.slice(0, insertionPoint) +
+        newTemplateLine +
+        artGeneratorContent.slice(insertionPoint);
+
+      fs.writeFileSync(artGeneratorPath, artGeneratorContent, "utf8");
+      console.log(`✅ Registered template in artGenerator.js`);
+    }
+
+    console.log(`✅ Template saved: ${templatePath}`);
+
+    res.json({
+      success: true,
+      message: `Template saved and registered successfully!`,
+      path: templatePath,
+      templateName: sanitizedName,
+      note: "The template has been automatically registered. You can use it in the generation script now.",
+    });
+  } catch (error) {
+    console.error("Error saving template:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to save template",
+      error: error.message,
+    });
+  }
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`\n🚀 Artwork API server running on http://localhost:${PORT}`);
   console.log(`   Health check: http://localhost:${PORT}/api/health`);
   console.log(
     `   Test endpoint: POST http://localhost:${PORT}/api/test-artwork`
+  );
+  console.log(
+    `   Template save: POST http://localhost:${PORT}/api/templates/save`
   );
   console.log(`   SPA routes: /* will serve index.html in production`);
   console.log("");

@@ -94,6 +94,12 @@ const ArtworkGrid = ({ onArtworkSelect }) => {
               ))}
             </select>
           </div>
+
+          <div className="editor-link">
+            <a href="/editor" className="editor-button">
+              ✨ Code Editor
+            </a>
+          </div>
         </div>
 
         <div className="grid-stats">
