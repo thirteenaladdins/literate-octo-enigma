@@ -3,6 +3,7 @@
 const OpenAI = require("openai");
 const fs = require("fs");
 const path = require("path");
+const { validateConcept } = require("./conceptSchema");
 
 /**
  * OpenAI Service for generating generative art concepts
@@ -38,9 +39,12 @@ class OpenAIService {
       },
     };
 
-    const logFile = path.join(this.logDir, `llm-${timestamp.split("T")[0]}.jsonl`);
+    const logFile = path.join(
+      this.logDir,
+      `llm-${timestamp.split("T")[0]}.jsonl`
+    );
     fs.appendFileSync(logFile, JSON.stringify(logEntry) + "\n", "utf8");
-    
+
     console.log(`📝 Logged LLM response to: ${logFile}`);
   }
 
@@ -95,80 +99,37 @@ Guidelines:
       });
 
       const content = response.choices[0].message.content;
-      const concept = JSON.parse(content);
+      const rawConcept = JSON.parse(content);
 
       // Enforce gridPattern template if LLM tries to use another one
-      if (concept.template && concept.template !== "gridPattern") {
-        console.log(`⚠️  LLM tried to use "${concept.template}", forcing to "gridPattern"`);
-        concept.template = "gridPattern";
+      if (rawConcept.template && rawConcept.template !== "gridPattern") {
+        console.log(
+          `⚠️  LLM tried to use "${rawConcept.template}", forcing to "gridPattern"`
+        );
+        rawConcept.template = "gridPattern";
       }
 
-      // Validate the concept
-      this.validateConcept(concept);
-
-      // Log the full response for debugging
-      this.logResponse(concept, response);
-
-      console.log("Generated art concept:", concept.title);
-      return concept;
+      // Validate with Zod schema
+      try {
+        const concept = validateConcept(rawConcept);
+        
+        // Log the full response for debugging
+        this.logResponse(concept, response);
+        
+        console.log("Generated art concept:", concept.title);
+        return concept;
+      } catch (error) {
+        console.error("❌ Concept validation failed:", error.message);
+        // Log the raw response for debugging even if validation fails
+        this.logResponse(rawConcept, response);
+        throw error;
+      }
     } catch (error) {
       console.error("Error generating art concept:", error.message);
       throw error;
     }
   }
 
-  /**
-   * Validate that the concept has all required fields
-   * @param {Object} concept - The generated concept
-   */
-  validateConcept(concept) {
-    const required = [
-      "template",
-      "shapes",
-      "colors",
-      "movement",
-      "density",
-      "mood",
-      "title",
-      "description",
-      "hashtags",
-    ];
-
-    for (const field of required) {
-      if (!concept[field]) {
-        throw new Error(`Missing required field: ${field}`);
-      }
-    }
-
-    if (!Array.isArray(concept.shapes) || concept.shapes.length === 0) {
-      throw new Error("Shapes must be a non-empty array");
-    }
-
-    if (!Array.isArray(concept.colors) || concept.colors.length < 3) {
-      throw new Error("Colors must be an array with at least 3 colors");
-    }
-
-    if (typeof concept.density !== "number" || concept.density < 1) {
-      throw new Error("Density must be a positive number");
-    }
-
-    if (!Array.isArray(concept.hashtags) || concept.hashtags.length === 0) {
-      throw new Error("Hashtags must be a non-empty array");
-    }
-
-    const validTemplates = [
-      "gridPattern", // Only allow gridPattern for now
-      // "particleSystem",
-      // "orbitalMotion",
-      // "flowField",
-      // "noiseWaves",
-      // "geometricGrid",
-      // "ballots",
-    ];
-    if (!validTemplates.includes(concept.template)) {
-      throw new Error(`Invalid template: ${concept.template}`);
-    }
-  }
 }
 
 module.exports = OpenAIService;

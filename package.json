@@ -27,7 +27,8 @@
   "devDependencies": {
     "concurrently": "^9.1.2",
     "dotenv": "^16.4.7",
-    "gh-pages": "^6.3.0"
+    "gh-pages": "^6.3.0",
+    "zod": "^4.1.12"
   },
   "scripts": {
     "dev": "react-scripts start",

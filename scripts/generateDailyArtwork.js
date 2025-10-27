@@ -19,6 +19,13 @@ const writeJson = (filePath, data) => {
   fs.writeFileSync(filePath, `${JSON.stringify(data, null, 2)}\n`, "utf8");
 };
 
+// Atomic write for safety
+const writeJsonAtomically = (filePath, data) => {
+  const tmpPath = `${filePath}.tmp`;
+  writeJson(tmpPath, data);
+  fs.renameSync(tmpPath, filePath);
+};
+
 const padId = (value) => String(value).padStart(3, "0");
 
 const makeIdentifier = (name) => {
@@ -137,6 +144,24 @@ async function main() {
     fs.writeFileSync(sketchPath, sketchCode, "utf8");
     console.log(`   Sketch saved to: ${sketchPath}`);
 
+    // 5.5. Store metadata for reproducibility
+    const metaDir = path.join(rootDir, "artworks");
+    if (!fs.existsSync(metaDir)) {
+      fs.mkdirSync(metaDir, { recursive: true });
+    }
+    const metaPath = path.join(metaDir, `${sketchFileName}.meta.json`);
+    const metadata = {
+      id: paddedId,
+      seed: Date.now(),
+      timestamp: new Date().toISOString(),
+      concept,
+      model: "gpt-4o-mini",
+      temperature: 0.95,
+      presencePenalty: 0.8,
+    };
+    writeJson(metaPath, metadata);
+    console.log(`   Metadata saved to: ${metaPath}`);
+
     // 6. Generate tags
     const tags = artGenerator.generateTags(concept);
 
@@ -192,7 +217,7 @@ async function main() {
       };
     }
 
-    writeJson(dataPath, { ...data, artworks });
+    writeJsonAtomically(dataPath, { ...data, artworks });
     console.log(`   Metadata updated`);
 
     // 10. Capture screenshot
