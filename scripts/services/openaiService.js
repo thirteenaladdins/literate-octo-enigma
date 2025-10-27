@@ -1,6 +1,8 @@
 #!/usr/bin/env node
 
 const OpenAI = require("openai");
+const fs = require("fs");
+const path = require("path");
 
 /**
  * OpenAI Service for generating generative art concepts
@@ -11,6 +13,35 @@ class OpenAIService {
       throw new Error("OpenAI API key is required");
     }
     this.client = new OpenAI({ apiKey });
+    this.logDir = path.join(__dirname, "..", "..", "logs");
+    this.ensureLogDir();
+  }
+
+  ensureLogDir() {
+    if (!fs.existsSync(this.logDir)) {
+      fs.mkdirSync(this.logDir, { recursive: true });
+    }
+  }
+
+  logResponse(concept, fullResponse) {
+    const timestamp = new Date().toISOString();
+    const logEntry = {
+      timestamp,
+      concept,
+      fullResponse: {
+        model: fullResponse.model,
+        usage: fullResponse.usage,
+        finishReason: fullResponse.choices[0].finish_reason,
+        promptTokens: fullResponse.usage.prompt_tokens,
+        completionTokens: fullResponse.usage.completion_tokens,
+        totalTokens: fullResponse.usage.total_tokens,
+      },
+    };
+
+    const logFile = path.join(this.logDir, `llm-${timestamp.split("T")[0]}.jsonl`);
+    fs.appendFileSync(logFile, JSON.stringify(logEntry) + "\n", "utf8");
+    
+    console.log(`📝 Logged LLM response to: ${logFile}`);
   }
 
   /**
@@ -68,6 +99,9 @@ Guidelines:
 
       // Validate the concept
       this.validateConcept(concept);
+
+      // Log the full response for debugging
+      this.logResponse(concept, response);
 
       console.log("Generated art concept:", concept.title);
       return concept;

@@ -33,3 +33,4 @@ yarn-error.log*
 /screenshots
 /.puppeteer_cache
 .twitter-oauth2.json
+/logs
