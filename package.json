@@ -28,7 +28,7 @@
     "concurrently": "^9.1.2",
     "dotenv": "^16.4.7",
     "gh-pages": "^6.3.0",
-    "zod": "^4.1.12"
+    "zod": "^3.23.8"
   },
   "scripts": {
     "dev": "react-scripts start",
