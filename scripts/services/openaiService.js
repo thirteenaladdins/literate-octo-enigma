@@ -67,7 +67,7 @@ class OpenAIService {
     const userPrompt = `Generate a unique generative art concept for a P5.js sketch using the gridPattern template. ${avoidText}\n${seedText}\n\nCRITICAL: You MUST use ONLY "gridPattern" as the template value. No other templates are allowed.\n\nReturn ONLY valid JSON with this exact structure:
 {
   "template": "gridPattern",
-  "shapes": ["circle", "rect", "line", "triangle", "ellipse"],
+  "shapes": ["circle", "rect", "triangle"],
   "colors": ["#hexcolor1", "#hexcolor2", "#hexcolor3", "#hexcolor4"],
   "movement": "description of animation pattern for grid-based patterns (e.g., 'slow pulse', 'alternating scales', 'rhythmic growth')",
   "density": 20-100,
@@ -79,6 +79,7 @@ class OpenAIService {
 
 Guidelines:
 - ALWAYS use "gridPattern" as the template value - this is MANDATORY
+- Use 1-3 shapes from: circle, rect, triangle (must be valid P5.js shape names)
 - Use 3-5 harmonious colors suitable for grid patterns
 - Movement should describe grid-specific animation (pulsing, scaling, shifting)
 - Density should be appropriate for grid layouts (typically 40-80)

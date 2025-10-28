@@ -35,7 +35,7 @@ class ArtGenerator {
     if (!this.templates[template]) {
       throw new Error(`Unknown template: ${template}`);
     }
-    
+
     // Check template registry for capabilities
     if (this.registry[template]) {
       console.log(`📋 Template: ${this.registry[template].name}`);
@@ -83,6 +83,9 @@ class ArtGenerator {
    * @returns {Array<string>} Normalized shape names
    */
   normalizeShapes(shapes) {
+    if (!shapes || !Array.isArray(shapes)) {
+      return ["circle"]; // default fallback
+    }
     const validShapes = ["circle", "rect", "ellipse", "triangle", "line"];
     return shapes
       .map((shape) => {
@@ -141,7 +144,9 @@ class ArtGenerator {
     }
 
     // Add shape tags
-    tags.push(...concept.shapes.slice(0, 2).map((s) => s.toLowerCase()));
+    if (concept.shapes && Array.isArray(concept.shapes)) {
+      tags.push(...concept.shapes.slice(0, 2).map((s) => s.toLowerCase()));
+    }
 
     return [...new Set(tags)].slice(0, 6); // max 6 unique tags
   }
