@@ -74,6 +74,12 @@ module.exports = function lightning(params) {
       p5.fill(0, 0, p5.random(20, 80), alpha);
       p5.ellipse(x, y, 1.5, 1.5);
     }
+    
+    // Border
+    p5.stroke(0, 0, 100, 30);
+    p5.strokeWeight(2);
+    p5.noFill();
+    p5.rect(0, 0, p5.width, p5.height);
   },
 };
 
