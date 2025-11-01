@@ -10,6 +10,7 @@ import orbitalMotionSchema from "../art/templates/orbitalMotion.schema.json";
 import particleSystemSchema from "../art/templates/particleSystem.schema.json";
 import geometricGridSchema from "../art/templates/geometricGrid.schema.json";
 import ballotsSchema from "../art/templates/ballots.schema.json";
+import lightningSchema from "../art/templates/lightning.schema.json";
 
 // Runtime templates
 import flowFieldRuntime from "../templates/flowFieldRuntime";
@@ -19,6 +20,7 @@ import orbitalMotionRuntime from "../templates/orbitalMotionRuntime";
 import particleSystemRuntime from "../templates/particleSystemRuntime";
 import geometricGridRuntime from "../templates/geometricGridRuntime";
 import ballotsRuntime from "../templates/ballotsRuntime";
+import lightningRuntime from "../templates/lightningRuntime";
 
 const templates = {
   flowField: {
@@ -55,6 +57,11 @@ const templates = {
     title: "Ballots",
     schema: ballotsSchema,
     runtime: ballotsRuntime,
+  },
+  lightning: {
+    title: "Lightning",
+    schema: lightningSchema,
+    runtime: lightningRuntime,
   },
 };
 

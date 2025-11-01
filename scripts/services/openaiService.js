@@ -64,25 +64,25 @@ class OpenAIService {
 
     const seedText = seed != null ? `Creative seed: ${seed}` : "";
 
-    const userPrompt = `Generate a unique generative art concept for a P5.js sketch using the gridPattern template. ${avoidText}\n${seedText}\n\nCRITICAL: You MUST use ONLY "gridPattern" as the template value. No other templates are allowed.\n\nReturn ONLY valid JSON with this exact structure:
+    const userPrompt = `Generate a unique generative art concept for a P5.js sketch using the lightning template. ${avoidText}\n${seedText}\n\nCRITICAL: You MUST use ONLY "lightning" as the template value. No other templates are allowed.\n\nReturn ONLY valid JSON with this exact structure:
 {
-  "template": "gridPattern",
-  "shapes": ["circle", "rect", "triangle"],
+  "template": "lightning",
+  "shapes": ["line", "curve"],
   "colors": ["#hexcolor1", "#hexcolor2", "#hexcolor3", "#hexcolor4"],
-  "movement": "description of animation pattern for grid-based patterns (e.g., 'slow pulse', 'alternating scales', 'rhythmic growth')",
+  "movement": "description of animation pattern for flowing organic patterns (e.g., 'slow flowing streams', 'rapid cascading', 'gentle undulating')",
   "density": 20-100,
   "mood": "1-2 word mood description",
   "title": "poetic title for the artwork (3-6 words)",
   "description": "brief artistic description (15-25 words)",
-  "hashtags": ["2-3 concept-specific hashtags (e.g., #Abstract, #Minimalist, #Organic, #Geometric, #Grid)"]
+  "hashtags": ["2-3 concept-specific hashtags (e.g., #Abstract, #Organic, #Flowing, #Fluid, #Dynamic)"]
 }
 
 Guidelines:
-- ALWAYS use "gridPattern" as the template value - this is MANDATORY
-- Use 1-3 shapes from: circle, rect, triangle (must be valid P5.js shape names)
-- Use 3-5 harmonious colors suitable for grid patterns
-- Movement should describe grid-specific animation (pulsing, scaling, shifting)
-- Density should be appropriate for grid layouts (typically 40-80)
+- ALWAYS use "lightning" as the template value - this is MANDATORY
+- Use shapes from: line, curve (flowing organic patterns)
+- Use 3-5 harmonious colors suitable for flow field patterns
+- Movement should describe flowing/organic animation (streaming, cascading, undulating)
+- Density should be appropriate for flow patterns (typically 50-90)
 - Title should be evocative but not overly abstract
 - Make each concept unique and visually distinct
 - Hashtags should be single words describing visual style or mood (no spaces, camelCase if needed)`;
@@ -102,12 +102,12 @@ Guidelines:
       const content = response.choices[0].message.content;
       const rawConcept = JSON.parse(content);
 
-      // Enforce gridPattern template if LLM tries to use another one
-      if (rawConcept.template && rawConcept.template !== "gridPattern") {
+      // Enforce lightning template if LLM tries to use another one
+      if (rawConcept.template && rawConcept.template !== "lightning") {
         console.log(
-          `⚠️  LLM tried to use "${rawConcept.template}", forcing to "gridPattern"`
+          `⚠️  LLM tried to use "${rawConcept.template}", forcing to "lightning"`
         );
-        rawConcept.template = "gridPattern";
+        rawConcept.template = "lightning";
       }
 
       // Validate with Zod schema

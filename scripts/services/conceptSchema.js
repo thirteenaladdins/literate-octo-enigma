@@ -8,7 +8,7 @@ const { z } = require("zod");
  */
 const ConceptSchema = z.object({
   title: z.string().min(1).max(80),
-  template: z.literal("gridPattern"), // Only allow gridPattern for now
+  template: z.enum(["gridPattern", "lightning"]), // Allow gridPattern and lightning templates
   description: z.string().min(10).max(200),
   mood: z.string().max(50),
   shapes: z.array(z.string()).min(1).max(5),

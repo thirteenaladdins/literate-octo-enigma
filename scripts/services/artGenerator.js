@@ -18,6 +18,7 @@ class ArtGenerator {
       noiseWaves: require("../templates/noiseWaves"),
       geometricGrid: require("../templates/geometricGrid"),
       ballots: require("../templates/ballots"),
+      lightning: require("../templates/lightning"),
     };
     this.registry = templateRegistry;
   }
@@ -26,9 +27,10 @@ class ArtGenerator {
    * Generate P5.js sketch code from an AI concept
    * @param {Object} concept - The AI-generated concept
    * @param {string} sketchId - The sketch ID (e.g., "006")
+   * @param {number} seed - Random seed for reproducibility
    * @returns {string} Complete P5.js sketch code
    */
-  generateSketch(concept, sketchId) {
+  generateSketch(concept, sketchId, seed) {
     const { template, shapes, colors, movement, density } = concept;
 
     // Validate template exists
@@ -52,8 +54,8 @@ class ArtGenerator {
     };
 
     // Build a per-template randomized config from schema to introduce variance
-    const seed = Date.now() % 2147483647;
-    const config = generateRandomConfig(template, seed);
+    const normalizedSeed = seed % 2147483647;
+    const config = generateRandomConfig(template, normalizedSeed);
 
     // Add template name to config for reference
     config.template = template;
@@ -65,16 +67,29 @@ class ArtGenerator {
     // Generate the sketch code
     const sketchCode = this.embedConfig(
       this.templates[template](params),
-      config
+      config,
+      normalizedSeed
     );
 
     return sketchCode;
   }
 
-  embedConfig(code, config) {
+  embedConfig(code, config, seed) {
     // Prepend a CONFIG constant so runtime can use it
     const header = `const CONFIG = ${JSON.stringify(config, null, 2)};\n`;
-    return header + code;
+
+    // Inject seed for true reproducibility
+    const seedInjection = `const SEED = ${seed};
+  p5.randomSeed(SEED);
+  p5.noiseSeed(SEED);`;
+
+    // Inject seeds into the setup function
+    const modifiedCode = code.replace(
+      /setup:\s*\(p5\)\s*=>\s*\{/,
+      (match) => `${match}\n${seedInjection}`
+    );
+
+    return header + modifiedCode;
   }
 
   /**

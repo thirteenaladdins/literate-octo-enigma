@@ -7,7 +7,16 @@
 module.exports = {
   gridPattern: {
     name: "Grid Pattern",
-    inputs: ["seed", "gridSize", "speed", "fade", "jitter", "shape", "background", "palette"],
+    inputs: [
+      "seed",
+      "gridSize",
+      "speed",
+      "fade",
+      "jitter",
+      "shape",
+      "background",
+      "palette",
+    ],
     capabilities: {
       colors: true,
       shapes: ["circle", "rect", "triangle"],
@@ -18,7 +27,15 @@ module.exports = {
   },
   particleSystem: {
     name: "Particle System",
-    inputs: ["seed", "count", "speed", "noiseScale", "trailLength", "background", "palette"],
+    inputs: [
+      "seed",
+      "count",
+      "speed",
+      "noiseScale",
+      "trailLength",
+      "background",
+      "palette",
+    ],
     capabilities: {
       colors: true,
       shapes: ["circle", "ellipse"],
@@ -29,7 +46,15 @@ module.exports = {
   },
   orbitalMotion: {
     name: "Orbital Motion",
-    inputs: ["seed", "count", "speed", "radius", "trail", "background", "palette"],
+    inputs: [
+      "seed",
+      "count",
+      "speed",
+      "radius",
+      "trail",
+      "background",
+      "palette",
+    ],
     capabilities: {
       colors: true,
       shapes: ["circle", "ellipse"],
@@ -40,7 +65,15 @@ module.exports = {
   },
   flowField: {
     name: "Flow Field",
-    inputs: ["seed", "density", "speed", "noiseScale", "strokeWeight", "background", "palette"],
+    inputs: [
+      "seed",
+      "density",
+      "speed",
+      "noiseScale",
+      "strokeWeight",
+      "background",
+      "palette",
+    ],
     capabilities: {
       colors: true,
       shapes: ["line", "curve"],
@@ -51,7 +84,17 @@ module.exports = {
   },
   noiseWaves: {
     name: "Noise Waves",
-    inputs: ["seed", "frequency", "amplitude", "bands", "speed", "lineWeight", "fade", "background", "palette"],
+    inputs: [
+      "seed",
+      "frequency",
+      "amplitude",
+      "bands",
+      "speed",
+      "lineWeight",
+      "fade",
+      "background",
+      "palette",
+    ],
     capabilities: {
       colors: true,
       shapes: ["line", "curve"],
@@ -83,5 +126,25 @@ module.exports = {
     },
     description: "Ballot-style text-based compositions",
   },
+  lightning: {
+    name: "Lightning",
+    inputs: [
+      "seed",
+      "count",
+      "step",
+      "noiseScale",
+      "zSpeed",
+      "strokeWeight",
+      "strokeAlpha",
+      "background",
+      "palette",
+    ],
+    capabilities: {
+      colors: true,
+      shapes: ["line", "curve"],
+      animation: "flowing",
+      interaction: false,
+    },
+    description: "Organic flowing patterns with flow field effects and grain",
+  },
 };
-

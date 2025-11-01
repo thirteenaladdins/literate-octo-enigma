@@ -21,6 +21,10 @@ const particleSystemSchema = require(path.join(
   __dirname,
   "../../src/art/templates/particleSystem.schema.json"
 ));
+const lightningSchema = require(path.join(
+  __dirname,
+  "../../src/art/templates/lightning.schema.json"
+));
 
 const TEMPLATE_TO_SCHEMA = {
   flowField: flowFieldSchema,
@@ -28,6 +32,7 @@ const TEMPLATE_TO_SCHEMA = {
   noiseWaves: noiseWavesSchema,
   orbitalMotion: orbitalMotionSchema,
   particleSystem: particleSystemSchema,
+  lightning: lightningSchema,
 };
 
 function mulberry32(seed) {

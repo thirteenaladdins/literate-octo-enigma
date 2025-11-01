@@ -186,7 +186,7 @@ async function main() {
 
     // 5. Generate P5.js sketch code
     console.log("\n🔨 Generating P5.js sketch...");
-    const sketchCode = artGenerator.generateSketch(concept, paddedId);
+    const sketchCode = artGenerator.generateSketch(concept, paddedId, seed);
 
     // Write sketch file
     fs.writeFileSync(sketchPath, sketchCode, "utf8");
