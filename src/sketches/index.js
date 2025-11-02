@@ -53,6 +53,7 @@ import sketch_051_ai_signal from "./051_ai_signal";
 import sketch_052_ai_signal from "./052_ai_signal";
 import sketch_053_ai_signal from "./053_ai_signal";
 import sketch_054_ai_signal from "./054_ai_signal";
+import sketch_055_ai_signal from "./055_ai_signal";
 
 const sketches = {
   "001_example": sketch_001_example,
@@ -110,6 +111,7 @@ const sketches = {
   "052_ai_signal": sketch_052_ai_signal,
   "053_ai_signal": sketch_053_ai_signal,
   "054_ai_signal": sketch_054_ai_signal,
+  "055_ai_signal": sketch_055_ai_signal,
 };
 
 export default sketches;
