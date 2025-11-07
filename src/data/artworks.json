@@ -1416,6 +1416,35 @@
       "movement": "gently undulating waves that shift and blend seamlessly across the canvas",
       "density": 85,
       "mood": "tranquil harmony"
+    },
+    {
+      "id": "060",
+      "title": "Signal 060: Eruptions of Electric Life",
+      "description": "A vibrant display of radiating lines and curves that mimic the energetic eruptions of natural forces.",
+      "date": "2025-11-07",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "lightning",
+        "dynamic",
+        "explosion",
+        "line"
+      ],
+      "file": "060_ai_signal",
+      "thumbnail": "060_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "lightning",
+      "colors": [
+        "#8e44ad",
+        "#e67e22",
+        "#f1c40f",
+        "#3498db"
+      ],
+      "movement": "radiating bursts that pulse and expand outward from central points",
+      "density": 65,
+      "mood": "dynamic explosion"
     }
   ],
   "categories": [
@@ -1431,9 +1460,9 @@
     "particleSystem"
   ],
   "metadata": {
-    "lastUpdated": "2025-11-06",
-    "totalArtworks": 59,
-    "publishedArtworks": 59,
+    "lastUpdated": "2025-11-07",
+    "totalArtworks": 60,
+    "publishedArtworks": 60,
     "draftArtworks": 0
   }
 }
