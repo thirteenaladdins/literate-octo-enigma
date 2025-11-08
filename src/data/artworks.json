@@ -1445,6 +1445,35 @@
       "movement": "radiating bursts that pulse and expand outward from central points",
       "density": 65,
       "mood": "dynamic explosion"
+    },
+    {
+      "id": "061",
+      "title": "Signal 061: Dance of Colorful Whispers",
+      "description": "A whimsical arrangement of floating particles that interact and change hue, creating a vibrant, joyful atmosphere.",
+      "date": "2025-11-08",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "particle-system",
+        "playful",
+        "wonder",
+        "circle"
+      ],
+      "file": "061_ai_signal",
+      "thumbnail": "061_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "particleSystem",
+      "colors": [
+        "#3498db",
+        "#e74c3c",
+        "#f1c40f",
+        "#2ecc71"
+      ],
+      "movement": "drifting particles that scatter and regroup in an endless dance",
+      "density": 75,
+      "mood": "playful wonder"
     }
   ],
   "categories": [
@@ -1460,9 +1489,9 @@
     "particleSystem"
   ],
   "metadata": {
-    "lastUpdated": "2025-11-07",
-    "totalArtworks": 60,
-    "publishedArtworks": 60,
+    "lastUpdated": "2025-11-08",
+    "totalArtworks": 61,
+    "publishedArtworks": 61,
     "draftArtworks": 0
   }
 }
