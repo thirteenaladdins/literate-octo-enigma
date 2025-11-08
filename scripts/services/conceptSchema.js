@@ -1,6 +1,14 @@
 #!/usr/bin/env node
 
 const { z } = require("zod");
+const templateRegistry = require("../../src/templates/registry");
+
+const TEMPLATE_KEYS = Object.keys(templateRegistry);
+if (TEMPLATE_KEYS.length === 0) {
+  throw new Error("Template registry is empty – cannot build concept schema.");
+}
+
+const TemplateEnum = z.enum([...TEMPLATE_KEYS]);
 
 /**
  * Zod schema for validating AI-generated art concepts
@@ -8,7 +16,7 @@ const { z } = require("zod");
  */
 const ConceptSchema = z.object({
   title: z.string().min(1).max(80),
-  template: z.enum(["gridPattern", "lightning"]), // Allow gridPattern and lightning templates
+  template: TemplateEnum,
   description: z.string().min(10).max(200),
   mood: z.string().max(50),
   shapes: z.array(z.string()).min(1).max(5),

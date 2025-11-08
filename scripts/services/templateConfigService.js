@@ -21,9 +21,17 @@ const particleSystemSchema = require(path.join(
   __dirname,
   "../../src/art/templates/particleSystem.schema.json"
 ));
+const geometricGridSchema = require(path.join(
+  __dirname,
+  "../../src/art/templates/geometricGrid.schema.json"
+));
 const lightningSchema = require(path.join(
   __dirname,
   "../../src/art/templates/lightning.schema.json"
+));
+const ballotsSchema = require(path.join(
+  __dirname,
+  "../../src/art/templates/ballots.schema.json"
 ));
 
 const TEMPLATE_TO_SCHEMA = {
@@ -32,7 +40,9 @@ const TEMPLATE_TO_SCHEMA = {
   noiseWaves: noiseWavesSchema,
   orbitalMotion: orbitalMotionSchema,
   particleSystem: particleSystemSchema,
+  geometricGrid: geometricGridSchema,
   lightning: lightningSchema,
+  ballots: ballotsSchema,
 };
 
 function mulberry32(seed) {

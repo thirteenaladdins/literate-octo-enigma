@@ -4,6 +4,27 @@ const OpenAI = require("openai");
 const fs = require("fs");
 const path = require("path");
 const { validateConcept } = require("./conceptSchema");
+const templateRegistry = require("../../src/templates/registry");
+
+const ALLOWED_TEMPLATES = Object.keys(templateRegistry);
+if (!ALLOWED_TEMPLATES.length) {
+  throw new Error("Template registry is empty – cannot initialize OpenAI service.");
+}
+
+const TEMPLATE_GUIDELINES = ALLOWED_TEMPLATES.map((template) => {
+  const details = templateRegistry[template] || {};
+  const shapes =
+    Array.isArray(details.capabilities?.shapes) &&
+    details.capabilities.shapes.length
+      ? details.capabilities.shapes.join(", ")
+      : "varied shapes";
+  const animation = details.capabilities?.animation || "varied animation";
+  const interaction = details.capabilities?.interaction
+    ? "; interaction: enabled"
+    : "";
+  const description = details.description || "No description provided";
+  return `- ${template}: ${description} (shapes: ${shapes}; animation: ${animation}${interaction})`;
+}).join("\n");
 
 /**
  * OpenAI Service for generating generative art concepts
@@ -64,28 +85,31 @@ class OpenAIService {
 
     const seedText = seed != null ? `Creative seed: ${seed}` : "";
 
-    const userPrompt = `Generate a unique generative art concept for a P5.js sketch using the lightning template. ${avoidText}\n${seedText}\n\nCRITICAL: You MUST use ONLY "lightning" as the template value. No other templates are allowed.\n\nReturn ONLY valid JSON with this exact structure:
+    const userPrompt = `Generate a unique generative art concept for a P5.js sketch. Choose whichever template best fits the concept while avoiding recent repetitions. ${avoidText}\n${seedText}\n
+Available templates:
+${TEMPLATE_GUIDELINES}
+
+Return ONLY valid JSON with this exact structure:
 {
-  "template": "lightning",
-  "shapes": ["line", "curve"],
+  "template": "<one of: ${ALLOWED_TEMPLATES.join(", ")}>",
+  "shapes": ["list of 1-5 primary shapes relevant to the chosen template"],
   "colors": ["#hexcolor1", "#hexcolor2", "#hexcolor3", "#hexcolor4"],
-  "movement": "description of animation pattern for flowing organic patterns (e.g., 'slow flowing streams', 'rapid cascading', 'gentle undulating')",
+  "movement": "description of the animation or motion behaviour (e.g., 'slow flowing streams')",
   "density": 20-100,
   "mood": "1-2 word mood description",
   "title": "poetic title for the artwork (3-6 words)",
   "description": "brief artistic description (15-25 words)",
-  "hashtags": ["2-3 concept-specific hashtags (e.g., #Abstract, #Organic, #Flowing, #Fluid, #Dynamic)"]
+  "hashtags": ["2-3 concept-specific hashtags (e.g., #Abstract, #Organic, #Flowing)"]
 }
 
 Guidelines:
-- ALWAYS use "lightning" as the template value - this is MANDATORY
-- Use shapes from: line, curve (flowing organic patterns)
-- Use 3-5 harmonious colors suitable for flow field patterns
-- Movement should describe flowing/organic animation (streaming, cascading, undulating)
-- Density should be appropriate for flow patterns (typically 50-90)
+- Template MUST be one of: ${ALLOWED_TEMPLATES.join(", ")}
+- Align shapes and movement with what the chosen template supports
+- Use 3-5 harmonious colors (hex values)
+- Keep density within the 20-100 range and consistent with the template's behaviour
 - Title should be evocative but not overly abstract
-- Make each concept unique and visually distinct
-- Hashtags should be single words describing visual style or mood (no spaces, camelCase if needed)`;
+- Ensure each concept feels distinct from the recent avoidance list
+- Hashtags must be single words (no spaces; camelCase if needed)`;
 
     try {
       const response = await this.client.chat.completions.create({
@@ -102,12 +126,17 @@ Guidelines:
       const content = response.choices[0].message.content;
       const rawConcept = JSON.parse(content);
 
-      // Enforce lightning template if LLM tries to use another one
-      if (rawConcept.template && rawConcept.template !== "lightning") {
+      // Ensure template stays within the allowed registry
+      if (
+        !rawConcept.template ||
+        !ALLOWED_TEMPLATES.includes(rawConcept.template)
+      ) {
         console.log(
-          `⚠️  LLM tried to use "${rawConcept.template}", forcing to "lightning"`
+          `⚠️  LLM produced unsupported template "${
+            rawConcept.template || "<missing>"
+          }", defaulting to "${ALLOWED_TEMPLATES[0]}"`
         );
-        rawConcept.template = "lightning";
+        rawConcept.template = ALLOWED_TEMPLATES[0];
       }
 
       // Validate with Zod schema
