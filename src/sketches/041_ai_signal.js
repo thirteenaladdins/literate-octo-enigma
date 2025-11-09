@@ -36,11 +36,6 @@ const generatedSketch = {
       const y = p5.height / 2 + Math.sin(angle + t) * radius;
       
       const colorIndex = Math.floor((i / count) * 4);
-      const hexColor = "#ff5733".replace('#', '');
-      const r = parseInt(hexColor.substr(0, 2), 16);
-      const g = parseInt(hexColor.substr(2, 2), 16);
-      const b = parseInt(hexColor.substr(4, 2), 16);
-      
       const hue = p5.map(colorIndex, 0, 4, 0, 360);
       const alpha = 30 + noiseVal * 50;
       
