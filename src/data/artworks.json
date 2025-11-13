@@ -1619,6 +1619,35 @@
       "movement": "dynamic and erratic flashes resembling lightning strikes",
       "density": 75,
       "mood": "electric energy"
+    },
+    {
+      "id": "067",
+      "title": "Signal 067: Floating Dreams of Colorful Whispers",
+      "description": "A charming assembly of softly drifting particles that interact subtly, creating a delicate balance of colors and forms.",
+      "date": "2025-11-13",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "particle-system",
+        "whimsical",
+        "serenity",
+        "circle"
+      ],
+      "file": "067_ai_signal",
+      "thumbnail": "067_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "particleSystem",
+      "colors": [
+        "#ff6348",
+        "#40e0d0",
+        "#ffc0cb",
+        "#9370db"
+      ],
+      "movement": "soft drifting motion with gentle rotations",
+      "density": 60,
+      "mood": "whimsical serenity"
     }
   ],
   "categories": [
@@ -1634,9 +1663,9 @@
     "particleSystem"
   ],
   "metadata": {
-    "lastUpdated": "2025-11-12",
-    "totalArtworks": 66,
-    "publishedArtworks": 66,
+    "lastUpdated": "2025-11-13",
+    "totalArtworks": 67,
+    "publishedArtworks": 67,
     "draftArtworks": 0
   }
 }
