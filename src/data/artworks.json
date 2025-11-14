@@ -1648,6 +1648,35 @@
       "movement": "soft drifting motion with gentle rotations",
       "density": 60,
       "mood": "whimsical serenity"
+    },
+    {
+      "id": "068",
+      "title": "Signal 068: Whispers of a Flowing Stream",
+      "description": "An immersive experience where vibrant lines create soft, flowing patterns reminiscent of water in gentle streams.",
+      "date": "2025-11-14",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "flow-field",
+        "tranquil",
+        "beauty",
+        "line"
+      ],
+      "file": "068_ai_signal",
+      "thumbnail": "068_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "flowField",
+      "colors": [
+        "#8e44ad",
+        "#3498db",
+        "#2ecc71",
+        "#e67e22"
+      ],
+      "movement": "fluid motions that ebb and flow gracefully like a serene river",
+      "density": 65,
+      "mood": "tranquil beauty"
     }
   ],
   "categories": [
@@ -1663,9 +1692,9 @@
     "particleSystem"
   ],
   "metadata": {
-    "lastUpdated": "2025-11-13",
-    "totalArtworks": 67,
-    "publishedArtworks": 67,
+    "lastUpdated": "2025-11-14",
+    "totalArtworks": 68,
+    "publishedArtworks": 68,
     "draftArtworks": 0
   }
 }
