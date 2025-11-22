@@ -105,13 +105,42 @@ app.get("/api/twitter/oauth2/auth", async (req, res) => {
 
 // OAuth2 callback endpoint
 app.get("/api/twitter/oauth2/callback", async (req, res) => {
-  const { code, state } = req.query;
+  console.log("\n📥 OAuth2 callback received");
+  const { code, state, error, error_description } = req.query;
+  console.log("Query params:", {
+    hasCode: !!code,
+    hasState: !!state,
+    error,
+    error_description,
+  });
+
+  // Check if Twitter returned an error
+  if (error) {
+    console.error("Twitter OAuth error:", error, error_description);
+    return res.status(400).send(
+      `Twitter OAuth error: ${error}<br><br>${error_description || ""}<br><br>
+       Please check:<br>
+       1. Redirect URI matches exactly in Twitter app settings<br>
+       2. App is configured as "Confidential client"<br>
+       3. OAuth 2.0 is enabled for your app`
+    );
+  }
+
+  if (!code) {
+    console.error("Missing authorization code in callback");
+    return res.status(400).send("Missing authorization code");
+  }
+
   try {
+    console.log("Calling handleCallback with code and state...");
     await handleCallback(code, state);
+    console.log("✅ OAuth2 callback completed successfully");
     res.send(
       "Twitter OAuth2 success. You can close this tab and return to the app."
     );
   } catch (e) {
+    console.error("❌ OAuth2 callback error:", e.message);
+    console.error("Full error:", e);
     res.status(500).send(`OAuth2 error: ${e.message}`);
   }
 });

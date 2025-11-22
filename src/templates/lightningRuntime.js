@@ -10,7 +10,7 @@ export default function generatedSketchFromConfig(config) {
     background: "#001f3f",
     palette: ["#0074D9", "#39CCCC", "#2ECC40", "#FF4136"],
     ...config,
-  };
+  };n
 
   return {
     setup: (p5) => {

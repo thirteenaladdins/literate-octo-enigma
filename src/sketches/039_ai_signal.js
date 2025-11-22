@@ -1,5 +1,3 @@
-const CONFIG = {};
-
 export default function sketch(p) {
   let palette;
   let gridCols, gridRows;

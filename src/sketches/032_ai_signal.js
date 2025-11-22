@@ -20,9 +20,7 @@ const generatedSketch = {
   setup: (p5) => {
     p5.colorMode(p5.HSB, 360, 100, 100, 100);
     if (typeof CONFIG !== 'undefined' && CONFIG.background) {
-      const hex = CONFIG.background;
-      // simple hex to HSB background: use dark backdrop if not convertible
-      p5.background(0, 0, 15);
+      p5.background(CONFIG.background);
     } else {
       p5.background(0, 0, 15);
     }

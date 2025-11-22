@@ -1,9 +1,25 @@
 import React, { useState, useEffect } from "react";
-import P5Canvas from "./P5Canvas";
+// import P5Canvas from "./P5Canvas";
 import artworksData from "../data/artworks.json";
-import sketches from "../sketches";
 
-const getSketchFromFile = (fileName) => sketches[fileName] || null;
+// Map file names to sketch objects
+import exampleSketch from "../sketches/001_example";
+import myCustomSketch from "../sketches/002_morse";
+import morseEnhancedSketch from "../sketches/003_morse_enhanced";
+import morseVeraSketch from "../sketches/004_morse_vera";
+import veraLinesSketch from "../sketches/005_vera_lines";
+
+const sketchMap = {
+  "001_example": exampleSketch,
+  "002_morse": myCustomSketch,
+  "003_morse_enhanced": morseEnhancedSketch,
+  "004_morse_vera": morseVeraSketch,
+  "005_vera_lines": veraLinesSketch,
+};
+
+const getSketchFromFile = (fileName) => {
+  return sketchMap[fileName] || null;
+};
 
 const ArtworkGrid = ({ onArtworkSelect }) => {
   const [artworks, setArtworks] = useState([]);
@@ -19,9 +35,9 @@ const ArtworkGrid = ({ onArtworkSelect }) => {
   const loadArtworks = async () => {
     try {
       setLoading(true);
-      const publishedArtworks = artworksData.artworks
-        .filter((artwork) => artwork.status === "published")
-        .reverse();
+      const publishedArtworks = artworksData.artworks.filter(
+        (artwork) => artwork.status === "published"
+      );
       setArtworks(publishedArtworks);
       setLoading(false);
     } catch (err) {
@@ -63,7 +79,6 @@ const ArtworkGrid = ({ onArtworkSelect }) => {
   return (
     <div>
       <div className="grid-header">
-        <h1 className="grid-banner">Whispers from an Unfinished Machine</h1>
         <p className="grid-description">
           A collection of generative art and interactive sketches
         </p>
@@ -94,12 +109,6 @@ const ArtworkGrid = ({ onArtworkSelect }) => {
               ))}
             </select>
           </div>
-
-          <div className="editor-link">
-            <a href="/editor" className="editor-button">
-              ✨ Code Editor
-            </a>
-          </div>
         </div>
 
         <div className="grid-stats">
@@ -122,28 +131,13 @@ const ArtworkGrid = ({ onArtworkSelect }) => {
               onClick={() => onArtworkSelect(artwork)}
             >
               <div className="artwork-preview">
-                {/* Prefer static thumbnail if available */}
-                {artwork.displayMode === "image" ? (
-                  <img
-                    src={`/thumbnails/${artwork.file}.png`}
-                    alt={artwork.title}
-                    width={200}
-                    height={200}
-                    onError={(e) => {
-                      // Fallback to live sketch preview if image missing
-                      e.currentTarget.style.display = "none";
-                    }}
-                    style={{ objectFit: "cover", borderRadius: 8 }}
-                  />
-                ) : (
-                  <P5Canvas
-                    width={200}
-                    height={200}
-                    sketch={getSketchFromFile(artwork.file)}
-                    showTitle={false}
-                    showDescription={false}
-                  />
-                )}
+                <img
+                  src={`/thumbnails/${artwork.thumbnail}.png`}
+                  alt={artwork.title}
+                  width={200}
+                  height={200}
+                  style={{ objectFit: "cover", borderRadius: "16px", background: "#222" }}
+                />
               </div>
               <div className="artwork-info">
                 <h3>{artwork.title}</h3>
