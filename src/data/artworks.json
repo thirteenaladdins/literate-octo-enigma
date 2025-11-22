@@ -1920,6 +1920,53 @@
         ],
         "template": "flowField"
       }
+    },
+    {
+      "id": "076",
+      "title": "Signal 076: Dance of Celestial Orbits",
+      "description": "An exploration of orbital motions across a cosmic canvas, where celestial shapes gracefully traverse paths of color.",
+      "date": "2025-11-22",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "orbital-motion",
+        "cosmic",
+        "wonder",
+        "circle"
+      ],
+      "file": "076_ai_signal",
+      "thumbnail": "076_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "orbitalMotion",
+      "colors": [
+        "#1abc9c",
+        "#3498db",
+        "#9b59b6",
+        "#e74c3c"
+      ],
+      "movement": "celestial bodies orbiting with elegant trails",
+      "density": 60,
+      "mood": "cosmic wonder",
+      "seed": 766828338,
+      "config": {
+        "seed": 2,
+        "numOrbits": 3,
+        "orbitSpeed": 0.027,
+        "trailFade": 0.474,
+        "radiusMin": 100.182,
+        "radiusMax": 366.547,
+        "lineWeight": 5.651,
+        "background": "#0e0f1a",
+        "palette": [
+          "#f72585",
+          "#7209b7",
+          "#3a0ca3",
+          "#4361ee"
+        ],
+        "template": "orbitalMotion"
+      }
     }
   ],
   "categories": [
@@ -1936,8 +1983,8 @@
   ],
   "metadata": {
     "lastUpdated": "2025-11-22",
-    "totalArtworks": 75,
-    "publishedArtworks": 75,
+    "totalArtworks": 76,
+    "publishedArtworks": 76,
     "draftArtworks": 0
   }
 }
