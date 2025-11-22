@@ -126,8 +126,11 @@ async function main() {
 
     // 4. Generate art concept using OpenAI
     console.log("\n🎨 Generating art concept with AI...");
-    // Build avoidance list from last few artworks to encourage novelty
-    const recent = artworks.slice(-5);
+    // Build avoidance list from recent artworks to encourage novelty
+    const avoidanceWindow = 20; // Look back 20 artworks
+    const recent = artworks.slice(-avoidanceWindow);
+
+    // Build traditional avoidance list (template, colors, movement, etc.)
     const avoid = recent.map((a) =>
       [
         a.template,
@@ -140,8 +143,28 @@ async function main() {
         .filter(Boolean)
         .join("|")
     );
+
+    // Build title word store to avoid repetitive words
+    const TitleWordStore = require("./services/titleWordStore");
+    const titleWordStore = new TitleWordStore();
+    const wordStore = titleWordStore.buildWordStore(artworks, avoidanceWindow);
+
+    if (wordStore.overusedWords.length > 0) {
+      console.log(
+        `   Detected ${
+          wordStore.overusedWords.length
+        } overused title words: ${wordStore.overusedWords
+          .slice(0, 5)
+          .join(", ")}...`
+      );
+    }
+
     const seed = Date.now();
-    let concept = await openaiService.generateArtConcept({ avoid, seed });
+    let concept = await openaiService.generateArtConcept({
+      avoid,
+      seed,
+      wordStore,
+    });
 
     // Override template if specified
     if (args.template) {

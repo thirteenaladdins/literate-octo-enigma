@@ -8,7 +8,9 @@ const templateRegistry = require("../../src/templates/registry");
 
 const ALLOWED_TEMPLATES = Object.keys(templateRegistry);
 if (!ALLOWED_TEMPLATES.length) {
-  throw new Error("Template registry is empty – cannot initialize OpenAI service.");
+  throw new Error(
+    "Template registry is empty – cannot initialize OpenAI service."
+  );
 }
 
 const TEMPLATE_GUIDELINES = ALLOWED_TEMPLATES.map((template) => {
@@ -73,7 +75,7 @@ class OpenAIService {
    * Generate a generative art concept using OpenAI
    * @returns {Promise<Object>} Art concept with shapes, colors, movement, density, mood, title, description
    */
-  async generateArtConcept({ avoid = [], seed = null } = {}) {
+  async generateArtConcept({ avoid = [], seed = null, wordStore = null } = {}) {
     const systemPrompt = `You are a generative art expert specializing in P5.js creative coding. Generate unique, visually interesting concepts for abstract generative artworks.`;
 
     const avoidText =
@@ -83,9 +85,28 @@ class OpenAIService {
           )}`
         : "";
 
+    // Add title word avoidance text
+    let titleWordAvoidanceText = "";
+    if (wordStore && wordStore.overusedWords) {
+      // Generate avoidance text directly without instantiating the class
+      const { overusedWords, recentTitles } = wordStore;
+      if (overusedWords.length > 0) {
+        const wordsToShow = overusedWords.slice(0, 10);
+        titleWordAvoidanceText += `\nAvoid overused title words that appear frequently in recent artworks:\n${wordsToShow
+          .map((w) => `- "${w}"`)
+          .join(", ")}\n`;
+      }
+      if (recentTitles.length > 0) {
+        titleWordAvoidanceText += `\nRecent artwork titles to avoid repeating:\n${recentTitles
+          .slice(-10)
+          .map((t) => `- "${t}"`)
+          .join("\n")}\n`;
+      }
+    }
+
     const seedText = seed != null ? `Creative seed: ${seed}` : "";
 
-    const userPrompt = `Generate a unique generative art concept for a P5.js sketch. Choose whichever template best fits the concept while avoiding recent repetitions. ${avoidText}\n${seedText}\n
+    const userPrompt = `Generate a unique generative art concept for a P5.js sketch. Choose whichever template best fits the concept while avoiding recent repetitions. ${avoidText}${titleWordAvoidanceText}\n${seedText}\n
 Available templates:
 ${TEMPLATE_GUIDELINES}
 
@@ -97,7 +118,7 @@ Return ONLY valid JSON with this exact structure:
   "movement": "description of the animation or motion behaviour (e.g., 'slow flowing streams')",
   "density": 20-100,
   "mood": "1-2 word mood description",
-  "title": "poetic title for the artwork (3-6 words)",
+  "title": "poetic title for the artwork (1-6 words)",
   "description": "brief artistic description (15-25 words)",
   "hashtags": ["2-3 concept-specific hashtags (e.g., #Abstract, #Organic, #Flowing)"]
 }
@@ -107,7 +128,8 @@ Guidelines:
 - Align shapes and movement with what the chosen template supports
 - Use 3-5 harmonious colors (hex values)
 - Keep density within the 20-100 range and consistent with the template's behaviour
-- Title should be evocative but not overly abstract
+- Title should be evocative but not overly abstract (1-6 words, can be as short as 1 word)
+- Avoid using overused words from recent artworks - be creative and use fresh vocabulary
 - Ensure each concept feels distinct from the recent avoidance list
 - Hashtags must be single words (no spaces; camelCase if needed)`;
 
