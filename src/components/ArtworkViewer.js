@@ -1,11 +1,51 @@
 import React from "react";
 import P5Canvas from "./P5Canvas";
 import sketches from "../sketches";
+// Runtime templates for parameter-based rendering
+import flowFieldRuntime from "../templates/flowFieldRuntime";
+import particleSystemRuntime from "../templates/particleSystemRuntime";
+import orbitalMotionRuntime from "../templates/orbitalMotionRuntime";
+import noiseWavesRuntime from "../templates/noiseWavesRuntime";
+import geometricGridRuntime from "../templates/geometricGridRuntime";
+import gridPatternRuntime from "../templates/gridPatternRuntime";
+import lightningRuntime from "../templates/lightningRuntime";
+import ballotsRuntime from "../templates/ballotsRuntime";
 
-const getSketchFromFile = (fileName) => sketches[fileName] || null;
+const runtimeTemplates = {
+  flowField: flowFieldRuntime,
+  particleSystem: particleSystemRuntime,
+  orbitalMotion: orbitalMotionRuntime,
+  noiseWaves: noiseWavesRuntime,
+  geometricGrid: geometricGridRuntime,
+  gridPattern: gridPatternRuntime,
+  lightning: lightningRuntime,
+  ballots: ballotsRuntime,
+};
+
+// Get sketch from file (legacy) or generate from config (new parameter-based)
+const getSketch = (artwork) => {
+  // Try parameter-based rendering first (new approach)
+  if (artwork.config && artwork.template) {
+    const runtimeTemplate = runtimeTemplates[artwork.template];
+    if (runtimeTemplate) {
+      console.log(
+        `Rendering artwork ${artwork.id} from config using ${artwork.template} runtime template`
+      );
+      // Ensure seed is set in config for reproducibility
+      const configWithSeed = {
+        ...artwork.config,
+        seed: artwork.seed || artwork.config.seed,
+      };
+      return runtimeTemplate(configWithSeed);
+    }
+  }
+
+  // Fallback to legacy JS file approach
+  return sketches[artwork.file] || null;
+};
 
 const ArtworkViewer = ({ artwork, onBack }) => {
-  const sketch = getSketchFromFile(artwork.file);
+  const sketch = getSketch(artwork);
 
   return (
     <div className="artwork-viewer">
@@ -33,7 +73,7 @@ const ArtworkViewer = ({ artwork, onBack }) => {
               }}
               style={{ objectFit: "cover", borderRadius: 12 }}
             />
-          ) : (
+          ) : sketch ? (
             <P5Canvas
               width={600}
               height={600}
@@ -41,6 +81,21 @@ const ArtworkViewer = ({ artwork, onBack }) => {
               title={artwork.title}
               description={artwork.description}
             />
+          ) : (
+            <div
+              style={{
+                width: 600,
+                height: 600,
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                background: "#1a1a1a",
+                borderRadius: 12,
+                color: "#666",
+              }}
+            >
+              No sketch available
+            </div>
           )}
         </div>
 

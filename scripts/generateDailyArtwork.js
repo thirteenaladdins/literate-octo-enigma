@@ -10,8 +10,6 @@ const TwitterService = require("./services/twitterService");
 
 const rootDir = path.join(__dirname, "..");
 const dataPath = path.join(rootDir, "src", "data", "artworks.json");
-const sketchesDir = path.join(rootDir, "src", "sketches");
-const sketchesIndexPath = path.join(sketchesDir, "index.js");
 
 const readJson = (filePath) => JSON.parse(fs.readFileSync(filePath, "utf8"));
 
@@ -27,32 +25,6 @@ const writeJsonAtomically = (filePath, data) => {
 };
 
 const padId = (value) => String(value).padStart(3, "0");
-
-const makeIdentifier = (name) => {
-  const sanitized = name.replace(/[^a-zA-Z0-9]/g, "_");
-  const prefix = /^[0-9]/.test(sanitized) ? `sketch_${sanitized}` : sanitized;
-  return prefix.replace(/__+/g, "_");
-};
-
-const buildSketchIndex = (filenames) => {
-  const imports = filenames
-    .map((filename) => {
-      const nameWithoutExt = filename.replace(/\.js$/, "");
-      const identifier = makeIdentifier(nameWithoutExt);
-      return `import ${identifier} from "./${nameWithoutExt}";`;
-    })
-    .join("\n");
-
-  const mappings = filenames
-    .map((filename) => {
-      const nameWithoutExt = filename.replace(/\.js$/, "");
-      const identifier = makeIdentifier(nameWithoutExt);
-      return `  "${nameWithoutExt}": ${identifier},`;
-    })
-    .join("\n");
-
-  return `${imports}\n\nconst sketches = {\n${mappings}\n};\n\nexport default sketches;\n`;
-};
 
 const calculateDate = () => {
   const now = new Date();
@@ -94,11 +66,11 @@ async function main() {
   if (isDryRun) {
     console.log("🔍 DRY RUN MODE - No Twitter posting");
   }
-  
+
   if (args.id) {
     console.log(`🔄 REPLAY MODE - Targeting ID: ${args.id}`);
   }
-  
+
   if (args.template) {
     console.log(`🎯 TEMPLATE OVERRIDE - Using: ${args.template}`);
   }
@@ -108,7 +80,7 @@ async function main() {
     console.log("\n📦 Initializing services...");
 
     const openaiService = new OpenAIService(process.env.OPENAI_API_KEY);
-    const artGenerator = new ArtGenerator();
+    const artGenerator = new ArtGenerator(); // Still needed for generateTags()
     const screenshotService = new ScreenshotService();
 
     let twitterService = null;
@@ -127,13 +99,12 @@ async function main() {
     const artworks = Array.isArray(data.artworks) ? data.artworks : [];
 
     // 3. Generate next artwork ID (or use override)
-    let paddedId, sketchFileName, sketchPath;
-    
+    let paddedId, sketchFileName;
+
     if (args.id) {
       // Replay mode: use specified ID
       paddedId = padId(args.id);
       sketchFileName = `${paddedId}_ai_signal`;
-      sketchPath = path.join(sketchesDir, `${sketchFileName}.js`);
       console.log(`\n🔄 Replay mode: Using ID ${paddedId}`);
     } else {
       // Normal mode: generate next ID
@@ -144,12 +115,12 @@ async function main() {
       const nextNumericId = numericIds.length ? Math.max(...numericIds) + 1 : 1;
       paddedId = padId(nextNumericId);
       sketchFileName = `${paddedId}_ai_signal`;
-      sketchPath = path.join(sketchesDir, `${sketchFileName}.js`);
     }
 
-    // Check if artwork already exists
-    if (fs.existsSync(sketchPath)) {
-      console.log(`\n⚠️  Artwork already exists for today: ${sketchPath}`);
+    // Check if artwork already exists (check artworks.json instead of JS file)
+    const existingArtwork = artworks.find((a) => a.id === paddedId);
+    if (existingArtwork) {
+      console.log(`\n⚠️  Artwork ${paddedId} already exists in artworks.json`);
       return;
     }
 
@@ -171,10 +142,12 @@ async function main() {
     );
     const seed = Date.now();
     let concept = await openaiService.generateArtConcept({ avoid, seed });
-    
+
     // Override template if specified
     if (args.template) {
-      console.log(`\n🎯 Overriding template from "${concept.template}" to "${args.template}"`);
+      console.log(
+        `\n🎯 Overriding template from "${concept.template}" to "${args.template}"`
+      );
       concept.template = args.template;
     }
 
@@ -184,13 +157,20 @@ async function main() {
     console.log(`   Mood: ${concept.mood}`);
     console.log(`   Description: ${concept.description}`);
 
-    // 5. Generate P5.js sketch code
-    console.log("\n🔨 Generating P5.js sketch...");
-    const sketchCode = artGenerator.generateSketch(concept, paddedId, seed);
+    // 5. Generate config for parameter-based rendering
+    console.log("\n🔨 Generating config for parameter-based rendering...");
+    const {
+      generateRandomConfig,
+    } = require("./services/templateConfigService");
+    const normalizedSeed = seed % 2147483647;
 
-    // Write sketch file
-    fs.writeFileSync(sketchPath, sketchCode, "utf8");
-    console.log(`   Sketch saved to: ${sketchPath}`);
+    // Generate the config that will be used for parameter-based rendering
+    // This config will be stored in artworks.json and used for screenshot capture
+    const config = generateRandomConfig(concept.template, normalizedSeed);
+    config.template = concept.template;
+
+    console.log(`   Config generated:`, JSON.stringify(config, null, 2));
+    console.log(`   Seed: ${normalizedSeed}`);
 
     // 5.5. Store metadata for reproducibility
     const metaDir = path.join(rootDir, "artworks");
@@ -200,9 +180,10 @@ async function main() {
     const metaPath = path.join(metaDir, `${sketchFileName}.meta.json`);
     const metadata = {
       id: paddedId,
-      seed: Date.now(),
+      seed: normalizedSeed,
       timestamp: new Date().toISOString(),
       concept,
+      config,
       model: "gpt-4o-mini",
       temperature: 0.95,
       presencePenalty: 0.8,
@@ -213,7 +194,7 @@ async function main() {
     // 6. Generate tags
     const tags = artGenerator.generateTags(concept);
 
-    // 7. Create artwork entry
+    // 7. Create artwork entry with parameter-based config
     const artworkDate = calculateDate();
     const newArtwork = {
       id: paddedId,
@@ -225,28 +206,22 @@ async function main() {
       thumbnail: `${sketchFileName}_thumb`,
       category: "generative",
       status: "published",
-      // Prefer static snapshot rendering on the website for newly generated artworks
+      // Use static screenshot for new parameter-based artworks
       displayMode: "image",
-      // Store concept metadata to reduce repetition
+      // Store concept metadata
       template: concept.template,
       colors: concept.colors,
       movement: concept.movement,
       density: concept.density,
       mood: concept.mood,
+      // Store full config and seed for parameter-based rendering
+      seed: normalizedSeed,
+      config: config,
     };
 
     artworks.push(newArtwork);
 
-    // 8. Regenerate sketches index
-    console.log("\n📝 Updating sketch registry...");
-    const sketchFiles = fs
-      .readdirSync(sketchesDir)
-      .filter((file) => file.endsWith(".js") && file !== "index.js")
-      .sort();
-
-    fs.writeFileSync(sketchesIndexPath, buildSketchIndex(sketchFiles), "utf8");
-
-    // 9. Update metadata
+    // 8. Update metadata (no sketch index needed for parameter-based system)
     if (data.metadata) {
       const totalArtworks = artworks.length;
       const publishedArtworks = artworks.filter(
@@ -268,17 +243,19 @@ async function main() {
     writeJsonAtomically(dataPath, { ...data, artworks });
     console.log(`   Metadata updated`);
 
-    // 10. Capture screenshot
-    console.log("\n📸 Capturing screenshot...");
-    const imageBuffer = await screenshotService.captureSketch(
-      sketchPath,
-      sketchFileName
+    // 9. Capture screenshot from config using runtime template
+    console.log("\n📸 Capturing screenshot from config...");
+    const imageBuffer = await screenshotService.captureFromConfig(
+      concept.template,
+      config,
+      sketchFileName,
+      180 // Capture at frame 180 (~3 seconds at 60fps) for consistency
     );
     console.log(
       `   Screenshot captured (${(imageBuffer.length / 1024).toFixed(2)} KB)`
     );
 
-    // 11. Post to Twitter
+    // 10. Post to Twitter
     let tweetUrl = null;
     if (!isDryRun && twitterService) {
       console.log("\n🐦 Posting to Twitter...");
@@ -294,7 +271,7 @@ async function main() {
       console.log("\n🐦 Skipping Twitter post (dry run)");
     }
 
-    // 12. Summary
+    // 11. Summary
     console.log("\n" + "=".repeat(60));
     console.log("✅ Daily artwork generated successfully!");
     console.log("=".repeat(60));
@@ -302,13 +279,16 @@ async function main() {
     console.log(`   ID: ${paddedId}`);
     console.log(`   Title: ${newArtwork.title}`);
     console.log(`   Template: ${concept.template}`);
-    console.log(`   Sketch: ${sketchPath}`);
+    console.log(`   Display Mode: ${newArtwork.displayMode} (parameter-based)`);
+    console.log(`   Config: stored in artworks.json`);
+    console.log(`   Seed: ${normalizedSeed}`);
+    console.log(`   Screenshot: ${sketchFileName}.png`);
     if (tweetUrl) {
       console.log(`   Tweet: ${tweetUrl}`);
     }
     console.log("=".repeat(60));
 
-    // 13. Cleanup old screenshots
+    // 12. Cleanup old screenshots
     screenshotService.cleanupOldScreenshots(7);
   } catch (error) {
     console.error("\n❌ Error generating daily artwork:", error.message);

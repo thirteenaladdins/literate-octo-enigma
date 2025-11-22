@@ -10,7 +10,7 @@ export default function generatedSketchFromConfig(config) {
     background: "#001f3f",
     palette: ["#0074D9", "#39CCCC", "#2ECC40", "#FF4136"],
     ...config,
-  };n
+  };
 
   return {
     setup: (p5) => {
@@ -45,10 +45,7 @@ export default function generatedSketchFromConfig(config) {
         const colorIndex = i % cfg.palette.length;
         const [h, s, b] = hexToHSB(cfg.palette[colorIndex]);
         p5.strokeWeight(
-          p5.random(
-            cfg.strokeWeight * 0.5,
-            cfg.strokeWeight * 2
-          )
+          p5.random(cfg.strokeWeight * 0.5, cfg.strokeWeight * 2)
         );
 
         let x = p5.random(p5.width);
@@ -57,9 +54,7 @@ export default function generatedSketchFromConfig(config) {
         p5.beginShape();
         for (let stepIndex = 0; stepIndex < 200; stepIndex++) {
           const angle =
-            p5.noise(x * cfg.noiseScale, y * cfg.noiseScale, t) *
-            p5.TAU *
-            2;
+            p5.noise(x * cfg.noiseScale, y * cfg.noiseScale, t) * p5.TAU * 2;
           x += Math.cos(angle) * cfg.step;
           y += Math.sin(angle) * cfg.step;
 
@@ -92,4 +87,3 @@ export default function generatedSketchFromConfig(config) {
     },
   };
 }
-

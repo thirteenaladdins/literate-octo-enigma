@@ -1,25 +1,5 @@
 import React, { useState, useEffect } from "react";
-// import P5Canvas from "./P5Canvas";
 import artworksData from "../data/artworks.json";
-
-// Map file names to sketch objects
-import exampleSketch from "../sketches/001_example";
-import myCustomSketch from "../sketches/002_morse";
-import morseEnhancedSketch from "../sketches/003_morse_enhanced";
-import morseVeraSketch from "../sketches/004_morse_vera";
-import veraLinesSketch from "../sketches/005_vera_lines";
-
-const sketchMap = {
-  "001_example": exampleSketch,
-  "002_morse": myCustomSketch,
-  "003_morse_enhanced": morseEnhancedSketch,
-  "004_morse_vera": morseVeraSketch,
-  "005_vera_lines": veraLinesSketch,
-};
-
-const getSketchFromFile = (fileName) => {
-  return sketchMap[fileName] || null;
-};
 
 const ArtworkGrid = ({ onArtworkSelect }) => {
   const [artworks, setArtworks] = useState([]);
@@ -35,9 +15,12 @@ const ArtworkGrid = ({ onArtworkSelect }) => {
   const loadArtworks = async () => {
     try {
       setLoading(true);
-      const publishedArtworks = artworksData.artworks.filter(
-        (artwork) => artwork.status === "published"
-      );
+      const publishedArtworks = artworksData.artworks
+        .filter((artwork) => artwork.status === "published")
+        .sort((a, b) => {
+          // Sort by ID in reverse chronological order (highest first)
+          return parseInt(b.id, 10) - parseInt(a.id, 10);
+        });
       setArtworks(publishedArtworks);
       setLoading(false);
     } catch (err) {
@@ -132,11 +115,20 @@ const ArtworkGrid = ({ onArtworkSelect }) => {
             >
               <div className="artwork-preview">
                 <img
-                  src={`/thumbnails/${artwork.thumbnail}.png`}
+                  src={`/thumbnails/${artwork.file}.png`}
                   alt={artwork.title}
                   width={200}
                   height={200}
-                  style={{ objectFit: "cover", borderRadius: "16px", background: "#222" }}
+                  style={{
+                    objectFit: "cover",
+                    borderRadius: "16px",
+                    background: "#222",
+                  }}
+                  onError={(e) => {
+                    // Fallback if thumbnail doesn't exist
+                    e.target.style.display = "none";
+                    e.target.parentElement.innerHTML = `<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; font-size: 0.8rem;">No preview</div>`;
+                  }}
                 />
               </div>
               <div className="artwork-info">

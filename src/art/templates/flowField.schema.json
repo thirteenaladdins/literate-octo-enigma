@@ -36,7 +36,7 @@
     },
     "strokeBrightness": {
       "type": "number",
-      "minimum": 0,
+      "minimum": 50,
       "maximum": 100,
       "default": 85
     },

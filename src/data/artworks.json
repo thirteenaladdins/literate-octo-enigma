@@ -1825,8 +1825,8 @@
     },
     {
       "id": "074",
-      "title": "Signal 074: Whispers of Colorful Currents",
-      "description": "A tranquil interaction of flowing lines and curves, creating a visual symphony of motion and color.",
+      "title": "Signal 074: Waves of Tranquil Currents",
+      "description": "A meditative composition of lines that gracefully intertwine, creating a soothing visual melody.",
       "date": "2025-11-22",
       "tags": [
         "generative",
@@ -1844,13 +1844,82 @@
       "template": "flowField",
       "colors": [
         "#8e44ad",
-        "#f1c40f",
-        "#2ecc71",
-        "#e67e22"
+        "#e27b02",
+        "#00a4d3",
+        "#dff9fb"
       ],
-      "movement": "gentle swirling currents that evolve slowly and dynamically",
+      "movement": "smoothly flowing waves that shift and swirl in harmony",
       "density": 65,
-      "mood": "serene beauty"
+      "mood": "serene beauty",
+      "seed": 766093192,
+      "config": {
+        "seed": 4,
+        "speed": 0.024,
+        "density": 98,
+        "steps": 16,
+        "noiseScale": 0.043,
+        "strokeWeight": 4.545,
+        "strokeSaturation": 95.895,
+        "strokeBrightness": 6.844,
+        "strokeAlpha": 28.065,
+        "background": "#26262b",
+        "palette": [
+          "#ff7a7a",
+          "#ffd166",
+          "#70d6ff",
+          "#bdb2ff"
+        ],
+        "template": "flowField"
+      }
+    },
+    {
+      "id": "075",
+      "title": "Signal 075: Resonance of Subtle Waves",
+      "description": "This artwork features flowing lines that create an inviting rhythm, mimicking natural wave patterns in a tranquil ambiance.",
+      "date": "2025-11-22",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "flow-field",
+        "harmonious",
+        "tranquility",
+        "line"
+      ],
+      "file": "075_ai_signal",
+      "thumbnail": "075_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "flowField",
+      "colors": [
+        "#ff5722",
+        "#3f51b5",
+        "#4caf50",
+        "#ffc107"
+      ],
+      "movement": "gentle oscillating waves that ripple seamlessly across the canvas",
+      "density": 55,
+      "mood": "harmonious tranquility",
+      "seed": 766210824,
+      "config": {
+        "seed": 2,
+        "speed": 0.023,
+        "density": 61,
+        "steps": 16,
+        "noiseScale": 0.014,
+        "strokeWeight": 5.625,
+        "strokeSaturation": 70.453,
+        "strokeBrightness": 96.516,
+        "strokeAlpha": 28.306,
+        "background": "#26262b",
+        "palette": [
+          "#ff7a7a",
+          "#ffd166",
+          "#70d6ff",
+          "#bdb2ff"
+        ],
+        "template": "flowField"
+      }
     }
   ],
   "categories": [
@@ -1867,8 +1936,8 @@
   ],
   "metadata": {
     "lastUpdated": "2025-11-22",
-    "totalArtworks": 74,
-    "publishedArtworks": 74,
+    "totalArtworks": 75,
+    "publishedArtworks": 75,
     "draftArtworks": 0
   }
 }
