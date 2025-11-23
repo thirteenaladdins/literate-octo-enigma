@@ -5,10 +5,11 @@
 
 /**
  * Noise-based sizing (organic, varying sizes)
+ * Matches gridPatternRuntime: cellSize * 0.6 * noiseVal
  */
 export function noiseSize(p5, i, j, t, cell, noiseScale = 0.1) {
   const n = p5.noise(i * noiseScale, j * noiseScale, t * 0.3);
-  return cell * 0.6 * (0.5 + n);
+  return cell * 0.6 * n; // Removed (0.5 + n) to match runtime
 }
 
 /**
@@ -35,15 +36,22 @@ export function distanceSize(p5, i, j, maxI, maxJ, cell, centerScale = 1.0) {
  */
 export function pulseSize(p5, i, j, t, cell, pulseSpeed = 1.0) {
   const pulse = (Math.sin(t * pulseSpeed) + 1) / 2; // 0 to 1
-  return cell * 0.5 + (cell * 0.3 * pulse);
+  return cell * 0.5 + cell * 0.3 * pulse;
 }
 
 /**
  * Random sizing per element
  */
-export function randomSize(p5, i, j, cell, minScale = 0.3, maxScale = 1.0, seed = null) {
+export function randomSize(
+  p5,
+  i,
+  j,
+  cell,
+  minScale = 0.3,
+  maxScale = 1.0,
+  seed = null
+) {
   if (seed) p5.randomSeed(seed + i * 1000 + j);
   const scale = p5.random(minScale, maxScale);
   return cell * 0.6 * scale;
 }
-

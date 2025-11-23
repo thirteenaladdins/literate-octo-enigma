@@ -16,7 +16,11 @@ const ArtworkGrid = ({ onArtworkSelect }) => {
     try {
       setLoading(true);
       const publishedArtworks = artworksData.artworks
-        .filter((artwork) => artwork.status === "published")
+        .filter(
+          (artwork) =>
+            artwork.status === "published" &&
+            !artwork.template // Only show artworks without a template
+        )
         .sort((a, b) => {
           // Sort by ID in reverse chronological order (highest first)
           return parseInt(b.id, 10) - parseInt(a.id, 10);

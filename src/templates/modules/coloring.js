@@ -5,11 +5,16 @@
 
 /**
  * Time-based color cycling (HSB)
+ * Matches gridPatternRuntime exactly
  */
 export function timeBasedColor(p5, i, j, t, n, palette) {
-  const hue = ((i + j) * 6 + t * 30) % 360;
-  const bright = 55 + n * 40;
-  return { h: hue, s: 75, b: bright, a: 70 };
+  // Exact match: const colorIndex = (i + j) % 4;
+  const colorIndex = (i + j) % 4;
+  // Exact match: const hue = (colorIndex * 60 + t * 30) % 360;
+  const hue = (colorIndex * 60 + t * 30) % 360;
+  // Exact match: const brightness = 60 + noiseVal * 35;
+  const brightness = 60 + n * 35;
+  return { h: hue, s: 75, b: brightness, a: 70 };
 }
 
 /**
@@ -39,11 +44,11 @@ export function gradientColor(p5, i, j, maxI, maxJ, palette) {
   const ratioX = i / maxI;
   const ratioY = j / maxJ;
   const ratio = (ratioX + ratioY) / 2;
-  
+
   const index1 = Math.floor(ratio * (palette.length - 1));
   const index2 = Math.min(index1 + 1, palette.length - 1);
   const blend = (ratio * (palette.length - 1)) % 1;
-  
+
   try {
     const c1 = p5.color(palette[index1]);
     const c2 = p5.color(palette[index2]);
@@ -95,4 +100,3 @@ export function indexColor(p5, i, j, palette) {
     return { h: 180, s: 50, b: 50, a: 70 };
   }
 }
-

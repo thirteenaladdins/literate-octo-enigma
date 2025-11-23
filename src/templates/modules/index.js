@@ -13,4 +13,11 @@ export * from './coloring';
 export * from './rendering';
 // Transform Modules
 export * from './transform';
-
+// Setup Modules
+export * from './setup';
+// Background Modules
+export * from './background';
+// Traversal Modules
+export * from './traversal';
+// Context Modules
+export * from './context';

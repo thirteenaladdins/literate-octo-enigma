@@ -166,6 +166,88 @@ class ScreenshotService {
   }
 
   /**
+   * Inline ES module imports by reading and embedding module files
+   * @param {string} code - Template code with imports
+   * @param {string} templatePath - Path to the template file
+   * @returns {string} Code with imports inlined
+   */
+  inlineModuleImports(code, templatePath) {
+    const templateDir = path.dirname(templatePath);
+
+    // Find all import statements - match the path after "from"
+    // Pattern: import ... from "path" or import ... from 'path'
+    // This regex handles both single-line and multi-line imports
+    const importRegex = /import\s+(?:[^'"]*from\s+)?['"](.+?)['"];?/gs;
+    let match;
+    const imports = [];
+    const importStatements = [];
+
+    // Collect all import statements
+    while ((match = importRegex.exec(code)) !== null) {
+      const importPath = match[1];
+      if (importPath && importPath.startsWith("./modules/")) {
+        // Add .js extension if not present
+        const modulePath = importPath.endsWith(".js") ? importPath : importPath + ".js";
+        const fullPath = path.join(templateDir, modulePath);
+        if (fs.existsSync(fullPath)) {
+          // Avoid duplicates
+          if (!imports.find(imp => imp.fullPath === fullPath)) {
+            imports.push({
+              statement: match[0],
+              path: importPath,
+              fullPath: fullPath,
+            });
+          }
+          importStatements.push(match[0]);
+        } else {
+          console.warn(`⚠️  Module file not found: ${fullPath}`);
+        }
+      }
+    }
+
+    // Read and inline each module file (only once per file)
+    const moduleExports = {};
+    const processedFiles = new Set();
+
+    imports.forEach((imp) => {
+      if (!processedFiles.has(imp.fullPath)) {
+        processedFiles.add(imp.fullPath);
+        let moduleCode = fs.readFileSync(imp.fullPath, "utf8");
+        // Remove export keywords and convert to regular functions/constants
+        moduleCode = moduleCode.replace(/export\s+function\s+(\w+)/g, "function $1");
+        moduleCode = moduleCode.replace(/export\s+const\s+(\w+)/g, "const $1");
+        moduleCode = moduleCode.replace(/export\s+default\s+/g, "");
+
+        // Store the module code
+        const moduleName = path.basename(imp.fullPath, ".js");
+        moduleExports[moduleName] = moduleCode;
+      }
+    });
+
+    // Remove all import statements from the code
+    let inlinedCode = code;
+    importStatements.forEach((stmt) => {
+      // Remove the import statement, handling multi-line imports
+      // Escape special regex characters in the statement
+      const escaped = stmt.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+      inlinedCode = inlinedCode.replace(new RegExp(escaped, "gs"), "");
+    });
+
+    // Prepend all module code before the main template code
+    const allModulesCode = Object.values(moduleExports).join("\n\n");
+    const result = allModulesCode + "\n\n" + inlinedCode;
+    
+    // Debug: log if modules were found
+    if (Object.keys(moduleExports).length === 0) {
+      console.warn("⚠️  Warning: No modules were inlined for modular runtime!");
+    } else {
+      console.log(`✓ Inlined ${Object.keys(moduleExports).length} module(s): ${Object.keys(moduleExports).join(", ")}`);
+    }
+    
+    return result;
+  }
+
+  /**
    * Generate HTML from config using runtime template
    * @param {string} template - Template name
    * @param {Object} config - Configuration object
@@ -180,7 +262,7 @@ class ScreenshotService {
       orbitalMotion: "orbitalMotionRuntime",
       noiseWaves: "noiseWavesRuntime",
       geometricGrid: "geometricGridRuntime",
-      gridPattern: "gridPatternRuntime",
+      gridPattern: "gridPatternModularRuntime",
       lightning: "lightningRuntime",
       ballots: "ballotsRuntime",
     };
@@ -198,6 +280,12 @@ class ScreenshotService {
 
     // Read and process the runtime template code
     let templateCode = fs.readFileSync(templatePath, "utf8");
+
+    // Handle modular runtime with ES module imports
+    if (templatePath.includes("ModularRuntime")) {
+      // Inline all module dependencies
+      templateCode = this.inlineModuleImports(templateCode, templatePath);
+    }
 
     // Remove ES module export and convert to function that can be called
     // Replace "export default function" with "function"

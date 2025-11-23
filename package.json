@@ -40,6 +40,7 @@
     "eject": "react-scripts eject",
     "add:placeholder": "node scripts/addPlaceholder.js",
     "generate:daily": "node scripts/generateDailyArtwork.js",
+    "generate:config": "node scripts/generateFromConfig.js",
     "test:artwork": "node scripts/testArtworkFlow.js",
     "test:media-upload": "node scripts/testMediaUploadV2.js",
     "predeploy": "npm run build",

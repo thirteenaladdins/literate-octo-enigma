@@ -1,7 +1,7 @@
 /**
  * Modular Grid Pattern Template
  * Demonstrates the plug-and-play module system
- * Each aspect (positioning, sizing, coloring, rendering) can be swapped
+ * Each aspect (positioning, sizing, coloring, rendering, setup, traversal, background, context) can be swapped
  */
 
 import {
@@ -28,17 +28,55 @@ import {
   jitterTransform,
   noiseOffsetTransform,
 } from "./modules/transform";
+import { defaultSetup, invertedSetup } from "./modules/setup";
+import {
+  transparentFade,
+  solidBackground,
+  noBackground,
+} from "./modules/background";
+import {
+  gridTraversal,
+  randomTraversal,
+  columnTraversal,
+} from "./modules/traversal";
+import { timeBasedContext, mouseBasedContext } from "./modules/context";
 
 // Default module configuration
 const DEFAULT_MODULES = {
+  setup: "default",
+  background: "transparent",
+  context: "time",
+  traversal: "grid",
   positioning: "grid",
   sizing: "noise",
   coloring: "time",
   rendering: "shape",
-  transform: "jitter",
+  transform: "none",
 };
 
-// Module function map
+// Module function maps
+const SETUP_MODULES = {
+  default: defaultSetup,
+  inverted: invertedSetup,
+};
+
+const BACKGROUND_MODULES = {
+  transparent: transparentFade,
+  solid: solidBackground,
+  none: noBackground,
+};
+
+const CONTEXT_MODULES = {
+  time: timeBasedContext,
+  mouse: mouseBasedContext,
+};
+
+const TRAVERSAL_MODULES = {
+  grid: gridTraversal,
+  random: randomTraversal,
+  column: columnTraversal,
+};
+
 const POSITIONING_MODULES = {
   grid: gridPosition,
   offsetGrid: offsetGridPosition,
@@ -67,115 +105,90 @@ const TRANSFORM_MODULES = {
 };
 
 export default function generatedSketchFromConfig(config) {
-  const cfg = {
-    seed: 37,
-    gridSize: 20,
-    speed: 0.012,
-    fade: 0.08,
-    jitter: 0.25,
-    shape: "rect",
-    background: "#1f1f24",
-    palette: ["#06d6a0", "#ffd166", "#ef476f", "#118ab2"],
-    // Module configuration
-    modules: DEFAULT_MODULES,
-    ...config,
-  };
-
-  // Ensure modules are set (can be overridden in config)
-  cfg.modules = {
+  // Config is already complete from schema generation - no defaults needed
+  // Only merge modules if provided
+  const modules = {
     ...DEFAULT_MODULES,
     ...(config.modules || {}),
   };
 
   // Get the actual module functions
+  const getSetup = () => SETUP_MODULES[modules.setup] || defaultSetup;
+  const getBackground = () =>
+    BACKGROUND_MODULES[modules.background] || transparentFade;
+  const getContext = () => CONTEXT_MODULES[modules.context] || timeBasedContext;
+  const getTraversal = () =>
+    TRAVERSAL_MODULES[modules.traversal] || gridTraversal;
+
   const getPositioning = () =>
-    POSITIONING_MODULES[cfg.modules.positioning] || gridPosition;
-  const getSizing = () => SIZING_MODULES[cfg.modules.sizing] || noiseSize;
+    POSITIONING_MODULES[modules.positioning] || gridPosition;
+  const getSizing = () => SIZING_MODULES[modules.sizing] || noiseSize;
   const getColoring = () =>
-    COLORING_MODULES[cfg.modules.coloring] || timeBasedColor;
+    COLORING_MODULES[modules.coloring] || timeBasedColor;
   const getTransform = () =>
-    TRANSFORM_MODULES[cfg.modules.transform] || jitterTransform;
+    TRANSFORM_MODULES[modules.transform] || noTransform;
 
   return {
     setup: (p5) => {
-      p5.randomSeed(cfg.seed);
-      p5.noiseSeed(cfg.seed);
-      p5.colorMode(p5.HSB, 360, 100, 100, 100);
-      p5.background(cfg.background);
-      p5.noStroke();
+      // Only set seed if provided (seed should always be provided)
+      if (config.seed) {
+        p5.randomSeed(config.seed);
+        p5.noiseSeed(config.seed);
+      }
+
+      // Call setup module
+      const setupFn = getSetup();
+      setupFn(p5, config);
     },
     draw: (p5) => {
-      // Trail fade
-      p5.push();
-      p5.noStroke();
-      p5.fill(0, 0, 0, cfg.fade * 100);
-      p5.rect(0, 0, p5.width, p5.height);
-      p5.pop();
+      // Call background module
+      const backgroundFn = getBackground();
+      backgroundFn(p5, config);
 
-      const t = p5.frameCount * cfg.speed;
-      const g = Math.max(2, Math.floor(cfg.gridSize));
-      const cell = Math.min(p5.width, p5.height) / g;
+      // Get context (time, grid size, etc.)
+      const contextFn = getContext();
+      const context = contextFn(p5, config);
+      const { t, cellSize } = context;
 
-      // Get module functions
+      // Get other module functions
       const positionFn = getPositioning();
       const sizeFn = getSizing();
       const colorFn = getColoring();
       const transformFn = getTransform();
+      const traversalFn = getTraversal();
 
-      for (let i = 0; i < g; i++) {
-        for (let j = 0; j < g; j++) {
-          // --- Module 1: Positioning ---
-          let pos;
-          if (cfg.modules.positioning === "spiral") {
-            const centerX = p5.width / 2;
-            const centerY = p5.height / 2;
-            const radius = Math.min(p5.width, p5.height) / 2;
-            const index = i * g + j;
-            const total = g * g;
-            pos = positionFn(index, total, centerX, centerY, radius);
-          } else if (cfg.modules.positioning === "offsetGrid") {
-            pos = positionFn(i, j, cell);
-          } else {
-            // Default grid positioning
-            pos = positionFn(i, j, cell);
-          }
+      // Define the element drawing logic
+      const drawElement = (i, j) => {
+        // --- Module 1: Positioning ---
+        const pos = positionFn(i, j, cellSize);
 
-          // --- Module 2: Sizing ---
-          let size;
-          const n = p5.noise(i * 0.1, j * 0.1, t * 0.3); // Noise for context
+        // --- Module 2: Sizing ---
+        // Calculate noise value for the current position/time
+        const noiseVal = p5.noise(i * 0.1, j * 0.1, t * 0.3);
+        // Use sizing module
+        const size = sizeFn(p5, i, j, t, cellSize, 0.1);
 
-          if (cfg.modules.sizing === "distance") {
-            size = sizeFn(p5, i, j, g, g, cell, 1.0);
-          } else if (cfg.modules.sizing === "pulse") {
-            size = sizeFn(p5, i, j, t, cell, cfg.speed || 1.0);
-          } else {
-            size = sizeFn(p5, i, j, t, cell);
-          }
+        // --- Module 3: Coloring ---
+        const colorResult = colorFn(p5, i, j, t, noiseVal, config.palette);
 
-          // --- Module 3: Coloring ---
-          const colorResult = colorFn(p5, i, j, t, n, cfg.palette);
-
-          // Apply color (handle both HSB object and hex string)
-          if (typeof colorResult === "object" && colorResult.h !== undefined) {
-            p5.fill(colorResult.h, colorResult.s, colorResult.b, colorResult.a);
-          } else {
-            p5.fill(colorResult);
-          }
-
-          // --- Module 4: Transform (jitter/offset) ---
-          let finalPos;
-          if (cfg.modules.transform === "jitter") {
-            finalPos = transformFn(p5, pos.x, pos.y, cfg.jitter || 0.25, cell);
-          } else if (cfg.modules.transform === "noiseOffset") {
-            finalPos = transformFn(p5, pos.x, pos.y, i, j, t, 0.1, 20);
-          } else {
-            finalPos = transformFn(p5, pos.x, pos.y);
-          }
-
-          // --- Module 5: Rendering ---
-          renderShape(p5, finalPos.x, finalPos.y, size, cfg.shape);
+        // Apply color
+        if (typeof colorResult === "object" && colorResult.h !== undefined) {
+          p5.fill(colorResult.h, colorResult.s, colorResult.b, colorResult.a);
+        } else {
+          p5.fill(colorResult);
         }
-      }
+
+        // --- Module 4: Transform ---
+        const finalPos = transformFn(p5, pos.x, pos.y);
+
+        // --- Module 5: Rendering ---
+        if (size > 0 && !isNaN(size)) {
+          renderShape(p5, finalPos.x, finalPos.y, size, config.shape);
+        }
+      };
+
+      // Execute traversal with the drawing callback
+      traversalFn(p5, config, context, drawElement);
     },
   };
 }
