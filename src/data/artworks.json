@@ -5,7 +5,11 @@
       "title": "Flowing Particles",
       "description": "Interactive particle system with mouse interaction and color cycling.",
       "date": "2024-01-15",
-      "tags": ["particles", "interactive", "color"],
+      "tags": [
+        "particles",
+        "interactive",
+        "color"
+      ],
       "file": "001_example",
       "thumbnail": "001_example_thumb",
       "category": "generative",
@@ -16,7 +20,11 @@
       "title": "Morse Code Visualizer",
       "description": "Converts text input into morse code line patterns.",
       "date": "2024-02-01",
-      "tags": ["morse", "text", "patterns"],
+      "tags": [
+        "morse",
+        "text",
+        "patterns"
+      ],
       "file": "002_morse",
       "thumbnail": "002_morse_thumb",
       "category": "data-visualization",
@@ -27,7 +35,11 @@
       "title": "Morse Code Visualizer 2",
       "description": "Enhanced morse code visualization with improved patterns and spacing.",
       "date": "2024-02-08",
-      "tags": ["morse", "enhanced", "patterns"],
+      "tags": [
+        "morse",
+        "enhanced",
+        "patterns"
+      ],
       "file": "003_morse_enhanced",
       "thumbnail": "003_morse_enhanced_thumb",
       "category": "data-visualization",
@@ -38,7 +50,11 @@
       "title": "Morse Code – Vera Style",
       "description": "Morse code rendered with Vera-inspired aesthetics.",
       "date": "2024-02-15",
-      "tags": ["morse", "vera", "typography"],
+      "tags": [
+        "morse",
+        "vera",
+        "typography"
+      ],
       "file": "004_morse_vera",
       "thumbnail": "004_morse_vera_thumb",
       "category": "data-visualization",
@@ -49,7 +65,11 @@
       "title": "Vera Lines",
       "description": "Generative line studies with strong contrast and rhythm.",
       "date": "2024-03-01",
-      "tags": ["lines", "vera", "contrast"],
+      "tags": [
+        "lines",
+        "vera",
+        "contrast"
+      ],
       "file": "005_vera_lines",
       "thumbnail": "005_vera_lines_thumb",
       "category": "geometric",
@@ -60,7 +80,11 @@
       "title": "Signal 006: AI Resonance",
       "description": "Emergent particle motion forming resonant structures.",
       "date": "2025-10-06",
-      "tags": ["signal", "ai", "particles"],
+      "tags": [
+        "signal",
+        "ai",
+        "particles"
+      ],
       "file": "006_ai_signal",
       "thumbnail": "006_ai_signal_thumb",
       "category": "generative",
@@ -71,7 +95,11 @@
       "title": "Signal 007: Echo Fields",
       "description": "Layered echoes shaping a dense motion field.",
       "date": "2025-10-07",
-      "tags": ["signal", "fields", "echo"],
+      "tags": [
+        "signal",
+        "fields",
+        "echo"
+      ],
       "file": "007_ai_signal",
       "thumbnail": "007_ai_signal_thumb",
       "category": "generative",
@@ -82,7 +110,11 @@
       "title": "Signal 008: Noise Currents",
       "description": "Currents driven by noise with soft collisions.",
       "date": "2025-10-08",
-      "tags": ["signal", "noise", "currents"],
+      "tags": [
+        "signal",
+        "noise",
+        "currents"
+      ],
       "file": "008_ai_signal",
       "thumbnail": "008_ai_signal_thumb",
       "category": "generative",
@@ -93,7 +125,11 @@
       "title": "Signal 009: Orbital Drift",
       "description": "Orbits drifting in layered densities.",
       "date": "2025-10-09",
-      "tags": ["signal", "orbit", "drift"],
+      "tags": [
+        "signal",
+        "orbit",
+        "drift"
+      ],
       "file": "009_ai_signal",
       "thumbnail": "009_ai_signal_thumb",
       "category": "generative",
@@ -104,7 +140,11 @@
       "title": "Signal 010: Vector Bloom",
       "description": "Vector blooms expanding and folding back.",
       "date": "2025-10-10",
-      "tags": ["signal", "vector", "bloom"],
+      "tags": [
+        "signal",
+        "vector",
+        "bloom"
+      ],
       "file": "010_ai_signal",
       "thumbnail": "010_ai_signal_thumb",
       "category": "generative",
@@ -115,7 +155,11 @@
       "title": "Signal 011: Phase Weave",
       "description": "Phased weaving of strands into a tapestry.",
       "date": "2025-10-11",
-      "tags": ["signal", "phase", "weave"],
+      "tags": [
+        "signal",
+        "phase",
+        "weave"
+      ],
       "file": "011_ai_signal",
       "thumbnail": "011_ai_signal_thumb",
       "category": "generative",
@@ -126,7 +170,11 @@
       "title": "Signal 012: Whisper Grid",
       "description": "Soft grid deformations whispering across the plane.",
       "date": "2025-10-12",
-      "tags": ["signal", "grid", "whisper"],
+      "tags": [
+        "signal",
+        "grid",
+        "whisper"
+      ],
       "file": "012_ai_signal",
       "thumbnail": "012_ai_signal_thumb",
       "category": "geometric",
@@ -137,7 +185,11 @@
       "title": "Signal 013: Violet Orbits",
       "description": "Violet-hued orbits pulsing in rhythm.",
       "date": "2025-10-13",
-      "tags": ["signal", "orbits", "violet"],
+      "tags": [
+        "signal",
+        "orbits",
+        "violet"
+      ],
       "file": "013_ai_signal",
       "thumbnail": "013_ai_signal_thumb",
       "category": "orbital",
@@ -148,7 +200,11 @@
       "title": "Signal 014: Ribbon Flow",
       "description": "Ribbons flowing through fluctuating fields.",
       "date": "2025-10-14",
-      "tags": ["signal", "ribbons", "flow"],
+      "tags": [
+        "signal",
+        "ribbons",
+        "flow"
+      ],
       "file": "014_ai_signal",
       "thumbnail": "014_ai_signal_thumb",
       "category": "flow-field",
@@ -159,7 +215,11 @@
       "title": "Signal 015: Scatter Dance",
       "description": "Dancing scatter of points with trails.",
       "date": "2025-10-15",
-      "tags": ["signal", "scatter", "trails"],
+      "tags": [
+        "signal",
+        "scatter",
+        "trails"
+      ],
       "file": "015_ai_signal",
       "thumbnail": "015_ai_signal_thumb",
       "category": "generative",
@@ -170,7 +230,11 @@
       "title": "Signal 016: Whispers of Colorful Echoes",
       "description": "Colorful echoes whispering in expanding rings.",
       "date": "2025-10-16",
-      "tags": ["signal", "echoes", "color"],
+      "tags": [
+        "signal",
+        "echoes",
+        "color"
+      ],
       "file": "016_ai_signal",
       "thumbnail": "016_ai_signal_thumb",
       "category": "generative",
@@ -181,7 +245,11 @@
       "title": "Signal 017: Spiral Chorus",
       "description": "Chorus of spirals building interference.",
       "date": "2025-10-17",
-      "tags": ["signal", "spiral", "chorus"],
+      "tags": [
+        "signal",
+        "spiral",
+        "chorus"
+      ],
       "file": "017_ai_signal",
       "thumbnail": "017_ai_signal_thumb",
       "category": "generative",
@@ -192,7 +260,11 @@
       "title": "Signal 018: Glass Waves",
       "description": "Waves with glass-like refractions.",
       "date": "2025-10-18",
-      "tags": ["signal", "waves", "glass"],
+      "tags": [
+        "signal",
+        "waves",
+        "glass"
+      ],
       "file": "018_ai_signal",
       "thumbnail": "018_ai_signal_thumb",
       "category": "noise",
@@ -203,7 +275,11 @@
       "title": "Signal 019: Harmony of Floating Spheres",
       "description": "A vibrant array of particles dance and collide, creating mesmerizing trails that fade, evoking a sense of joyful chaos.",
       "date": "2025-10-19",
-      "tags": ["signal", "harmony", "spheres"],
+      "tags": [
+        "signal",
+        "harmony",
+        "spheres"
+      ],
       "file": "019_ai_signal",
       "thumbnail": "019_ai_signal_thumb",
       "category": "particleSystem",
@@ -228,7 +304,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "flowField",
-      "colors": ["#f7d08a", "#e8734c", "#6b5b95", "#8c6baf"],
+      "colors": [
+        "#f7d08a",
+        "#e8734c",
+        "#6b5b95",
+        "#8c6baf"
+      ],
       "movement": "undulating currents with swirling eddies",
       "density": 60,
       "mood": "dynamic serenity"
@@ -252,7 +333,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "orbitalMotion",
-      "colors": ["#1a1f36", "#e0eaef", "#ff6f61", "#49c6b3"],
+      "colors": [
+        "#1a1f36",
+        "#e0eaef",
+        "#ff6f61",
+        "#49c6b3"
+      ],
       "movement": "graceful elliptical orbits with varying speed",
       "density": 75,
       "mood": "whimsical joy"
@@ -262,7 +348,11 @@
       "title": "Signal 022: Placeholder",
       "description": "A reserved space awaiting its future sketch. Replace this placeholder when inspiration lands.",
       "date": "2025-10-18",
-      "tags": ["placeholder", "pending", "future"],
+      "tags": [
+        "placeholder",
+        "pending",
+        "future"
+      ],
       "file": "022_placeholder_signal",
       "thumbnail": "022_placeholder_signal_thumb",
       "category": "generative",
@@ -287,7 +377,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "noiseWaves",
-      "colors": ["#d9b5e6", "#4a3f8a", "#ff9f43", "#fefae0"],
+      "colors": [
+        "#d9b5e6",
+        "#4a3f8a",
+        "#ff9f43",
+        "#fefae0"
+      ],
       "movement": "gentle, undulating fluctuations mimicking a calm ocean surface",
       "density": 45,
       "mood": "dreamy tranquility"
@@ -311,7 +406,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "gridPattern",
-      "colors": ["#6a5acd", "#ff6347", "#ffd700", "#00ced1"],
+      "colors": [
+        "#6a5acd",
+        "#ff6347",
+        "#ffd700",
+        "#00ced1"
+      ],
       "movement": "intermittent rhythmic pulsation with gentle rotations",
       "density": 70,
       "mood": "vibrant contrast"
@@ -321,7 +421,11 @@
       "title": "Signal 025: Placeholder",
       "description": "A reserved space awaiting its future sketch. Replace this placeholder when inspiration lands.",
       "date": "2025-10-19",
-      "tags": ["placeholder", "pending", "future"],
+      "tags": [
+        "placeholder",
+        "pending",
+        "future"
+      ],
       "file": "025_placeholder_signal",
       "thumbnail": "025_placeholder_signal_thumb",
       "category": "generative",
@@ -346,7 +450,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "flowField",
-      "colors": ["#4e1f35", "#f4c242", "#1b6ca8", "#f49b42"],
+      "colors": [
+        "#4e1f35",
+        "#f4c242",
+        "#1b6ca8",
+        "#f49b42"
+      ],
       "movement": "swirling currents that intertwine like ribbons of wind",
       "density": 65,
       "mood": "captivating energy"
@@ -370,7 +479,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "orbitalMotion",
-      "colors": ["#f09e5f", "#007A33", "#299B9A", "#EAE3D2"],
+      "colors": [
+        "#f09e5f",
+        "#007A33",
+        "#299B9A",
+        "#EAE3D2"
+      ],
       "movement": "intertwining orbits with variable speeds and radial pulses",
       "density": 55,
       "mood": "dynamic exploration"
@@ -394,7 +508,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "particleSystem",
-      "colors": ["#2c3e50", "#ecf0f1", "#e67e22", "#3498db"],
+      "colors": [
+        "#2c3e50",
+        "#ecf0f1",
+        "#e67e22",
+        "#3498db"
+      ],
       "movement": "erratic bursts mimicking fireworks exploding in slow motion",
       "density": 75,
       "mood": "celebratory joy"
@@ -418,7 +537,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "noiseWaves",
-      "colors": ["#3cba54", "#c45850", "#f9f923", "#00bfff"],
+      "colors": [
+        "#3cba54",
+        "#c45850",
+        "#f9f923",
+        "#00bfff"
+      ],
       "movement": "serpentine undulations with synchronized oscillations",
       "density": 80,
       "mood": "playful chaos"
@@ -442,7 +566,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "gridPattern",
-      "colors": ["#ff9a00", "#4b3c2d", "#f7d02c", "#e85d04"],
+      "colors": [
+        "#ff9a00",
+        "#4b3c2d",
+        "#f7d02c",
+        "#e85d04"
+      ],
       "movement": "rhythmic pulsations with shifting radii and angles",
       "density": 45,
       "mood": "energetic vibrancy"
@@ -466,7 +595,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "noiseWaves",
-      "colors": ["#3b0a45", "#de4f8e", "#ffdb58", "#40e0d0"],
+      "colors": [
+        "#3b0a45",
+        "#de4f8e",
+        "#ffdb58",
+        "#40e0d0"
+      ],
       "movement": "gentle ebb and flow with rhythmic pulsations",
       "density": 68,
       "mood": "serene tranquility"
@@ -490,7 +624,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "flowField",
-      "colors": ["#1f78b4", "#33a02c", "#fb9a99", "#e31a1c"],
+      "colors": [
+        "#1f78b4",
+        "#33a02c",
+        "#fb9a99",
+        "#e31a1c"
+      ],
       "movement": "gentle swirling currents enhancing fluidity",
       "density": 65,
       "mood": "tranquil beauty"
@@ -514,7 +653,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "geometricGrid",
-      "colors": ["#8e44ad", "#3498db", "#f1c40f", "#2ecc71"],
+      "colors": [
+        "#8e44ad",
+        "#3498db",
+        "#f1c40f",
+        "#2ecc71"
+      ],
       "movement": "dynamic rotation and scaling of shapes within the grid",
       "density": 55,
       "mood": "playful intrigue"
@@ -538,7 +682,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "orbitalMotion",
-      "colors": ["#ff4f00", "#ffdc00", "#3cbb9e", "#2b0a45"],
+      "colors": [
+        "#ff4f00",
+        "#ffdc00",
+        "#3cbb9e",
+        "#2b0a45"
+      ],
       "movement": "spiraling ascent with gradual rotation around a focal point",
       "density": 75,
       "mood": "whimsical exploration"
@@ -562,7 +711,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "particleSystem",
-      "colors": ["#5b2e91", "#ff8c00", "#fff3b0", "#7c84ff"],
+      "colors": [
+        "#5b2e91",
+        "#ff8c00",
+        "#fff3b0",
+        "#7c84ff"
+      ],
       "movement": "fractured, but harmonious pulses with erratic trajectories",
       "density": 45,
       "mood": "chaotic beauty"
@@ -586,7 +740,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "gridPattern",
-      "colors": ["#ecf0f1", "#3498db", "#e74c3c", "#2ecc71"],
+      "colors": [
+        "#ecf0f1",
+        "#3498db",
+        "#e74c3c",
+        "#2ecc71"
+      ],
       "movement": "intermittent snapping and expanding like a camera shutter",
       "density": 75,
       "mood": "dynamic tension"
@@ -610,7 +769,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "noiseWaves",
-      "colors": ["#2e86de", "#f39c12", "#27ae60", "#8e44ad"],
+      "colors": [
+        "#2e86de",
+        "#f39c12",
+        "#27ae60",
+        "#8e44ad"
+      ],
       "movement": "undulating waves oscillating gently across the canvas",
       "density": 70,
       "mood": "serene wonder"
@@ -634,7 +798,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "flowField",
-      "colors": ["#1abc9c", "#e74c3c", "#f39c12", "#3498db"],
+      "colors": [
+        "#1abc9c",
+        "#e74c3c",
+        "#f39c12",
+        "#3498db"
+      ],
       "movement": "gentle swirling and twirling, creating pebble-like ripples in a stream",
       "density": 65,
       "mood": "calm serenity"
@@ -658,7 +827,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "geometricGrid",
-      "colors": ["#fbc531", "#4cd137", "#487eb0", "#e84118"],
+      "colors": [
+        "#fbc531",
+        "#4cd137",
+        "#487eb0",
+        "#e84118"
+      ],
       "movement": "interlocking triangles shifting rhythmically in a synchronized dance",
       "density": 80,
       "mood": "dynamic harmony"
@@ -682,7 +856,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "orbitalMotion",
-      "colors": ["#8e44ad", "#2c3e50", "#f1c40f", "#d35400"],
+      "colors": [
+        "#8e44ad",
+        "#2c3e50",
+        "#f1c40f",
+        "#d35400"
+      ],
       "movement": "graceful spirals with varying rotation speeds",
       "density": 55,
       "mood": "mysterious allure"
@@ -706,7 +885,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "particleSystem",
-      "colors": ["#ff5733", "#33c1ff", "#9b59b6", "#f1c40f"],
+      "colors": [
+        "#ff5733",
+        "#33c1ff",
+        "#9b59b6",
+        "#f1c40f"
+      ],
       "movement": "explosive bursts followed by slow fade-out",
       "density": 85,
       "mood": "dynamic chaos"
@@ -730,7 +914,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "gridPattern",
-      "colors": ["#ff6b81", "#f7e3b6", "#46d0f5", "#1c1c1c"],
+      "colors": [
+        "#ff6b81",
+        "#f7e3b6",
+        "#46d0f5",
+        "#1c1c1c"
+      ],
       "movement": "oscillating flicker with random scaling",
       "density": 75,
       "mood": "vibrant energy"
@@ -754,7 +943,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "noiseWaves",
-      "colors": ["#1abc9c", "#e67e22", "#e74c3c", "#2980b9"],
+      "colors": [
+        "#1abc9c",
+        "#e67e22",
+        "#e74c3c",
+        "#2980b9"
+      ],
       "movement": "rhythmic undulations with a soft amplitude variation",
       "density": 70,
       "mood": "serene beauty"
@@ -778,7 +972,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "flowField",
-      "colors": ["#1f3b5d", "#ff6f61", "#f9c74f", "#90be6d"],
+      "colors": [
+        "#1f3b5d",
+        "#ff6f61",
+        "#f9c74f",
+        "#90be6d"
+      ],
       "movement": "gentle currents flowing through a fluid grid",
       "density": 65,
       "mood": "playful tranquility"
@@ -802,7 +1001,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "gridPattern",
-      "colors": ["#2ecc71", "#3498db", "#e67e22", "#f1c40f"],
+      "colors": [
+        "#2ecc71",
+        "#3498db",
+        "#e67e22",
+        "#f1c40f"
+      ],
       "movement": "gentle pulsing with sporadic rotation",
       "density": 65,
       "mood": "harmonious unity"
@@ -826,7 +1030,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "gridPattern",
-      "colors": ["#4a90e2", "#d5a564", "#e94e77", "#52c41a"],
+      "colors": [
+        "#4a90e2",
+        "#d5a564",
+        "#e94e77",
+        "#52c41a"
+      ],
       "movement": "undulating rotation with gradual scaling",
       "density": 68,
       "mood": "whimsical delight"
@@ -850,7 +1059,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "gridPattern",
-      "colors": ["#f9c2ff", "#3b7fba", "#71c8c8", "#f670a1"],
+      "colors": [
+        "#f9c2ff",
+        "#3b7fba",
+        "#71c8c8",
+        "#f670a1"
+      ],
       "movement": "intermittent scaling with soft fades",
       "density": 55,
       "mood": "playful whimsy"
@@ -874,7 +1088,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "gridPattern",
-      "colors": ["#9b59b6", "#34495e", "#16a085", "#f39c12"],
+      "colors": [
+        "#9b59b6",
+        "#34495e",
+        "#16a085",
+        "#f39c12"
+      ],
       "movement": "fractured rotation with periodic shifts",
       "density": 75,
       "mood": "dynamic intrigue"
@@ -898,7 +1117,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "gridPattern",
-      "colors": ["#e74c3c", "#2980b9", "#f1c40f", "#8e44ad"],
+      "colors": [
+        "#e74c3c",
+        "#2980b9",
+        "#f1c40f",
+        "#8e44ad"
+      ],
       "movement": "gentle rotation combined with overlapping fades",
       "density": 72,
       "mood": "vibrant wonder"
@@ -922,7 +1146,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "gridPattern",
-      "colors": ["#1abc9c", "#e67e22", "#3498db", "#f39c12"],
+      "colors": [
+        "#1abc9c",
+        "#e67e22",
+        "#3498db",
+        "#f39c12"
+      ],
       "movement": "dynamic waves with subtle oscillation",
       "density": 70,
       "mood": "serene balance"
@@ -946,7 +1175,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "gridPattern",
-      "colors": ["#ff5733", "#33ff57", "#3357ff", "#f1c40f"],
+      "colors": [
+        "#ff5733",
+        "#33ff57",
+        "#3357ff",
+        "#f1c40f"
+      ],
       "movement": "intermittent pulsation with circular rotations",
       "density": 65,
       "mood": "vibrant energy"
@@ -970,7 +1204,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "lightning",
-      "colors": ["#8e44ad", "#3498db", "#1abc9c", "#f39c12"],
+      "colors": [
+        "#8e44ad",
+        "#3498db",
+        "#1abc9c",
+        "#f39c12"
+      ],
       "movement": "gentle undulating waves that ebb and flow gracefully across the canvas",
       "density": 65,
       "mood": "dreamy serenity"
@@ -994,7 +1233,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "lightning",
-      "colors": ["#e74c3c", "#f39c12", "#2ecc71", "#3498db"],
+      "colors": [
+        "#e74c3c",
+        "#f39c12",
+        "#2ecc71",
+        "#3498db"
+      ],
       "movement": "whirling curls that twist and twirl dynamically across the canvas",
       "density": 85,
       "mood": "vibrant chaos"
@@ -1018,7 +1262,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "lightning",
-      "colors": ["#f39c12", "#2ecc71", "#e74c3c", "#2980b9"],
+      "colors": [
+        "#f39c12",
+        "#2ecc71",
+        "#e74c3c",
+        "#2980b9"
+      ],
       "movement": "dynamic spirals that contract and expand rhythmically across the canvas",
       "density": 78,
       "mood": "intense energy"
@@ -1042,7 +1291,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "lightning",
-      "colors": ["#16a085", "#2980b9", "#d35400", "#f1c40f"],
+      "colors": [
+        "#16a085",
+        "#2980b9",
+        "#d35400",
+        "#f1c40f"
+      ],
       "movement": "spiraling tendrils that weave and twirl across the canvas",
       "density": 75,
       "mood": "whimsical dance"
@@ -1066,7 +1320,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "lightning",
-      "colors": ["#e67e22", "#1abc9c", "#3498db", "#f1c40f"],
+      "colors": [
+        "#e67e22",
+        "#1abc9c",
+        "#3498db",
+        "#f1c40f"
+      ],
       "movement": "swaying arcs that flow with a rhythmic pulse across the canvas",
       "density": 72,
       "mood": "fluid harmony"
@@ -1090,7 +1349,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "lightning",
-      "colors": ["#7f8c8d", "#e74c3c", "#f39c12", "#16a085"],
+      "colors": [
+        "#7f8c8d",
+        "#e74c3c",
+        "#f39c12",
+        "#16a085"
+      ],
       "movement": "spiraling and swirling like a storm gathering energy",
       "density": 70,
       "mood": "dynamic intensity"
@@ -1114,7 +1378,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "lightning",
-      "colors": ["#273c75", "#fbc531", "#e84393", "#4cd137"],
+      "colors": [
+        "#273c75",
+        "#fbc531",
+        "#e84393",
+        "#4cd137"
+      ],
       "movement": "gentle spiraling currents that weave through the canvas",
       "density": 65,
       "mood": "serene flow"
@@ -1138,7 +1407,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "lightning",
-      "colors": ["#9b59b6", "#2980b9", "#f39c12", "#2ecc71"],
+      "colors": [
+        "#9b59b6",
+        "#2980b9",
+        "#f39c12",
+        "#2ecc71"
+      ],
       "movement": "gently undulating waves that shift and blend seamlessly across the canvas",
       "density": 85,
       "mood": "tranquil harmony"
@@ -1162,7 +1436,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "lightning",
-      "colors": ["#8e44ad", "#e67e22", "#f1c40f", "#3498db"],
+      "colors": [
+        "#8e44ad",
+        "#e67e22",
+        "#f1c40f",
+        "#3498db"
+      ],
       "movement": "radiating bursts that pulse and expand outward from central points",
       "density": 65,
       "mood": "dynamic explosion"
@@ -1186,7 +1465,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "particleSystem",
-      "colors": ["#3498db", "#e74c3c", "#f1c40f", "#2ecc71"],
+      "colors": [
+        "#3498db",
+        "#e74c3c",
+        "#f1c40f",
+        "#2ecc71"
+      ],
       "movement": "drifting particles that scatter and regroup in an endless dance",
       "density": 75,
       "mood": "playful wonder"
@@ -1210,7 +1494,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "flowField",
-      "colors": ["#1abc9c", "#e67e22", "#3498db", "#2c3e50"],
+      "colors": [
+        "#1abc9c",
+        "#e67e22",
+        "#3498db",
+        "#2c3e50"
+      ],
       "movement": "gentle ebb and flow reminiscent of ocean currents",
       "density": 80,
       "mood": "calming serenity"
@@ -1234,7 +1523,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "noiseWaves",
-      "colors": ["#ff4757", "#1dd1a1", "#3742fa", "#ffa502"],
+      "colors": [
+        "#ff4757",
+        "#1dd1a1",
+        "#3742fa",
+        "#ffa502"
+      ],
       "movement": "gentle undulations flowing like a soft breeze",
       "density": 70,
       "mood": "dreamy exploration"
@@ -1258,7 +1552,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "orbitalMotion",
-      "colors": ["#e74c3c", "#f1c40f", "#2ecc71", "#2980b9"],
+      "colors": [
+        "#e74c3c",
+        "#f1c40f",
+        "#2ecc71",
+        "#2980b9"
+      ],
       "movement": "whirling orbits that gracefully spiral around central points in a rhythmic dance",
       "density": 50,
       "mood": "playful exploration"
@@ -1282,7 +1581,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "gridPattern",
-      "colors": ["#f39c12", "#2980b9", "#d35400", "#2ecc71"],
+      "colors": [
+        "#f39c12",
+        "#2980b9",
+        "#d35400",
+        "#2ecc71"
+      ],
       "movement": "pulsating shapes that shift and transform in rhythmic patterns across the grid",
       "density": 60,
       "mood": "vibrant energy"
@@ -1306,7 +1610,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "lightning",
-      "colors": ["#6c5ce7", "#00b894", "#d63031", "#fdcb6e"],
+      "colors": [
+        "#6c5ce7",
+        "#00b894",
+        "#d63031",
+        "#fdcb6e"
+      ],
       "movement": "dynamic and erratic flashes resembling lightning strikes",
       "density": 75,
       "mood": "electric energy"
@@ -1330,7 +1639,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "particleSystem",
-      "colors": ["#ff6348", "#40e0d0", "#ffc0cb", "#9370db"],
+      "colors": [
+        "#ff6348",
+        "#40e0d0",
+        "#ffc0cb",
+        "#9370db"
+      ],
       "movement": "soft drifting motion with gentle rotations",
       "density": 60,
       "mood": "whimsical serenity"
@@ -1354,7 +1668,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "flowField",
-      "colors": ["#8e44ad", "#3498db", "#2ecc71", "#e67e22"],
+      "colors": [
+        "#8e44ad",
+        "#3498db",
+        "#2ecc71",
+        "#e67e22"
+      ],
       "movement": "fluid motions that ebb and flow gracefully like a serene river",
       "density": 65,
       "mood": "tranquil beauty"
@@ -1378,7 +1697,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "noiseWaves",
-      "colors": ["#1abc9c", "#e74c3c", "#f39c12", "#3498db"],
+      "colors": [
+        "#1abc9c",
+        "#e74c3c",
+        "#f39c12",
+        "#3498db"
+      ],
       "movement": "rhythmic undulating waves that pulse and shift gradually",
       "density": 45,
       "mood": "dynamic expression"
@@ -1402,7 +1726,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "orbitalMotion",
-      "colors": ["#ff6b81", "#ffd93d", "#6bcf8e", "#4a69bd"],
+      "colors": [
+        "#ff6b81",
+        "#ffd93d",
+        "#6bcf8e",
+        "#4a69bd"
+      ],
       "movement": "dynamic circular trails orbiting around a central point, gradually shifting in speed and direction",
       "density": 50,
       "mood": "playful exploration"
@@ -1426,7 +1755,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "gridPattern",
-      "colors": ["#f39c12", "#8e44ad", "#2ecc71", "#3498db"],
+      "colors": [
+        "#f39c12",
+        "#8e44ad",
+        "#2ecc71",
+        "#3498db"
+      ],
       "movement": "pulsating animations that expand and contract rhythmically",
       "density": 75,
       "mood": "vibrant energy"
@@ -1450,7 +1784,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "lightning",
-      "colors": ["#f1c40f", "#e67e22", "#2ecc71", "#3498db"],
+      "colors": [
+        "#f1c40f",
+        "#e67e22",
+        "#2ecc71",
+        "#3498db"
+      ],
       "movement": "erratic flashes and fluid movements resembling electrical discharges",
       "density": 85,
       "mood": "electric dynamism"
@@ -1474,7 +1813,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "particleSystem",
-      "colors": ["#3498db", "#e74c3c", "#f39c12", "#2ecc71"],
+      "colors": [
+        "#3498db",
+        "#e74c3c",
+        "#f39c12",
+        "#2ecc71"
+      ],
       "movement": "floating particles drift and swirl gracefully, creating ethereal trails in their wake",
       "density": 75,
       "mood": "dreamy exploration"
@@ -1498,7 +1842,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "flowField",
-      "colors": ["#8e44ad", "#e27b02", "#00a4d3", "#dff9fb"],
+      "colors": [
+        "#8e44ad",
+        "#e27b02",
+        "#00a4d3",
+        "#dff9fb"
+      ],
       "movement": "smoothly flowing waves that shift and swirl in harmony",
       "density": 65,
       "mood": "serene beauty",
@@ -1514,7 +1863,12 @@
         "strokeBrightness": 6.844,
         "strokeAlpha": 28.065,
         "background": "#26262b",
-        "palette": ["#ff7a7a", "#ffd166", "#70d6ff", "#bdb2ff"],
+        "palette": [
+          "#ff7a7a",
+          "#ffd166",
+          "#70d6ff",
+          "#bdb2ff"
+        ],
         "template": "flowField"
       }
     },
@@ -1537,7 +1891,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "flowField",
-      "colors": ["#ff5722", "#3f51b5", "#4caf50", "#ffc107"],
+      "colors": [
+        "#ff5722",
+        "#3f51b5",
+        "#4caf50",
+        "#ffc107"
+      ],
       "movement": "gentle oscillating waves that ripple seamlessly across the canvas",
       "density": 55,
       "mood": "harmonious tranquility",
@@ -1553,7 +1912,12 @@
         "strokeBrightness": 96.516,
         "strokeAlpha": 28.306,
         "background": "#26262b",
-        "palette": ["#ff7a7a", "#ffd166", "#70d6ff", "#bdb2ff"],
+        "palette": [
+          "#ff7a7a",
+          "#ffd166",
+          "#70d6ff",
+          "#bdb2ff"
+        ],
         "template": "flowField"
       }
     },
@@ -1576,7 +1940,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "orbitalMotion",
-      "colors": ["#1abc9c", "#3498db", "#9b59b6", "#e74c3c"],
+      "colors": [
+        "#1abc9c",
+        "#3498db",
+        "#9b59b6",
+        "#e74c3c"
+      ],
       "movement": "celestial bodies orbiting with elegant trails",
       "density": 60,
       "mood": "cosmic wonder",
@@ -1590,7 +1959,12 @@
         "radiusMax": 366.547,
         "lineWeight": 5.651,
         "background": "#0e0f1a",
-        "palette": ["#f72585", "#7209b7", "#3a0ca3", "#4361ee"],
+        "palette": [
+          "#f72585",
+          "#7209b7",
+          "#3a0ca3",
+          "#4361ee"
+        ],
         "template": "orbitalMotion"
       }
     },
@@ -1613,7 +1987,12 @@
       "status": "published",
       "displayMode": "image",
       "template": "flowField",
-      "colors": ["#2d3436", "#00b894", "#fdcb6e", "#e84393"],
+      "colors": [
+        "#2d3436",
+        "#00b894",
+        "#fdcb6e",
+        "#e84393"
+      ],
       "movement": "graceful drifting motions with subtle rotations and swirls",
       "density": 70,
       "mood": "whimsical exploration",
@@ -1629,7 +2008,12 @@
         "strokeBrightness": 95.031,
         "strokeAlpha": 24.015,
         "background": "#26262b",
-        "palette": ["#ff7a7a", "#ffd166", "#70d6ff", "#bdb2ff"],
+        "palette": [
+          "#ff7a7a",
+          "#ffd166",
+          "#70d6ff",
+          "#bdb2ff"
+        ],
         "template": "flowField"
       }
     },
@@ -1638,14 +2022,25 @@
       "title": "Signal 078: Modular Test",
       "description": "Testing the new modular template system with plug-and-play modules",
       "date": "2025-11-22",
-      "tags": ["generative", "ai-generated", "grid-pattern", "modular", "test"],
+      "tags": [
+        "generative",
+        "ai-generated",
+        "grid-pattern",
+        "modular",
+        "test"
+      ],
       "file": "078_modular_test",
       "thumbnail": "078_modular_test_thumb",
       "category": "generative",
       "status": "published",
       "displayMode": "live",
       "template": "gridPatternModular",
-      "colors": ["#06d6a0", "#ffd166", "#ef476f", "#118ab2"],
+      "colors": [
+        "#06d6a0",
+        "#ffd166",
+        "#ef476f",
+        "#118ab2"
+      ],
       "movement": "animated grid elements with modular positioning and sizing",
       "density": 60,
       "mood": "experimental",
@@ -1658,7 +2053,12 @@
         "jitter": 0.3,
         "shape": "circle",
         "background": "#1f1f24",
-        "palette": ["#06d6a0", "#ffd166", "#ef476f", "#118ab2"],
+        "palette": [
+          "#06d6a0",
+          "#ffd166",
+          "#ef476f",
+          "#118ab2"
+        ],
         "template": "gridPatternModular",
         "modules": {
           "positioning": "grid",
@@ -1666,6 +2066,53 @@
           "coloring": "palette",
           "transform": "jitter"
         }
+      }
+    },
+    {
+      "id": "079",
+      "title": "Signal 079: Drifting Tranquility",
+      "description": "A gentle composition of floating particles creating a serene atmosphere, evoking peaceful moments suspended in time.",
+      "date": "2025-11-23",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "particle-system",
+        "calm",
+        "serenity",
+        "circle"
+      ],
+      "file": "079_ai_signal",
+      "thumbnail": "079_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "particleSystem",
+      "colors": [
+        "#1d3557",
+        "#457b9d",
+        "#a8dadc",
+        "#f1faee"
+      ],
+      "movement": "serene floating motion with gradual rotations and dispersal across the canvas",
+      "density": 85,
+      "mood": "calm serenity",
+      "seed": 797881676,
+      "config": {
+        "seed": 6,
+        "numParticles": 1312,
+        "maxSpeed": 8.255,
+        "cohesion": 0.614,
+        "separation": 0.482,
+        "alignment": 1.037,
+        "trailFade": 0.62,
+        "background": "#0a0a0e",
+        "palette": [
+          "#ffbe0b",
+          "#fb5607",
+          "#ff006e",
+          "#8338ec"
+        ],
+        "template": "particleSystem"
       }
     }
   ],
@@ -1682,9 +2129,9 @@
     "particleSystem"
   ],
   "metadata": {
-    "lastUpdated": "2025-11-22",
-    "totalArtworks": 78,
-    "publishedArtworks": 78,
+    "lastUpdated": "2025-11-23",
+    "totalArtworks": 79,
+    "publishedArtworks": 79,
     "draftArtworks": 0
   }
 }
