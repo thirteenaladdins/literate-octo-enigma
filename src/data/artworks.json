@@ -2160,6 +2160,52 @@
         ],
         "template": "gridPattern"
       }
+    },
+    {
+      "id": "081",
+      "title": "Signal 081: Kaleidoscope Pulse",
+      "description": "A dynamic interplay of shapes in a structured grid, creating an engaging visual melody through color and motion.",
+      "date": "2025-11-23",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "grid-pattern",
+        "energetic",
+        "intrigue",
+        "rect"
+      ],
+      "file": "081_ai_signal",
+      "thumbnail": "081_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "gridPattern",
+      "colors": [
+        "#4a90e2",
+        "#f39c12",
+        "#27ae60",
+        "#8e44ad"
+      ],
+      "movement": "animated pulsations that expand and contract in sync with a rhythmic pattern",
+      "density": 75,
+      "mood": "energetic intrigue",
+      "seed": 852561363,
+      "config": {
+        "seed": 9,
+        "gridSize": 34,
+        "speed": 0.036,
+        "fade": 0.974,
+        "jitter": 0.959,
+        "shape": "circle",
+        "background": "#1f1f24",
+        "palette": [
+          "#06d6a0",
+          "#ffd166",
+          "#ef476f",
+          "#118ab2"
+        ],
+        "template": "gridPattern"
+      }
     }
   ],
   "categories": [
@@ -2176,8 +2222,8 @@
   ],
   "metadata": {
     "lastUpdated": "2025-11-23",
-    "totalArtworks": 80,
-    "publishedArtworks": 80,
+    "totalArtworks": 81,
+    "publishedArtworks": 81,
     "draftArtworks": 0
   }
 }
