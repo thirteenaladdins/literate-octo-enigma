@@ -7,7 +7,6 @@ import particleSystemRuntime from "../templates/particleSystemRuntime";
 import orbitalMotionRuntime from "../templates/orbitalMotionRuntime";
 import noiseWavesRuntime from "../templates/noiseWavesRuntime";
 import geometricGridRuntime from "../templates/geometricGridRuntime";
-import gridPatternRuntime from "../templates/gridPatternRuntime";
 import gridPatternModularRuntime from "../templates/gridPatternModularRuntime";
 import lightningRuntime from "../templates/lightningRuntime";
 import ballotsRuntime from "../templates/ballotsRuntime";
@@ -18,8 +17,8 @@ const runtimeTemplates = {
   orbitalMotion: orbitalMotionRuntime,
   noiseWaves: noiseWavesRuntime,
   geometricGrid: geometricGridRuntime,
-  gridPattern: gridPatternRuntime,
-  gridPatternModular: gridPatternModularRuntime,
+  gridPattern: gridPatternModularRuntime, // Use modular runtime as default
+  gridPatternModular: gridPatternModularRuntime, // Alias for explicit modular usage
   lightning: lightningRuntime,
   ballots: ballotsRuntime,
 };

@@ -5,9 +5,9 @@ const flowFieldSchema = require(path.join(
   __dirname,
   "../../src/art/templates/flowField.schema.json"
 ));
-const gridPatternSchema = require(path.join(
+const gridPatternModularSchema = require(path.join(
   __dirname,
-  "../../src/art/templates/gridPattern.schema.json"
+  "../../src/art/templates/gridPatternModular.schema.json"
 ));
 const noiseWavesSchema = require(path.join(
   __dirname,
@@ -36,7 +36,7 @@ const ballotsSchema = require(path.join(
 
 const TEMPLATE_TO_SCHEMA = {
   flowField: flowFieldSchema,
-  gridPattern: gridPatternSchema,
+  gridPattern: gridPatternModularSchema,
   noiseWaves: noiseWavesSchema,
   orbitalMotion: orbitalMotionSchema,
   particleSystem: particleSystemSchema,
@@ -113,6 +113,17 @@ function generateRandomConfig(template, seed) {
           .toString(16)
           .padStart(6, "0")}`;
       }
+    } else if (prop.type === "object" && prop.properties) {
+      // Handle nested objects (e.g., modules)
+      const nestedCfg = buildDefaults(prop);
+      for (const [nestedKey, nestedProp] of Object.entries(prop.properties)) {
+        if (nestedProp.enum) {
+          nestedCfg[nestedKey] = pickRandom(rng, nestedProp.enum);
+        } else if (nestedProp.default !== undefined) {
+          nestedCfg[nestedKey] = nestedProp.default;
+        }
+      }
+      cfg[key] = nestedCfg;
     }
   }
 

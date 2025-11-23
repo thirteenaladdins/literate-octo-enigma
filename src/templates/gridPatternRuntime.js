@@ -1,3 +1,7 @@
+/**
+ * @deprecated This runtime is deprecated. Use gridPatternModularRuntime instead.
+ * This file is kept for backward compatibility but will be removed in a future version.
+ */
 export default function generatedSketchFromConfig(config) {
   // Config is already complete from schema generation - no defaults needed
   return {

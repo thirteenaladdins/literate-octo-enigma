@@ -4,7 +4,7 @@ import { validateConfig, getDefaultConfig } from "../utils/schemaValidator";
 
 // Schemas
 import flowFieldSchema from "../art/templates/flowField.schema.json";
-import gridPatternSchema from "../art/templates/gridPattern.schema.json";
+import gridPatternModularSchema from "../art/templates/gridPatternModular.schema.json";
 import noiseWavesSchema from "../art/templates/noiseWaves.schema.json";
 import orbitalMotionSchema from "../art/templates/orbitalMotion.schema.json";
 import particleSystemSchema from "../art/templates/particleSystem.schema.json";
@@ -14,7 +14,7 @@ import lightningSchema from "../art/templates/lightning.schema.json";
 
 // Runtime templates
 import flowFieldRuntime from "../templates/flowFieldRuntime";
-import gridPatternRuntime from "../templates/gridPatternRuntime";
+import gridPatternModularRuntime from "../templates/gridPatternModularRuntime";
 import noiseWavesRuntime from "../templates/noiseWavesRuntime";
 import orbitalMotionRuntime from "../templates/orbitalMotionRuntime";
 import particleSystemRuntime from "../templates/particleSystemRuntime";
@@ -29,9 +29,9 @@ const templates = {
     runtime: flowFieldRuntime,
   },
   gridPattern: {
-    title: "Grid Pattern",
-    schema: gridPatternSchema,
-    runtime: gridPatternRuntime,
+    title: "Grid Pattern (Modular)",
+    schema: gridPatternModularSchema,
+    runtime: gridPatternModularRuntime,
   },
   noiseWaves: {
     title: "Noise Waves",
@@ -157,6 +157,27 @@ function Field({ name, schema, value, onChange }) {
         <button onClick={add} style={{ marginTop: 6 }}>
           Add color
         </button>
+      </div>
+    );
+  }
+
+  if (schema.type === "object" && schema.properties) {
+    const obj = value || {};
+    const updateNested = (key, v) => {
+      onChange({ ...obj, [key]: v });
+    };
+    return (
+      <div style={{ marginBottom: 12, padding: 8, border: "1px solid #ccc", borderRadius: 4 }}>
+        <div style={{ fontWeight: 600, marginBottom: 8 }}>{name}</div>
+        {Object.entries(schema.properties).map(([key, prop]) => (
+          <Field
+            key={key}
+            name={key}
+            schema={prop}
+            value={obj[key] ?? prop.default ?? ""}
+            onChange={(v) => updateNested(key, v)}
+          />
+        ))}
       </div>
     );
   }
