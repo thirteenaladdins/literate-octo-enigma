@@ -2206,6 +2206,53 @@
         ],
         "template": "gridPattern"
       }
+    },
+    {
+      "id": "082",
+      "title": "Signal 082: Whispers of Floating Light",
+      "description": "A symphony of particles dance in a tranquil atmosphere, creating a sense of peace and serenity with their soft movements.",
+      "date": "2025-11-24",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "particle-system",
+        "ethereal",
+        "delight",
+        "circle"
+      ],
+      "file": "082_ai_signal",
+      "thumbnail": "082_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "particleSystem",
+      "colors": [
+        "#ff6f61",
+        "#6fa3ef",
+        "#50b848",
+        "#f9e74c"
+      ],
+      "movement": "softly drifting and intermingling with gentle rotations",
+      "density": 75,
+      "mood": "ethereal delight",
+      "seed": 884294544,
+      "config": {
+        "seed": 1,
+        "numParticles": 182,
+        "maxSpeed": 6.853,
+        "cohesion": 0.734,
+        "separation": 1.638,
+        "alignment": 0.439,
+        "trailFade": 0.601,
+        "background": "#0a0a0e",
+        "palette": [
+          "#ffbe0b",
+          "#fb5607",
+          "#ff006e",
+          "#8338ec"
+        ],
+        "template": "particleSystem"
+      }
     }
   ],
   "categories": [
@@ -2221,9 +2268,9 @@
     "particleSystem"
   ],
   "metadata": {
-    "lastUpdated": "2025-11-23",
-    "totalArtworks": 81,
-    "publishedArtworks": 81,
+    "lastUpdated": "2025-11-24",
+    "totalArtworks": 82,
+    "publishedArtworks": 82,
     "draftArtworks": 0
   }
 }
