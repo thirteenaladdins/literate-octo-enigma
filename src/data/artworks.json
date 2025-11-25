@@ -2253,6 +2253,53 @@
         ],
         "template": "particleSystem"
       }
+    },
+    {
+      "id": "083",
+      "title": "Signal 083: Kaleidoscope of Floating Dreams",
+      "description": "A jubilant interaction of radiant orbs cascading gracefully, inviting viewers into a realm of imaginative joyfulness.",
+      "date": "2025-11-25",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "particle-system",
+        "playful",
+        "whimsy",
+        "circle"
+      ],
+      "file": "083_ai_signal",
+      "thumbnail": "083_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "particleSystem",
+      "colors": [
+        "#6a0572",
+        "#f8f4e3",
+        "#ffb703",
+        "#fb8500"
+      ],
+      "movement": "softly drifting particles with dynamic rotations and occasional bursts towards the canvas edges",
+      "density": 65,
+      "mood": "playful whimsy",
+      "seed": 970724371,
+      "config": {
+        "seed": 4,
+        "numParticles": 1234,
+        "maxSpeed": 7.264,
+        "cohesion": 0.006,
+        "separation": 0.64,
+        "alignment": 1.262,
+        "trailFade": 0.954,
+        "background": "#0a0a0e",
+        "palette": [
+          "#ffbe0b",
+          "#fb5607",
+          "#ff006e",
+          "#8338ec"
+        ],
+        "template": "particleSystem"
+      }
     }
   ],
   "categories": [
@@ -2268,9 +2315,9 @@
     "particleSystem"
   ],
   "metadata": {
-    "lastUpdated": "2025-11-24",
-    "totalArtworks": 82,
-    "publishedArtworks": 82,
+    "lastUpdated": "2025-11-25",
+    "totalArtworks": 83,
+    "publishedArtworks": 83,
     "draftArtworks": 0
   }
 }
