@@ -182,18 +182,58 @@
     },
     {
       "id": "013",
-      "title": "Signal 013: Violet Orbits",
-      "description": "Violet-hued orbits pulsing in rhythm.",
-      "date": "2025-10-13",
+      "title": "Signal 013: Luminous Echoes",
+      "description": "An enchanting dance of particles, reminiscent of ethereal blossoms unfurling and tracing delicate paths in the air.",
+      "date": "2025-11-26",
       "tags": [
-        "signal",
-        "orbits",
-        "violet"
+        "generative",
+        "ai-generated",
+        "flow-field",
+        "mystical,",
+        "whimsical",
+        "circle"
       ],
       "file": "013_ai_signal",
       "thumbnail": "013_ai_signal_thumb",
-      "category": "orbital",
-      "status": "published"
+      "category": "generative",
+      "status": "published",
+      "display_mode": "image",
+      "template": "flowField",
+      "colors": [
+        "#6A0572",
+        "#9D50B0",
+        "#EAB8E4",
+        "#FFD1DC"
+      ],
+      "movement": "swirling clusters with radiant trails fading away",
+      "density": 78,
+      "mood": "mystical, whimsical",
+      "seed": 1111633252,
+      "config": {
+        "seed": 6,
+        "speed": 0.035,
+        "steps": 52,
+        "density": 132,
+        "palette": [
+          "#ff7a7a",
+          "#ffd166",
+          "#70d6ff",
+          "#bdb2ff"
+        ],
+        "template": "flowField",
+        "background": "#26262b",
+        "noiseScale": 0.021,
+        "strokeAlpha": 89.296,
+        "strokeWeight": 5.553,
+        "strokeBrightness": 89.004,
+        "strokeSaturation": 30.948
+      },
+      "image_url": "https://wepwkddoljsgkhelrplp.supabase.co/storage/v1/object/public/artworks/images/013_ai_signal.png",
+      "thumbnail_url": "https://wepwkddoljsgkhelrplp.supabase.co/storage/v1/object/public/artworks/thumbnails/013_ai_signal.png",
+      "created_at": "2025-11-26T22:21:52.445839+00:00",
+      "updated_at": "2025-11-26T22:22:00.977203+00:00",
+      "imageUrl": "https://wepwkddoljsgkhelrplp.supabase.co/storage/v1/object/public/artworks/images/013_ai_signal.png",
+      "thumbnailUrl": "https://wepwkddoljsgkhelrplp.supabase.co/storage/v1/object/public/artworks/thumbnails/013_ai_signal.png"
     },
     {
       "id": "014",
@@ -2033,7 +2073,7 @@
       "thumbnail": "078_modular_test_thumb",
       "category": "generative",
       "status": "published",
-      "displayMode": "live",
+      "displayMode": "image",
       "template": "gridPatternModular",
       "colors": [
         "#06d6a0",
@@ -2256,15 +2296,15 @@
     },
     {
       "id": "083",
-      "title": "Signal 083: Kaleidoscope of Floating Dreams",
-      "description": "A jubilant interaction of radiant orbs cascading gracefully, inviting viewers into a realm of imaginative joyfulness.",
-      "date": "2025-11-25",
+      "title": "Signal 083: Fragmented Spiral Harmony",
+      "description": "An enchanting array of particles twirl and expand, creating visual rhythms that engage the eyes in a lively celebration.",
+      "date": "2025-11-24",
       "tags": [
         "generative",
         "ai-generated",
-        "particle-system",
+        "ballots",
         "playful",
-        "whimsy",
+        "vibrance",
         "circle"
       ],
       "file": "083_ai_signal",
@@ -2272,33 +2312,553 @@
       "category": "generative",
       "status": "published",
       "displayMode": "image",
-      "template": "particleSystem",
+      "template": "ballots",
       "colors": [
-        "#6a0572",
-        "#f8f4e3",
-        "#ffb703",
-        "#fb8500"
+        "#ff9f00",
+        "#4a90e2",
+        "#d0021b",
+        "#7ed321"
       ],
-      "movement": "softly drifting particles with dynamic rotations and occasional bursts towards the canvas edges",
-      "density": 65,
-      "mood": "playful whimsy",
-      "seed": 970724371,
+      "movement": "gentle spiraling motion with variable speed and size changes",
+      "density": 80,
+      "mood": "playful vibrance",
+      "seed": 925674200,
       "config": {
-        "seed": 4,
-        "numParticles": 1234,
-        "maxSpeed": 7.264,
-        "cohesion": 0.006,
-        "separation": 0.64,
-        "alignment": 1.262,
-        "trailFade": 0.954,
-        "background": "#0a0a0e",
+        "seed": 6191,
+        "gridSize": 9,
+        "subdivisions": 2,
+        "rotation": 22.477,
+        "strokeCount": 15,
+        "strokeWeight": 1.035,
+        "strokeAlpha": 54.732,
+        "waveAmount": 0.092,
+        "background": "#FAFAFA",
         "palette": [
-          "#ffbe0b",
-          "#fb5607",
-          "#ff006e",
-          "#8338ec"
+          "#1a1a1a",
+          "#4a4a4a",
+          "#7a7a7a"
         ],
-        "template": "particleSystem"
+        "modules": {
+          "setup": "default",
+          "background": "solid",
+          "subdivision": "uniform",
+          "rotation": "noise",
+          "coloring": "palette",
+          "strokes": "straight"
+        },
+        "template": "ballots"
+      }
+    },
+    {
+      "id": "084",
+      "title": "Signal 084: Fractured Geometries",
+      "description": "This artwork features an energetic interplay of shapes that react rhythmically, creating a captivating visual dialogue through form and color.",
+      "date": "2025-11-24",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "ballots",
+        "dynamic",
+        "tension",
+        "rect"
+      ],
+      "file": "084_ai_signal",
+      "thumbnail": "084_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "ballots",
+      "colors": [
+        "#2c3e50",
+        "#e74c3c",
+        "#f1c40f",
+        "#3498db"
+      ],
+      "movement": "vibrant oscillations responsive to a central pulse",
+      "density": 70,
+      "mood": "dynamic tension",
+      "seed": 926406836,
+      "config": {
+        "seed": 7536,
+        "gridSize": 8,
+        "subdivisions": 3,
+        "rotation": 28.869,
+        "strokeCount": 5,
+        "strokeWeight": 1.894,
+        "strokeAlpha": 32.086,
+        "waveAmount": 0.097,
+        "background": "#FAFAFA",
+        "palette": [
+          "#1a1a1a",
+          "#4a4a4a",
+          "#7a7a7a"
+        ],
+        "modules": {
+          "setup": "default",
+          "background": "solid",
+          "subdivision": "uniform",
+          "rotation": "noise",
+          "coloring": "palette",
+          "strokes": "straight"
+        },
+        "template": "ballots"
+      }
+    },
+    {
+      "id": "085",
+      "title": "Signal 085: Tidal Swirls of Serenity",
+      "description": "An exploration of flowing shapes that weave and twist, creating a harmonious balance reminiscent of gentle currents.",
+      "date": "2025-11-24",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "ballots-standard",
+        "organic",
+        "harmony",
+        "line"
+      ],
+      "file": "085_ai_signal",
+      "thumbnail": "085_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "ballotsStandard",
+      "colors": [
+        "#ff6f61",
+        "#e27b02",
+        "#00a4d3",
+        "#dff9fb"
+      ],
+      "movement": "graceful spirals and curls that intertwine and drift across the canvas",
+      "density": 70,
+      "mood": "organic harmony",
+      "seed": 934358958,
+      "config": {
+        "template": "ballotsStandard"
+      }
+    },
+    {
+      "id": "086",
+      "title": "Signal 086: Tempest in Motion",
+      "description": "A vibrant dance of flowing lines that emulate the unpredictable nature of a stormy sky, creating a sense of movement and energy.",
+      "date": "2025-11-24",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "ballots-standard",
+        "dynamic",
+        "chaos",
+        "line"
+      ],
+      "file": "086_ai_signal",
+      "thumbnail": "086_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "ballotsStandard",
+      "colors": [
+        "#ffdb58",
+        "#ff8c00",
+        "#d35400",
+        "#c0392b"
+      ],
+      "movement": "fluid motions resembling a turbulent sky, with swirls and eddies",
+      "density": 50,
+      "mood": "dynamic chaos",
+      "seed": 934660532,
+      "config": {
+        "seed": 606,
+        "gridSize": 10,
+        "subdivisions": 11,
+        "rotation": 15.513,
+        "strokeCount": 25,
+        "strokeWeight": 0.171,
+        "strokeAlpha": 88.845,
+        "waveAmount": 0.024,
+        "background": "#FAFAFA",
+        "palette": [
+          "#1a1a1a",
+          "#4a4a4a",
+          "#7a7a7a"
+        ],
+        "template": "ballotsStandard"
+      }
+    },
+    {
+      "id": "087",
+      "title": "Signal 087: Aetherial Embrace",
+      "description": "An immersed experience of floating particles intertwining gracefully, inviting viewers into a magical dance of colors and forms.",
+      "date": "2025-11-24",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "ballots-standard",
+        "ethereal",
+        "charm",
+        "circle"
+      ],
+      "file": "087_ai_signal",
+      "thumbnail": "087_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "ballotsStandard",
+      "colors": [
+        "#f39c12",
+        "#1abc9c",
+        "#e74c3c",
+        "#8e44ad"
+      ],
+      "movement": "gentle undulating motion creating an enchanting display of merging and swirling particles",
+      "density": 65,
+      "mood": "ethereal charm",
+      "seed": 934761224,
+      "config": {
+        "seed": 8454,
+        "gridSize": 7,
+        "subdivisions": 8,
+        "rotation": 20.565,
+        "strokeCount": 6,
+        "strokeWeight": 2.168,
+        "strokeAlpha": 57.832,
+        "waveAmount": 0.057,
+        "background": "#FAFAFA",
+        "palette": [
+          "#1a1a1a",
+          "#4a4a4a",
+          "#7a7a7a"
+        ],
+        "template": "ballotsStandard"
+      }
+    },
+    {
+      "id": "088",
+      "title": "Signal 088: Luminous Convergence",
+      "description": "An enchanting display of particles that gracefully interact, evoking a sense of cosmic harmony and exploration.",
+      "date": "2025-11-24",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "ballots",
+        "celestial",
+        "wonder",
+        "circle"
+      ],
+      "file": "088_ai_signal",
+      "thumbnail": "088_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "ballots",
+      "colors": [
+        "#8e44ad",
+        "#f1c40f",
+        "#2ecc71",
+        "#3498db"
+      ],
+      "movement": "particles gently disperse and converge, simulating a cosmic dance of light and color",
+      "density": 70,
+      "mood": "celestial wonder",
+      "seed": 935140993,
+      "config": {
+        "seed": 3837,
+        "gridSize": 2,
+        "subdivisions": 11,
+        "rotation": 5.185,
+        "strokeCount": 23,
+        "strokeWeight": 1.016,
+        "strokeAlpha": 53.774,
+        "waveAmount": 0.098,
+        "background": "#FAFAFA",
+        "palette": [
+          "#1a1a1a",
+          "#4a4a4a",
+          "#7a7a7a"
+        ],
+        "modules": {
+          "setup": "default",
+          "background": "solid",
+          "subdivision": "alternating",
+          "rotation": "noise",
+          "coloring": "noise",
+          "strokes": "straight"
+        },
+        "template": "ballots"
+      }
+    },
+    {
+      "id": "089",
+      "title": "Signal 089: Ebb and Flow of Dreams",
+      "description": "An exploration of serene fluidity, with waves that undulate gracefully, inviting contemplation and connection with nature's rhythms.",
+      "date": "2025-11-24",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "ballots",
+        "fluid",
+        "serenity",
+        "line"
+      ],
+      "file": "089_ai_signal",
+      "thumbnail": "089_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "ballots",
+      "colors": [
+        "#3c6382",
+        "#4abef1",
+        "#e84118",
+        "#f8c291"
+      ],
+      "movement": "gentle waves shifting and intertwining in a fluid, organic manner",
+      "density": 45,
+      "mood": "fluid serenity",
+      "seed": 935261860,
+      "config": {
+        "seed": 8012,
+        "gridSize": 8,
+        "subdivisions": 2,
+        "rotation": 28.723,
+        "strokeCount": 5,
+        "strokeWeight": 1.467,
+        "strokeAlpha": 52.276,
+        "waveAmount": 0.096,
+        "background": "#FAFAFA",
+        "palette": [
+          "#1a1a1a",
+          "#4a4a4a",
+          "#7a7a7a"
+        ],
+        "modules": {
+          "setup": "default",
+          "background": "solid",
+          "subdivision": "variable",
+          "rotation": "constant",
+          "coloring": "noise",
+          "strokes": "vertical"
+        },
+        "template": "ballots"
+      }
+    },
+    {
+      "id": "090",
+      "title": "Signal 090: Luminous Tides of Color",
+      "description": "A mesmerizing display of vibrant waves that ebb and flow, revealing a kaleidoscope of hues in motion.",
+      "date": "2025-11-24",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "ballots",
+        "fluid",
+        "serenity",
+        "line"
+      ],
+      "file": "090_ai_signal",
+      "thumbnail": "090_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "ballots",
+      "colors": [
+        "#3c6382",
+        "#ff6f61",
+        "#f39c12",
+        "#06d6a0"
+      ],
+      "movement": "gentle undulations create a flowing, rhythmic pattern across the canvas",
+      "density": 65,
+      "mood": "fluid serenity",
+      "seed": 935333207,
+      "config": {
+        "seed": 3053,
+        "gridSize": 7,
+        "subdivisions": 4,
+        "rotation": 13.415,
+        "strokeCount": 21,
+        "strokeWeight": 2.618,
+        "strokeAlpha": 95.633,
+        "waveAmount": 0.07,
+        "background": "#FAFAFA",
+        "palette": [
+          "#1a1a1a",
+          "#4a4a4a",
+          "#7a7a7a"
+        ],
+        "modules": {
+          "setup": "default",
+          "background": "none",
+          "subdivision": "alternating",
+          "rotation": "constant",
+          "coloring": "palette",
+          "strokes": "vertical"
+        },
+        "template": "ballots"
+      }
+    },
+    {
+      "id": "091",
+      "title": "Signal 091: Whispers of Undulating Currents",
+      "description": "A tranquil visualization of flowing lines, gracefully intertwining and shifting in harmonious motion.",
+      "date": "2025-11-24",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "ballots",
+        "serene",
+        "fluidity",
+        "line"
+      ],
+      "file": "091_ai_signal",
+      "thumbnail": "091_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "ballots",
+      "colors": [
+        "#6c5ce7",
+        "#a29bfe",
+        "#00b894",
+        "#dfe6e9"
+      ],
+      "movement": "slow undulating waves that blend and swirl, creating an animated dance of colors",
+      "density": 65,
+      "mood": "serene fluidity",
+      "seed": 935491593,
+      "config": {
+        "seed": 3972,
+        "gridSize": 7,
+        "subdivisions": 9,
+        "rotation": 15.211,
+        "strokeCount": 21,
+        "strokeWeight": 0.444,
+        "strokeAlpha": 89.213,
+        "waveAmount": 0.038,
+        "background": "#FAFAFA",
+        "palette": [
+          "#1a1a1a",
+          "#4a4a4a",
+          "#7a7a7a"
+        ],
+        "modules": {
+          "setup": "default",
+          "background": "none",
+          "subdivision": "variable",
+          "rotation": "noise",
+          "coloring": "palette",
+          "strokes": "straight"
+        },
+        "template": "ballots"
+      }
+    },
+    {
+      "id": "092",
+      "title": "Signal 092: Echoing Tides of Harmony",
+      "description": "A serene composition of flowing waves, evoking a sense of calm through gentle color transitions and rhythmic movements.",
+      "date": "2025-11-24",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "ballots",
+        "melodic",
+        "serenity",
+        "line"
+      ],
+      "file": "092_ai_signal",
+      "thumbnail": "092_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "ballots",
+      "colors": [
+        "#ff6b81",
+        "#f7b2b1",
+        "#8e44ad",
+        "#6c5ce7"
+      ],
+      "movement": "gentle undulations creating a soft wave-like rhythm across the canvas",
+      "density": 65,
+      "mood": "melodic serenity",
+      "seed": 935783333,
+      "config": {
+        "seed": 4474,
+        "gridSize": 2,
+        "subdivisions": 12,
+        "rotation": 18.573,
+        "strokeCount": 28,
+        "strokeWeight": 0.518,
+        "strokeAlpha": 86.212,
+        "waveAmount": 0.009,
+        "background": "#FAFAFA",
+        "palette": [
+          "#1a1a1a",
+          "#4a4a4a",
+          "#7a7a7a"
+        ],
+        "modules": {
+          "setup": "default",
+          "background": "solid",
+          "subdivision": "alternating",
+          "rotation": "alternating",
+          "coloring": "palette",
+          "strokes": "diagonal"
+        },
+        "template": "ballots"
+      }
+    },
+    {
+      "id": "093",
+      "title": "Signal 093: Rhythms of Color Waves",
+      "description": "An exploration of vibrant colors flowing through wave-like structures that dance and pulsate with life.",
+      "date": "2025-11-24",
+      "tags": [
+        "generative",
+        "ai-generated",
+        "ballots",
+        "vibrant",
+        "energy",
+        "line"
+      ],
+      "file": "093_ai_signal",
+      "thumbnail": "093_ai_signal_thumb",
+      "category": "generative",
+      "status": "published",
+      "displayMode": "image",
+      "template": "ballots",
+      "colors": [
+        "#5e60ce",
+        "#fdca40",
+        "#e71d36",
+        "#4ecdc4"
+      ],
+      "movement": "gentle oscillations shifting in rhythmic patterns, creating a dynamic wave-like effect",
+      "density": 80,
+      "mood": "vibrant energy",
+      "seed": 935969310,
+      "config": {
+        "seed": 6814,
+        "gridSize": 6,
+        "subdivisions": 9,
+        "rotation": 5.918,
+        "strokeCount": 24,
+        "strokeWeight": 2.583,
+        "strokeAlpha": 46.507,
+        "waveAmount": 0.097,
+        "background": "#FAFAFA",
+        "palette": [
+          "#1a1a1a",
+          "#4a4a4a",
+          "#7a7a7a"
+        ],
+        "modules": {
+          "setup": "default",
+          "background": "solid",
+          "subdivision": "uniform",
+          "rotation": "alternating",
+          "coloring": "index",
+          "strokes": "straight"
+        },
+        "template": "ballots"
       }
     }
   ],
@@ -2315,9 +2875,9 @@
     "particleSystem"
   ],
   "metadata": {
-    "lastUpdated": "2025-11-25",
-    "totalArtworks": 83,
-    "publishedArtworks": 83,
+    "lastUpdated": "2025-11-26",
+    "totalArtworks": 93,
+    "publishedArtworks": 93,
     "draftArtworks": 0
   }
 }

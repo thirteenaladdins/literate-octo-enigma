@@ -1,62 +1,99 @@
-import React from "react";
+import React, { useState } from "react";
 import artworksData from "../data/artworks.json";
+import { belongsToCollection } from "../utils/artworkHelpers";
+import { TEMPLATE_INFO } from "../constants";
+import { sortArtworksByDate, filterPublished, filterByTemplate } from "../utils/artworkHelpers";
 
-// Template display names and descriptions
-const templateInfo = {
-  gridPattern: {
-    name: "Grid Pattern",
-    description: "A collection of artworks using the grid pattern template",
-  },
-  gridPatternModular: {
-    name: "Grid Pattern (Modular)",
-    description: "Modular grid pattern artworks with plug-and-play modules",
-  },
-  flowField: {
-    name: "Flow Field",
-    description: "Artworks featuring flowing fields and currents",
-  },
-  orbitalMotion: {
-    name: "Orbital Motion",
-    description: "Celestial movements and orbital patterns",
-  },
-  noiseWaves: {
-    name: "Noise Waves",
-    description: "Wave patterns generated with noise functions",
-  },
-  particleSystem: {
-    name: "Particle System",
-    description: "Dynamic particle systems and interactions",
-  },
-  geometricGrid: {
-    name: "Geometric Grid",
-    description: "Geometric shapes arranged in grid patterns",
-  },
-  lightning: {
-    name: "Lightning",
-    description: "Electric currents and lightning-like patterns",
-  },
+// Artwork tile component with image error handling
+const ArtworkTile = ({ artwork, onArtworkSelect }) => {
+  const [imageError, setImageError] = useState(false);
+  const [triedFallback, setTriedFallback] = useState(false);
+  
+  const handleImageError = (e) => {
+    if (!triedFallback && artwork.thumbnail) {
+      // Try fallback thumbnail
+      setTriedFallback(true);
+      e.target.src = `/thumbnails/${artwork.thumbnail}.png`;
+    } else {
+      // Both failed - show placeholder
+      setImageError(true);
+    }
+  };
+
+  // Determine image source: prefer remote URL, then local path
+  const imageSrc = artwork.thumbnailUrl || 
+                   artwork.imageUrl || 
+                   `/thumbnails/${artwork.file}.png`;
+
+  return (
+    <div
+      className="artwork-tile"
+      onClick={() => onArtworkSelect(artwork)}
+    >
+      <div className="artwork-preview" style={{ position: "relative" }}>
+        {!imageError ? (
+          <img
+            src={imageSrc}
+            alt={artwork.title}
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              borderRadius: "8px",
+              background: "#222",
+              display: "block",
+            }}
+            onError={handleImageError}
+          />
+        ) : (
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#666",
+              fontSize: "0.8rem",
+              background: "#222",
+              borderRadius: "8px",
+            }}
+          >
+            No preview
+          </div>
+        )}
+      </div>
+      <div className="artwork-info">
+        <h3>{artwork.title}</h3>
+        <p>{artwork.description}</p>
+        <div className="artwork-meta">
+          <span className="artwork-date">{artwork.date}</span>
+          <span className="artwork-category">{artwork.category}</span>
+        </div>
+        <div className="artwork-tags">
+          {artwork.tags.map((tag, tagIndex) => (
+            <span key={tagIndex} className="tag">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
 };
 
-const TemplateSection = ({ templateType, onArtworkSelect }) => {
+
+const TemplateSection = ({ templateType, onArtworkSelect, activeCollection }) => {
   // Special handling for "other" - artworks without templates
   if (templateType === "other") {
-    const otherArtworks = artworksData.artworks
+    const otherArtworks = filterPublished(artworksData.artworks)
       .filter(
         (artwork) =>
-          artwork.status === "published" &&
           !artwork.template &&
-          !artwork.tags?.includes("placeholder")
+          !artwork.tags?.includes("placeholder") &&
+          belongsToCollection(artwork, activeCollection)
       )
-      .sort((a, b) => {
-        // Sort by date in reverse chronological order (newest first)
-        const dateA = new Date(a.date);
-        const dateB = new Date(b.date);
-        if (dateB - dateA !== 0) {
-          return dateB - dateA;
-        }
-        // If dates are equal, sort by ID in reverse order
-        return parseInt(b.id, 10) - parseInt(a.id, 10);
-      });
+      .sort(sortArtworksByDate);
 
     if (otherArtworks.length === 0) {
       return null;
@@ -65,57 +102,18 @@ const TemplateSection = ({ templateType, onArtworkSelect }) => {
     return (
       <div className="template-section">
         <div className="section-header">
-          <h2 className="section-title">Other Collection</h2>
+          <h2 className="section-title">Other</h2>
           <p className="section-description">
             Artworks that don't use a specific template
           </p>
         </div>
         <div className="artwork-grid">
           {otherArtworks.map((artwork) => (
-            <div
+            <ArtworkTile
               key={artwork.id}
-              className="artwork-tile"
-              onClick={() => onArtworkSelect(artwork)}
-            >
-              <div className="artwork-preview">
-                <img
-                  src={`/thumbnails/${artwork.file}.png`}
-                  alt={artwork.title}
-                  width={200}
-                  height={200}
-                  style={{
-                    objectFit: "cover",
-                    borderRadius: "16px",
-                    background: "#222",
-                  }}
-                  onError={(e) => {
-                    // Fallback if thumbnail doesn't exist - try thumbnail property
-                    const fallbackSrc = artwork.thumbnail ? `/thumbnails/${artwork.thumbnail}.png` : null;
-                    if (fallbackSrc) {
-                      e.target.src = fallbackSrc;
-                    } else {
-                      e.target.style.display = "none";
-                      e.target.parentElement.innerHTML = `<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; font-size: 0.8rem;">No preview</div>`;
-                    }
-                  }}
+              artwork={artwork}
+              onArtworkSelect={onArtworkSelect}
                 />
-              </div>
-              <div className="artwork-info">
-                <h3>{artwork.title}</h3>
-                <p>{artwork.description}</p>
-                <div className="artwork-meta">
-                  <span className="artwork-date">{artwork.date}</span>
-                  <span className="artwork-category">{artwork.category}</span>
-                </div>
-                <div className="artwork-tags">
-                  {artwork.tags.map((tag, tagIndex) => (
-                    <span key={tagIndex} className="tag">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
           ))}
         </div>
       </div>
@@ -127,25 +125,17 @@ const TemplateSection = ({ templateType, onArtworkSelect }) => {
     ? templateType
     : [templateType];
 
-  // Filter artworks that use this template type
-  const templateArtworks = artworksData.artworks
+  // Filter artworks that use this template type and belong to the active collection
+  const templateArtworks = filterByTemplate(
+    filterPublished(artworksData.artworks),
+    templateVariants
+  )
     .filter(
       (artwork) =>
-        artwork.status === "published" &&
-        artwork.template &&
-        templateVariants.includes(artwork.template) &&
-        !artwork.tags?.includes("placeholder")
+        !artwork.tags?.includes("placeholder") &&
+        belongsToCollection(artwork, activeCollection)
     )
-    .sort((a, b) => {
-      // Sort by date in reverse chronological order (newest first)
-      const dateA = new Date(a.date);
-      const dateB = new Date(b.date);
-      if (dateB - dateA !== 0) {
-        return dateB - dateA;
-      }
-      // If dates are equal, sort by ID in reverse order
-      return parseInt(b.id, 10) - parseInt(a.id, 10);
-    });
+    .sort(sortArtworksByDate);
 
   if (templateArtworks.length === 0) {
     return null;
@@ -153,7 +143,7 @@ const TemplateSection = ({ templateType, onArtworkSelect }) => {
 
   // Get display info for the primary template type
   const primaryTemplate = Array.isArray(templateType) ? templateType[0] : templateType;
-  const info = templateInfo[primaryTemplate] || {
+  const info = TEMPLATE_INFO[primaryTemplate] || {
     name: primaryTemplate,
     description: `Artworks using the ${primaryTemplate} template`,
   };
@@ -161,55 +151,16 @@ const TemplateSection = ({ templateType, onArtworkSelect }) => {
   return (
     <div className="template-section">
       <div className="section-header">
-        <h2 className="section-title">{info.name} Collection</h2>
+        <h2 className="section-title">{info.name}</h2>
         <p className="section-description">{info.description}</p>
       </div>
       <div className="artwork-grid">
         {templateArtworks.map((artwork) => (
-          <div
+          <ArtworkTile
             key={artwork.id}
-            className="artwork-tile"
-            onClick={() => onArtworkSelect(artwork)}
-          >
-            <div className="artwork-preview">
-              <img
-                src={`/thumbnails/${artwork.file}.png`}
-                alt={artwork.title}
-                width={200}
-                height={200}
-                style={{
-                  objectFit: "cover",
-                  borderRadius: "16px",
-                  background: "#222",
-                }}
-                onError={(e) => {
-                  // Fallback if thumbnail doesn't exist - try thumbnail property
-                  const fallbackSrc = artwork.thumbnail ? `/thumbnails/${artwork.thumbnail}.png` : null;
-                  if (fallbackSrc) {
-                    e.target.src = fallbackSrc;
-                  } else {
-                    e.target.style.display = "none";
-                    e.target.parentElement.innerHTML = `<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; font-size: 0.8rem;">No preview</div>`;
-                  }
-                }}
+            artwork={artwork}
+            onArtworkSelect={onArtworkSelect}
               />
-            </div>
-            <div className="artwork-info">
-              <h3>{artwork.title}</h3>
-              <p>{artwork.description}</p>
-              <div className="artwork-meta">
-                <span className="artwork-date">{artwork.date}</span>
-                <span className="artwork-category">{artwork.category}</span>
-              </div>
-              <div className="artwork-tags">
-                {artwork.tags.map((tag, tagIndex) => (
-                  <span key={tagIndex} className="tag">
-                    {tag}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </div>
         ))}
       </div>
     </div>

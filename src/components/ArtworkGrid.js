@@ -1,5 +1,94 @@
 import React, { useState, useEffect } from "react";
 import artworksData from "../data/artworks.json";
+import { formatErrorMessage } from "../utils/errorHandler";
+import { ERROR_MESSAGES } from "../constants";
+import { filterPublished, getArtworkImageUrl } from "../utils/artworkHelpers";
+
+// Artwork tile component with image error handling
+const ArtworkTile = ({ artwork, onArtworkSelect }) => {
+  const [imageError, setImageError] = useState(false);
+  const [triedFallback, setTriedFallback] = useState(false);
+  
+  const handleImageError = (e) => {
+    if (!triedFallback && artwork.thumbnail) {
+      // Try fallback thumbnail
+      setTriedFallback(true);
+      e.target.src = `/thumbnails/${artwork.thumbnail}.png`;
+    } else {
+      // Both failed - show placeholder
+      setImageError(true);
+    }
+  };
+
+  // Determine image source: prefer remote URL, then local path
+  const imageSrc = getArtworkImageUrl(artwork, "thumbnail");
+
+  return (
+    <div
+      className="artwork-tile"
+      onClick={() => onArtworkSelect(artwork)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onArtworkSelect(artwork);
+        }
+      }}
+      role="button"
+      tabIndex={0}
+      aria-label={`View artwork: ${artwork.title}`}
+    >
+      <div className="artwork-preview" style={{ position: "relative" }}>
+        {!imageError ? (
+          <img
+            src={imageSrc}
+            alt={artwork.title}
+            width={200}
+            height={200}
+            loading="lazy"
+            style={{
+              objectFit: "cover",
+              borderRadius: "16px",
+              background: "#222",
+              display: "block",
+            }}
+            onError={handleImageError}
+          />
+        ) : (
+          <div
+            style={{
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#666",
+              fontSize: "0.8rem",
+              background: "#222",
+              borderRadius: "16px",
+            }}
+          >
+            No preview
+          </div>
+        )}
+      </div>
+      <div className="artwork-info">
+        <h3>{artwork.title}</h3>
+        <p>{artwork.description}</p>
+        <div className="artwork-meta">
+          <span className="artwork-date">{artwork.date}</span>
+          <span className="artwork-category">{artwork.category}</span>
+        </div>
+        <div className="artwork-tags">
+          {artwork.tags.map((tag, tagIndex) => (
+            <span key={tagIndex} className="tag">
+              {tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+};
 
 const ArtworkGrid = ({ onArtworkSelect }) => {
   const [artworks, setArtworks] = useState([]);
@@ -15,11 +104,9 @@ const ArtworkGrid = ({ onArtworkSelect }) => {
   const loadArtworks = async () => {
     try {
       setLoading(true);
-      const publishedArtworks = artworksData.artworks
+      const publishedArtworks = filterPublished(artworksData.artworks)
         .filter(
-          (artwork) =>
-            artwork.status === "published" &&
-            !artwork.template // Only show artworks without a template
+          (artwork) => !artwork.template // Only show artworks without a template
         )
         .sort((a, b) => {
           // Sort by ID in reverse chronological order (highest first)
@@ -28,7 +115,7 @@ const ArtworkGrid = ({ onArtworkSelect }) => {
       setArtworks(publishedArtworks);
       setLoading(false);
     } catch (err) {
-      setError("Failed to load artworks");
+      setError(formatErrorMessage(err) || ERROR_MESSAGES.LOAD_FAILED);
       setLoading(false);
     }
   };
@@ -112,45 +199,11 @@ const ArtworkGrid = ({ onArtworkSelect }) => {
           </div>
         ) : (
           filteredArtworks.map((artwork) => (
-            <div
+            <ArtworkTile
               key={artwork.id}
-              className="artwork-tile"
-              onClick={() => onArtworkSelect(artwork)}
-            >
-              <div className="artwork-preview">
-                <img
-                  src={`/thumbnails/${artwork.file}.png`}
-                  alt={artwork.title}
-                  width={200}
-                  height={200}
-                  style={{
-                    objectFit: "cover",
-                    borderRadius: "16px",
-                    background: "#222",
-                  }}
-                  onError={(e) => {
-                    // Fallback if thumbnail doesn't exist
-                    e.target.style.display = "none";
-                    e.target.parentElement.innerHTML = `<div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #666; font-size: 0.8rem;">No preview</div>`;
-                  }}
-                />
-              </div>
-              <div className="artwork-info">
-                <h3>{artwork.title}</h3>
-                <p>{artwork.description}</p>
-                <div className="artwork-meta">
-                  <span className="artwork-date">{artwork.date}</span>
-                  <span className="artwork-category">{artwork.category}</span>
-                </div>
-                <div className="artwork-tags">
-                  {artwork.tags.map((tag, tagIndex) => (
-                    <span key={tagIndex} className="tag">
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
+              artwork={artwork}
+              onArtworkSelect={onArtworkSelect}
+            />
           ))
         )}
       </div>

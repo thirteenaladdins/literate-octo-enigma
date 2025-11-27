@@ -13,9 +13,23 @@ const {
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// Enable CORS for React dev server
-app.use(cors());
-app.use(express.json());
+// Security: Set security headers
+app.use((req, res, next) => {
+  res.setHeader("X-Content-Type-Options", "nosniff");
+  res.setHeader("X-Frame-Options", "DENY");
+  res.setHeader("X-XSS-Protection", "1; mode=block");
+  next();
+});
+
+// Enable CORS for React dev server (configure properly for production)
+const corsOptions = {
+  origin: process.env.NODE_ENV === "production" 
+    ? process.env.ALLOWED_ORIGINS?.split(",") || false
+    : true,
+  credentials: true,
+};
+app.use(cors(corsOptions));
+app.use(express.json({ limit: "10mb" })); // Limit JSON payload size
 
 // Health check endpoint
 app.get("/api/health", (req, res) => {
@@ -95,7 +109,11 @@ app.get("/api/twitter/oauth2/auth", async (req, res) => {
     const { url } = await getAuthLink();
     res.json({ url });
   } catch (e) {
-    res.status(500).json({ error: e.message });
+    console.error("Error generating auth link:", e);
+    res.status(500).json({ 
+      error: "Failed to generate authorization URL",
+      message: process.env.NODE_ENV === "development" ? e.message : undefined
+    });
   }
 });
 
@@ -141,11 +159,26 @@ app.get("/api/twitter/oauth2/callback", async (req, res) => {
   }
 });
 
+// Error handling middleware (must be last)
+app.use((err, req, res, next) => {
+  console.error("Unhandled error:", err);
+  res.status(err.status || 500).json({
+    error: "Internal server error",
+    message: process.env.NODE_ENV === "development" ? err.message : undefined,
+  });
+});
+
+// 404 handler
+app.use((req, res) => {
+  res.status(404).json({ error: "Not found" });
+});
+
 // Start server
 app.listen(PORT, () => {
   console.log(`\n🚀 Twitter OAuth server running on http://localhost:${PORT}`);
   console.log(`   Health check: http://localhost:${PORT}/api/health`);
   console.log(`   OAuth flow: http://localhost:${PORT}/auth/twitter`);
+  console.log(`   Environment: ${process.env.NODE_ENV || "development"}`);
   console.log("");
 });
 

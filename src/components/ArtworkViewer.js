@@ -1,57 +1,18 @@
 import React from "react";
-import P5Canvas from "./P5Canvas";
-import sketches from "../sketches";
-// Runtime templates for parameter-based rendering
-import flowFieldRuntime from "../templates/flowFieldRuntime";
-import particleSystemRuntime from "../templates/particleSystemRuntime";
-import orbitalMotionRuntime from "../templates/orbitalMotionRuntime";
-import noiseWavesRuntime from "../templates/noiseWavesRuntime";
-import geometricGridRuntime from "../templates/geometricGridRuntime";
-import gridPatternModularRuntime from "../templates/gridPatternModularRuntime";
-import lightningRuntime from "../templates/lightningRuntime";
-import ballotsRuntime from "../templates/ballotsRuntime";
-
-const runtimeTemplates = {
-  flowField: flowFieldRuntime,
-  particleSystem: particleSystemRuntime,
-  orbitalMotion: orbitalMotionRuntime,
-  noiseWaves: noiseWavesRuntime,
-  geometricGrid: geometricGridRuntime,
-  gridPattern: gridPatternModularRuntime, // Use modular runtime as default
-  gridPatternModular: gridPatternModularRuntime, // Alias for explicit modular usage
-  lightning: lightningRuntime,
-  ballots: ballotsRuntime,
-};
-
-// Get sketch from file (legacy) or generate from config (new parameter-based)
-const getSketch = (artwork) => {
-  // Try parameter-based rendering first (new approach)
-  if (artwork.config && artwork.template) {
-    const runtimeTemplate = runtimeTemplates[artwork.template];
-    if (runtimeTemplate) {
-      console.log(
-        `Rendering artwork ${artwork.id} from config using ${artwork.template} runtime template`
-      );
-      // Ensure seed is set in config for reproducibility
-      const configWithSeed = {
-        ...artwork.config,
-        seed: artwork.seed || artwork.config.seed,
-      };
-      return runtimeTemplate(configWithSeed);
-    }
-  }
-
-  // Fallback to legacy JS file approach
-  return sketches[artwork.file] || null;
-};
+import { getArtworkImageUrl } from "../utils/artworkHelpers";
+// Note: This project only displays pre-rendered images fetched from Octo Studio API
+// Live rendering capabilities have been removed - all artworks use displayMode: "image"
 
 const ArtworkViewer = ({ artwork, onBack }) => {
-  const sketch = getSketch(artwork);
-
+  const imageUrl = getArtworkImageUrl(artwork, "full");
   return (
     <div className="artwork-viewer">
       <div className="viewer-header">
-        <button className="back-button" onClick={onBack}>
+        <button
+          className="back-button"
+          onClick={onBack}
+          aria-label="Back to gallery"
+        >
           ← Back to Gallery
         </button>
         <div className="artwork-header-info">
@@ -62,42 +23,32 @@ const ArtworkViewer = ({ artwork, onBack }) => {
 
       <div className="artwork-content">
         <div className="artwork-canvas">
-          {artwork.displayMode === "image" ? (
-            <img
-              src={`/thumbnails/${artwork.file}.png`}
-              alt={artwork.title}
-              width={600}
-              height={600}
-              onError={(e) => {
-                // Hide broken image and fallback to live P5 render
-                e.currentTarget.style.display = "none";
-              }}
-              style={{ objectFit: "cover", borderRadius: 12 }}
-            />
-          ) : sketch ? (
-            <P5Canvas
-              width={600}
-              height={600}
-              sketch={sketch}
-              title={artwork.title}
-              description={artwork.description}
-            />
-          ) : (
-            <div
-              style={{
-                width: 600,
-                height: 600,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                background: "#1a1a1a",
-                borderRadius: 12,
-                color: "#666",
-              }}
-            >
-              No sketch available
-            </div>
-          )}
+          <img
+            src={imageUrl}
+            alt={artwork.title}
+            width={600}
+            height={600}
+            loading="lazy"
+            onError={(e) => {
+              e.currentTarget.style.display = "none";
+              e.currentTarget.nextSibling.style.display = "flex";
+            }}
+            style={{ objectFit: "cover", borderRadius: 12 }}
+          />
+          <div
+            style={{
+              width: 600,
+              height: 600,
+              display: "none",
+              alignItems: "center",
+              justifyContent: "center",
+              background: "#1a1a1a",
+              borderRadius: 12,
+              color: "#666",
+            }}
+          >
+            Image not available
+          </div>
         </div>
 
         <div className="artwork-details">

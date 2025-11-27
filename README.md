@@ -180,11 +180,12 @@ Generates a simple placeholder artwork (legacy system).
 
 ### Template System
 
-Templates are located in `scripts/templates/`:
+Templates use a parameter-based runtime system:
 
-- Each template is a function that accepts parameters (colors, density, movement, shapes)
-- Returns a complete P5.js sketch as a string
-- Parameterized to allow AI concept customization
+- Runtime templates: `src/templates/*Runtime.js`
+- Schema definitions: `src/art/templates/*.schema.json`
+- Templates accept configuration objects and return P5.js sketch functions
+- Modular templates (like `gridPatternModularRuntime`) support plug-and-play module systems
 
 ### Template Tuner (/tuner)
 
@@ -202,7 +203,7 @@ Use the tuner to tweak parameters (speed, density, palettes, etc.). You can copy
 Located in `scripts/services/`:
 
 - **openaiService.js** - OpenAI API integration for concept generation
-- **artGenerator.js** - Translates AI concepts into P5.js code
+- **artGenerator.js** - Generates tags from AI concepts
 - **screenshotService.js** - Puppeteer-based screenshot capture
 - **twitterService.js** - Twitter API integration for posting
 
@@ -233,25 +234,27 @@ scripts/
 ├── generateDailyArtwork.js   # Main orchestration script
 ├── services/
 │   ├── openaiService.js       # AI concept generation
-│   ├── artGenerator.js        # P5.js code generation
-│   ├── screenshotService.js   # Image capture
+│   ├── artGenerator.js        # Tag generation
+│   ├── screenshotService.js   # Image capture from configs
+│   ├── templateConfigService.js # Config generation from schemas
 │   └── twitterService.js      # Social media posting
-└── templates/
-    ├── particleSystem.js      # Particle template
-    ├── gridPattern.js         # Grid template
-    ├── orbitalMotion.js       # Orbital template
-    ├── flowField.js           # Flow field template
-    └── noiseWaves.js          # Noise waves template
+src/
+├── templates/
+│   ├── *Runtime.js            # Runtime template functions
+│   ├── modules/               # Modular template components
+│   └── registry.js            # Template capabilities registry
+└── art/templates/
+    └── *.schema.json          # JSON schemas for validation
 ```
 
 ### Contributing
 
 To add new templates:
 
-1. Create a new file in `scripts/templates/`
-2. Export a function that accepts `params` and returns P5.js code
-3. Add the template name to `openaiService.js` validation
-4. Add the template to `artGenerator.js` templates object
+1. Create a runtime template in `src/templates/` (e.g., `myTemplateRuntime.js`)
+2. Create a JSON schema in `src/art/templates/` (e.g., `myTemplate.schema.json`)
+3. Add template capabilities to `src/templates/registry.js`
+4. The template will automatically be available in the system
 
 ### License
 
