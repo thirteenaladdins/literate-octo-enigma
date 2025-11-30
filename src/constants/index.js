@@ -55,6 +55,34 @@ export const TEMPLATE_INFO = {
   },
 };
 
+// Category display names and descriptions (optional - will fallback to auto-generated)
+export const CATEGORY_INFO = {
+  generative: {
+    name: "Generative",
+    description: "Generative and algorithmic artworks",
+  },
+  "data-visualization": {
+    name: "Data Visualization",
+    description: "Data-driven visualizations and patterns",
+  },
+  geometric: {
+    name: "Geometric",
+    description: "Geometric patterns and shapes",
+  },
+  "flow-field": {
+    name: "Flow Field",
+    description: "Flowing fields and dynamic currents",
+  },
+  noise: {
+    name: "Noise",
+    description: "Noise-based patterns and textures",
+  },
+  particleSystem: {
+    name: "Particle System",
+    description: "Dynamic particle systems and interactions",
+  },
+};
+
 // API Configuration
 export const API_CONFIG = {
   BASE_URL: process.env.REACT_APP_API_URL || "",

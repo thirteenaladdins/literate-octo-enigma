@@ -112,3 +112,72 @@ export const filterPublished = (artworks) => {
   );
 };
 
+/**
+ * Extract unique categories from artworks
+ * @param {Array} artworks - Array of artwork objects
+ * @returns {Array} Array of unique category strings, sorted
+ */
+export const getUniqueCategories = (artworks) => {
+  if (!Array.isArray(artworks)) {
+    return [];
+  }
+
+  const categories = new Set();
+  filterPublished(artworks).forEach((artwork) => {
+    if (artwork.category && !artwork.tags?.includes("placeholder")) {
+      categories.add(artwork.category);
+    }
+  });
+  return Array.from(categories).sort();
+};
+
+/**
+ * Get category display name (capitalize and format)
+ * @param {string} category - Category string (e.g., "data-visualization")
+ * @returns {string} Formatted display name (e.g., "Data Visualization")
+ */
+export const getCategoryDisplayName = (category) => {
+  if (!category) return "Unknown";
+  return category
+    .split("-")
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(" ");
+};
+
+/**
+ * Extract unique template types from artworks
+ * Normalizes template names (e.g., gridPatternModular -> gridPattern)
+ * @param {Array} artworks - Array of artwork objects
+ * @returns {Array} Array of unique template type strings, sorted
+ */
+export const getUniqueTemplates = (artworks) => {
+  if (!Array.isArray(artworks)) {
+    return [];
+  }
+
+  const templates = new Set();
+  const hasOther = new Set();
+  
+  filterPublished(artworks).forEach((artwork) => {
+    if (artwork.tags?.includes("placeholder")) return;
+    
+    if (artwork.template) {
+      // Normalize gridPatternModular to gridPattern
+      const template = artwork.template === "gridPatternModular" 
+        ? "gridPattern" 
+        : artwork.template;
+      templates.add(template);
+    } else {
+      hasOther.add(true);
+    }
+  });
+  
+  const templateArray = Array.from(templates).sort();
+  // Add "other" if there are artworks without templates
+  if (hasOther.size > 0) {
+    templateArray.push("other");
+  }
+  
+  return templateArray;
+};
+

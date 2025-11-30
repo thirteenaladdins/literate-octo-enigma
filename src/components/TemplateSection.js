@@ -72,11 +72,12 @@ const ArtworkTile = ({ artwork, onArtworkSelect }) => {
           <span className="artwork-category">{artwork.category}</span>
         </div>
         <div className="artwork-tags">
-          {artwork.tags.map((tag, tagIndex) => (
-            <span key={tagIndex} className="tag">
-              {tag}
-            </span>
-          ))}
+          {artwork.tags &&
+            artwork.tags.map((tag, tagIndex) => (
+              <span key={tagIndex} className="tag">
+                {tag}
+              </span>
+            ))}
         </div>
       </div>
     </div>

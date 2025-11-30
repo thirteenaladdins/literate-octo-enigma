@@ -3,8 +3,7 @@ import "./App.css";
 import Navigation from "./components/Navigation";
 import CollectionSwitcher from "./components/CollectionSwitcher";
 import ErrorBoundary from "./components/ErrorBoundary";
-import { TEMPLATE_TYPES } from "./constants";
-import { belongsToCollection } from "./utils/artworkHelpers";
+import { belongsToCollection, getUniqueTemplates } from "./utils/artworkHelpers";
 import staticArtworksData from "./data/artworks.json";
 
 // Lazy load components for code splitting
@@ -71,18 +70,19 @@ function App() {
 
   const renderContent = () => {
     if (activeSection === "all") {
-      // Show all template sections
+      // Show all templates
+      const templates = getUniqueTemplates(collectionArtworks);
       return (
         <>
-          {TEMPLATE_TYPES.map((templateType) => {
+          {templates.map((template) => {
             // Special handling for gridPattern to include both variants
-            const template = templateType === "gridPattern" 
+            const templateType = template === "gridPattern" 
               ? ["gridPattern", "gridPatternModular"]
-              : templateType;
+              : template;
             return (
-              <Suspense key={templateType} fallback={<div className="loading">Loading...</div>}>
+              <Suspense key={template} fallback={<div className="loading">Loading...</div>}>
                 <TemplateSection
-                  templateType={template}
+                  templateType={templateType}
                   onArtworkSelect={setSelectedArtwork}
                   activeCollection={activeCollection}
                   artworks={collectionArtworks}
@@ -94,13 +94,13 @@ function App() {
       );
     } else {
       // Show only the selected template section
-      const template = activeSection === "gridPattern" 
+      const templateType = activeSection === "gridPattern" 
         ? ["gridPattern", "gridPatternModular"]
         : activeSection;
       return (
         <Suspense fallback={<div className="loading">Loading...</div>}>
           <TemplateSection
-            templateType={template}
+            templateType={templateType}
             onArtworkSelect={setSelectedArtwork}
             activeCollection={activeCollection}
             artworks={collectionArtworks}
@@ -141,6 +141,7 @@ function App() {
                 activeSection={activeSection}
                 onSectionChange={handleSectionChange}
                 activeCollection={activeCollection}
+                artworks={collectionArtworks}
               />
             </div>
           </>

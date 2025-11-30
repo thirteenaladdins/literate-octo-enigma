@@ -1,88 +1,68 @@
 import React from "react";
-import artworksData from "../data/artworks.json";
-import { belongsToCollection } from "../utils/artworkHelpers";
-import { filterPublished } from "../utils/artworkHelpers";
+import { belongsToCollection, filterPublished, getUniqueTemplates, filterByTemplate } from "../utils/artworkHelpers";
+import { TEMPLATE_INFO } from "../constants";
 
-// Template display names
-const templateNames = {
-  all: "All",
-  gridPattern: "Grid Pattern",
-  flowField: "Flow Field",
-  orbitalMotion: "Orbital Motion",
-  noiseWaves: "Noise Waves",
-  particleSystem: "Particle System",
-  geometricGrid: "Geometric Grid",
-  lightning: "Lightning",
-  other: "Other",
-};
+const Navigation = ({ activeSection, onSectionChange, activeCollection, artworks = [] }) => {
+  // Get all unique templates from the provided artworks
+  const allTemplates = getUniqueTemplates(artworks);
+  
+  // Filter templates to only show those that have artworks in the active collection
+  const getTemplatesForCollection = () => {
+    if (!activeCollection || !artworks || artworks.length === 0) return allTemplates;
 
-// Template type mapping for filtering
-const TEMPLATE_TYPE_MAP = {
-  gridPattern: ["gridPattern", "gridPatternModular"],
-  flowField: ["flowField"],
-  orbitalMotion: ["orbitalMotion"],
-  noiseWaves: ["noiseWaves"],
-  particleSystem: ["particleSystem"],
-  geometricGrid: ["geometricGrid"],
-  lightning: ["lightning"],
-};
+    const templatesWithArtworks = [];
 
-const Navigation = ({ activeSection, onSectionChange, activeCollection }) => {
-  // Get all template sections
-  const allSections = [
-    "all",
-    "gridPattern",
-    "flowField",
-    "orbitalMotion",
-    "noiseWaves",
-    "particleSystem",
-    "geometricGrid",
-    "lightning",
-    "other",
-  ];
+    allTemplates.forEach((template) => {
+      if (template === "other") {
+        // Check for artworks without templates
+        const hasOtherArtworks = filterPublished(artworks).some(
+          (artwork) =>
+            !artwork.template &&
+            !artwork.tags?.includes("placeholder") &&
+            belongsToCollection(artwork, activeCollection)
+        );
+        if (hasOtherArtworks) {
+          templatesWithArtworks.push(template);
+        }
+      } else {
+        // For gridPattern, check both gridPattern and gridPatternModular
+        const templateVariants = template === "gridPattern" 
+          ? ["gridPattern", "gridPatternModular"]
+          : [template];
+        
+        const hasArtworks = filterByTemplate(
+          filterPublished(artworks),
+          templateVariants
+        ).some(
+          (artwork) =>
+            !artwork.tags?.includes("placeholder") &&
+            belongsToCollection(artwork, activeCollection)
+        );
 
-  // Filter sections to only show those that have artworks in the active collection
-  const getSectionsForCollection = () => {
-    if (!activeCollection) return allSections;
-
-    const sectionsWithArtworks = ["all"]; // Always show "all"
-
-    // Check each template type
-    Object.entries(TEMPLATE_TYPE_MAP).forEach(([sectionKey, templateVariants]) => {
-      const hasArtworks = filterPublished(artworksData.artworks).some(
-        (artwork) =>
-          artwork.template &&
-          templateVariants.includes(artwork.template) &&
-          !artwork.tags?.includes("placeholder") &&
-          belongsToCollection(artwork, activeCollection)
-      );
-
-      if (hasArtworks) {
-        sectionsWithArtworks.push(sectionKey);
+        if (hasArtworks) {
+          templatesWithArtworks.push(template);
+        }
       }
     });
 
-    // Check if "other" section has artworks
-    const hasOtherArtworks = filterPublished(artworksData.artworks).some(
-      (artwork) =>
-        !artwork.template &&
-        !artwork.tags?.includes("placeholder") &&
-        belongsToCollection(artwork, activeCollection)
-    );
-
-    if (hasOtherArtworks) {
-      sectionsWithArtworks.push("other");
-    }
-
-    return sectionsWithArtworks;
+    return templatesWithArtworks;
   };
 
-  const sections = getSectionsForCollection();
+  const templates = getTemplatesForCollection();
+  const allSections = ["all", ...templates];
+
+  // Get display name for template
+  const getTemplateName = (section) => {
+    if (section === "all") return "All";
+    if (section === "other") return "Other";
+    const info = TEMPLATE_INFO[section];
+    return info?.name || section;
+  };
 
   return (
     <nav className="sidebar-navigation" aria-label="Template navigation">
       <div className="nav-links">
-        {sections.map((section) => (
+        {allSections.map((section) => (
           <div
             key={section}
             className={`nav-link ${activeSection === section ? "active" : ""}`}
@@ -95,9 +75,9 @@ const Navigation = ({ activeSection, onSectionChange, activeCollection }) => {
                 onSectionChange(section);
               }
             }}
-            aria-label={`View ${templateNames[section] || section} artworks`}
+            aria-label={`View ${getTemplateName(section)} artworks`}
           >
-            {templateNames[section] || section}
+            {getTemplateName(section)}
           </div>
         ))}
       </div>
