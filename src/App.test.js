@@ -1,5 +1,4 @@
 import { render, screen, waitFor } from '@testing-library/react';
-import { act } from 'react-dom/test-utils';
 import App from './App';
 
 // Mock the fetch API
@@ -19,15 +18,11 @@ describe('App', () => {
   });
 
   it('renders without crashing', async () => {
-    await act(async () => {
-      render(<App />);
-    });
+    render(<App />);
   });
 
   it('renders collection switcher', async () => {
-    await act(async () => {
-      render(<App />);
-    });
+    render(<App />);
     
     // Wait for Suspense to resolve
     await waitFor(() => {
@@ -36,9 +31,7 @@ describe('App', () => {
   });
 
   it('renders navigation', async () => {
-    await act(async () => {
-      render(<App />);
-    });
+    render(<App />);
     
     // Wait for Suspense to resolve
     await waitFor(() => {
