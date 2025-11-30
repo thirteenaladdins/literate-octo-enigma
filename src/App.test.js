@@ -1,20 +1,48 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, waitFor } from '@testing-library/react';
+import { act } from 'react-dom/test-utils';
 import App from './App';
 
+// Mock the fetch API
+global.fetch = jest.fn();
+
 describe('App', () => {
-  it('renders without crashing', () => {
-    render(<App />);
+  beforeEach(() => {
+    // Reset fetch mock before each test
+    fetch.mockClear();
+    // Mock successful fetch response by default
+    fetch.mockResolvedValue({
+      ok: true,
+      json: async () => ({
+        artworks: [],
+      }),
+    });
   });
 
-  it('renders collection switcher', () => {
-    render(<App />);
-    // Collection switcher should be present
-    expect(screen.getByRole('button', { name: /experiments/i })).toBeInTheDocument();
+  it('renders without crashing', async () => {
+    await act(async () => {
+      render(<App />);
+    });
   });
 
-  it('renders navigation', () => {
-    render(<App />);
-    // Navigation should be present
-    expect(screen.getByRole('navigation')).toBeInTheDocument();
+  it('renders collection switcher', async () => {
+    await act(async () => {
+      render(<App />);
+    });
+    
+    // Wait for Suspense to resolve
+    await waitFor(() => {
+      expect(screen.getByRole('tab', { name: /experiments/i })).toBeInTheDocument();
+    });
+  });
+
+  it('renders navigation', async () => {
+    await act(async () => {
+      render(<App />);
+    });
+    
+    // Wait for Suspense to resolve
+    await waitFor(() => {
+      expect(screen.getByRole('navigation')).toBeInTheDocument();
+    });
   });
 });

@@ -37,9 +37,12 @@ describe("ArtworkGrid", () => {
     mockOnArtworkSelect.mockClear();
   });
 
-  it("renders loading state initially", () => {
+  it("renders loading state initially", async () => {
     render(<ArtworkGrid onArtworkSelect={mockOnArtworkSelect} />);
-    expect(screen.getByText(/loading artworks/i)).toBeInTheDocument();
+    // Component starts with loading: true, so loading text should appear
+    // Use findByText to wait for async rendering instead of getByText
+    const loadingElement = await screen.findByText(/loading artworks/i);
+    expect(loadingElement).toBeInTheDocument();
   });
 
   it("renders artworks after loading", async () => {
