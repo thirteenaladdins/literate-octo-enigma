@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import artworksData from "../data/artworks.json";
 import { belongsToCollection } from "../utils/artworkHelpers";
 import { TEMPLATE_INFO } from "../constants";
-import { sortArtworksByDate, filterPublished, filterByTemplate } from "../utils/artworkHelpers";
+import {
+  sortArtworksByDate,
+  filterPublished,
+  filterByTemplate,
+} from "../utils/artworkHelpers";
 
 // Artwork tile component with image error handling
 const ArtworkTile = ({ artwork, onArtworkSelect }) => {
   const [imageError, setImageError] = useState(false);
   const [triedFallback, setTriedFallback] = useState(false);
-  
+
   const handleImageError = (e) => {
     if (!triedFallback && artwork.thumbnail) {
       // Try fallback thumbnail
@@ -21,15 +24,13 @@ const ArtworkTile = ({ artwork, onArtworkSelect }) => {
   };
 
   // Determine image source: prefer remote URL, then local path
-  const imageSrc = artwork.thumbnailUrl || 
-                   artwork.imageUrl || 
-                   `/thumbnails/${artwork.file}.png`;
+  const imageSrc =
+    artwork.thumbnailUrl ||
+    artwork.imageUrl ||
+    `/thumbnails/${artwork.file}.png`;
 
   return (
-    <div
-      className="artwork-tile"
-      onClick={() => onArtworkSelect(artwork)}
-    >
+    <div className="artwork-tile" onClick={() => onArtworkSelect(artwork)}>
       <div className="artwork-preview" style={{ position: "relative" }}>
         {!imageError ? (
           <img
@@ -82,11 +83,15 @@ const ArtworkTile = ({ artwork, onArtworkSelect }) => {
   );
 };
 
-
-const TemplateSection = ({ templateType, onArtworkSelect, activeCollection }) => {
+const TemplateSection = ({
+  templateType,
+  onArtworkSelect,
+  activeCollection,
+  artworks = [],
+}) => {
   // Special handling for "other" - artworks without templates
   if (templateType === "other") {
-    const otherArtworks = filterPublished(artworksData.artworks)
+    const otherArtworks = filterPublished(artworks)
       .filter(
         (artwork) =>
           !artwork.template &&
@@ -113,7 +118,7 @@ const TemplateSection = ({ templateType, onArtworkSelect, activeCollection }) =>
               key={artwork.id}
               artwork={artwork}
               onArtworkSelect={onArtworkSelect}
-                />
+            />
           ))}
         </div>
       </div>
@@ -127,7 +132,7 @@ const TemplateSection = ({ templateType, onArtworkSelect, activeCollection }) =>
 
   // Filter artworks that use this template type and belong to the active collection
   const templateArtworks = filterByTemplate(
-    filterPublished(artworksData.artworks),
+    filterPublished(artworks),
     templateVariants
   )
     .filter(
@@ -142,7 +147,9 @@ const TemplateSection = ({ templateType, onArtworkSelect, activeCollection }) =>
   }
 
   // Get display info for the primary template type
-  const primaryTemplate = Array.isArray(templateType) ? templateType[0] : templateType;
+  const primaryTemplate = Array.isArray(templateType)
+    ? templateType[0]
+    : templateType;
   const info = TEMPLATE_INFO[primaryTemplate] || {
     name: primaryTemplate,
     description: `Artworks using the ${primaryTemplate} template`,
@@ -160,7 +167,7 @@ const TemplateSection = ({ templateType, onArtworkSelect, activeCollection }) =>
             key={artwork.id}
             artwork={artwork}
             onArtworkSelect={onArtworkSelect}
-              />
+          />
         ))}
       </div>
     </div>
@@ -168,4 +175,3 @@ const TemplateSection = ({ templateType, onArtworkSelect, activeCollection }) =>
 };
 
 export default TemplateSection;
-

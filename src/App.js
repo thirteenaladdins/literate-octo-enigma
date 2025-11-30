@@ -1,10 +1,11 @@
-import React, { useState, lazy, Suspense } from "react";
+import React, { useState, useEffect, lazy, Suspense } from "react";
 import "./App.css";
 import Navigation from "./components/Navigation";
 import CollectionSwitcher from "./components/CollectionSwitcher";
 import ErrorBoundary from "./components/ErrorBoundary";
 import { TEMPLATE_TYPES } from "./constants";
 import { belongsToCollection } from "./utils/artworkHelpers";
+import staticArtworksData from "./data/artworks.json";
 
 // Lazy load components for code splitting
 const ArtworkViewer = lazy(() => import("./components/ArtworkViewer"));
@@ -17,6 +18,40 @@ function App() {
   const [selectedArtwork, setSelectedArtwork] = useState(null);
   const [activeSection, setActiveSection] = useState("all");
   const [activeCollection, setActiveCollection] = useState("experiments");
+  const [experimentArtworks] = useState(staticArtworksData.artworks || []);
+  const [newArtworks, setNewArtworks] = useState([]);
+  const [isLoadingNew, setIsLoadingNew] = useState(false);
+  const [newError, setNewError] = useState(null);
+
+  useEffect(() => {
+    let isMounted = true;
+    setIsLoadingNew(true);
+    fetch("/api/artworks?limit=200")
+      .then((res) => res.json())
+      .then((data) => {
+        if (!isMounted) return;
+        if (data.artworks && Array.isArray(data.artworks)) {
+          setNewArtworks(data.artworks);
+          setNewError(null);
+        } else {
+          setNewError("No artworks returned from Supabase.");
+        }
+      })
+      .catch((err) => {
+        if (!isMounted) return;
+        console.warn("API fetch failed, staying on static experiments:", err);
+        setNewError(err.message || "Failed to load new artworks.");
+      })
+      .finally(() => {
+        if (isMounted) {
+          setIsLoadingNew(false);
+        }
+      });
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const handleSectionChange = (section) => {
     setActiveSection(section);
@@ -30,6 +65,9 @@ function App() {
     // Scroll to top when changing collections
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const isNewCollection = activeCollection === "new";
+  const collectionArtworks = isNewCollection ? newArtworks : experimentArtworks;
 
   const renderContent = () => {
     if (activeSection === "all") {
@@ -47,6 +85,7 @@ function App() {
                   templateType={template}
                   onArtworkSelect={setSelectedArtwork}
                   activeCollection={activeCollection}
+                  artworks={collectionArtworks}
                 />
               </Suspense>
             );
@@ -64,6 +103,7 @@ function App() {
             templateType={template}
             onArtworkSelect={setSelectedArtwork}
             activeCollection={activeCollection}
+            artworks={collectionArtworks}
           />
         </Suspense>
       );
@@ -79,6 +119,23 @@ function App() {
               activeCollection={activeCollection}
               onCollectionChange={handleCollectionChange}
             />
+            {isNewCollection && newArtworks.length === 0 && (
+              <div
+                className="info-banner"
+                style={{
+                  margin: "1rem 0",
+                  padding: "0.75rem 1rem",
+                  borderRadius: "8px",
+                  background: "#222",
+                  color: "#fff",
+                  fontSize: "0.9rem",
+                }}
+              >
+                {isLoadingNew
+                  ? "Loading new artworks..."
+                  : newError || "No Supabase artworks available yet."}
+              </div>
+            )}
             <div className="sidebar-container">
               <Navigation
                 activeSection={activeSection}

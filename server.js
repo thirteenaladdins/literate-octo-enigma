@@ -9,6 +9,7 @@ const {
   getAuthLink,
   handleCallback,
 } = require("./scripts/services/twitterOAuth2");
+const artworksHandler = require("./api/artworks");
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -34,6 +35,11 @@ app.use(express.json({ limit: "10mb" })); // Limit JSON payload size
 // Health check endpoint
 app.get("/api/health", (req, res) => {
   res.json({ status: "ok", message: "Twitter OAuth server is running" });
+});
+
+// Artworks endpoint (mirrors the Vercel serverless function for local dev)
+app.get("/api/artworks", (req, res, next) => {
+  Promise.resolve(artworksHandler(req, res)).catch(next);
 });
 
 // Twitter OAuth landing page
